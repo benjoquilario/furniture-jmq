@@ -1,7 +1,6 @@
 "use server"
 
 import { AuthError } from "next-auth"
-import { signIn } from "@/auth"
 import { redirect } from "next/navigation"
 import db from "@/lib/db"
 import { hashPassword } from "@/lib/utils"
@@ -15,7 +14,7 @@ const signInSchema = z.object({
   password: z.string().min(4).max(100),
 })
 
-export const login = validatedAction(signInSchema, async (data, formData) => {
+export const login = validatedAction(signInSchema, async (data, _formData) => {
   const { email, password } = data
 
   const user = await db.user.findUnique({
@@ -47,7 +46,7 @@ export const login = validatedAction(signInSchema, async (data, formData) => {
   redirect("/")
 })
 
-export const signUp = validatedAction(signUpSchema, async (data, formData) => {
+export const signUp = validatedAction(signUpSchema, async (data, _formData) => {
   const { email, password, confirmPassword, firstName, lastName } = data
 
   const isEmailExist = await db.user.findFirst({

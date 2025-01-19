@@ -35,3 +35,7 @@ export async function getUser() {
 
   return user
 }
+
+export async function getAllFurniture() {
+  return await db.furniture.findMany()
+}

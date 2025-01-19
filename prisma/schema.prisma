@@ -75,9 +75,14 @@ model Furniture {
   id          String   @id @default(cuid())
   name        String
   description String?
-  image       String?
-  size        String
-  color       String
+  image       String[]
+  measurements String?
+  pullOut     Int?
+  withStorage Boolean?
+  Shape       String?
+  size        String?
+  color       String?
+  cover       String?
   seater      Int
   sellerId    String
   seller      User     @relation(fields: [sellerId], references: [id])

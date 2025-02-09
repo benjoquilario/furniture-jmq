@@ -37,5 +37,9 @@ export async function getUser() {
 }
 
 export async function getAllFurniture() {
-  return await db.furniture.findMany()
+  return await db.furniture.findMany({
+    include: {
+      selectedFile: true,
+    },
+  })
 }

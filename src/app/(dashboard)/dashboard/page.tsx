@@ -22,7 +22,7 @@ const DashBoard = async () => {
       <div className="flex-between">
         <h1 className="h2-bold">Products</h1>
         <Button asChild variant="default">
-          <Link href="/dashboard/products/create">Create Furnitures</Link>
+          <Link href="/dashboard/create">Create Furnitures</Link>
         </Button>
       </div>
       <div>
@@ -45,9 +45,9 @@ const DashBoard = async () => {
                   <TableCell>{furniture.id}</TableCell>
                   <TableCell>{furniture.name}</TableCell>
                   <TableCell>
-                    <div className="h-10 w-10">
+                    {/* <div className="h-10 w-10">
                       <img src={furniture.image[0]} />
-                    </div>
+                    </div> */}
                   </TableCell>
                   <TableCell className="text-right">
                     {furniture.price}

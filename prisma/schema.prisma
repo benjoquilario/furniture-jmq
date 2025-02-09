@@ -75,11 +75,11 @@ model Furniture {
   id          String   @id @default(cuid())
   name        String
   description String?
-  image       String[]
+  selectedFile SelectedFile[]
   measurements String?
-  pullOut     Int?
-  withStorage Boolean?
-  Shape       String?
+  pullOut     Int?      @default(0)
+  withStorage Boolean? @default(false)
+  shape       String?
   size        String?
   color       String?
   cover       String?
@@ -89,4 +89,12 @@ model Furniture {
   price       Float
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model SelectedFile {
+  id            String  @id @default(uuid())
+  url           String
+  furniture     Furniture?    @relation(fields: [furnitureId], references: [id], onDelete: Cascade)
+  furnitureId   String?
+  key           String
 }

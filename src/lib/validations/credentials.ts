@@ -1,34 +1,20 @@
 import * as z from "zod"
 
-export const signInSchema = z.object({
-  email: z.string().email({
-    message: "Email is required",
-  }),
-  password: z.string().min(4, {
-    message: "Password is required",
-  }),
+export const signInInputSchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
 })
 
-export const signUpSchema = signInSchema
+export const signUpInputSchema = signInInputSchema
   .extend({
-    firstName: z.string().min(3, {
-      message: "FirstName must be at least 4 character",
-    }),
-    lastName: z.string().min(3, {
-      message: "LastName must be at least 4 character",
-    }),
-    confirmPassword: z.string().min(3, {
-      message: "Password must be at least 4 character",
-    }),
+    confirmPassword: z
+      .string()
+      .min(3, "Confirm password must be at least 3 characters"),
   })
-  .superRefine(({ password, confirmPassword }, ctx) => {
-    if (confirmPassword !== password) {
-      ctx.addIssue({
-        code: "custom",
-        message: "The passwords did not match",
-      })
-    }
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
   })
 
-export type SignIn = z.infer<typeof signInSchema>
-export type SignUp = z.infer<typeof signUpSchema>
+export type SignInInput = z.infer<typeof signInInputSchema>
+export type SignUpInput = z.infer<typeof signUpInputSchema>

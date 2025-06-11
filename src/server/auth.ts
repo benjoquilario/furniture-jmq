@@ -1,84 +1,132 @@
 "use server"
 
+import { signIn, signOut } from "@/auth"
+import {
+  type SignInInput,
+  type SignUpInput,
+  signInInputSchema,
+  signUpInputSchema,
+} from "@/lib/validations/credentials"
 import { AuthError } from "next-auth"
-import { redirect } from "next/navigation"
 import db from "@/lib/db"
-import { hashPassword } from "@/lib/utils"
-import { validatedAction } from "@/lib/auth/middleware"
-import { comparePasswords, setSession } from "@/lib/auth/session"
-import * as z from "zod"
-import { signUpSchema } from "@/lib/validations/credentials"
+import { hashPassword } from "@/lib/auth/session"
 
-const signInSchema = z.object({
-  email: z.string().email().min(3).max(255),
-  password: z.string().min(4).max(100),
-})
+type Res =
+  | { success: true }
+  | { success: false; error: string; statusCode: 401 | 500 }
 
-export const login = validatedAction(signInSchema, async (data, _formData) => {
-  const { email, password } = data
+export const login = async (values: SignInInput): Promise<Res> => {
+  try {
+    const validatedFields = signInInputSchema.safeParse(values)
 
-  const user = await db.user.findUnique({
-    where: {
-      email: email,
-    },
-  })
-
-  if (!user) {
-    return {
-      error: "Invalid email or password",
-      email,
-      password,
+    if (!validatedFields.success) {
+      return {
+        success: false,
+        statusCode: 401,
+        error: "Invalid Fields",
+      }
     }
-  }
 
-  const isPasswordValid = await comparePasswords(password, user.hashedPassword!)
+    await signIn("credentials", { ...values, redirect: false })
 
-  if (!isPasswordValid) {
-    return {
-      error: "Invalid email or password",
-      email,
-      password,
+    return { success: true }
+  } catch (err) {
+    if (err instanceof AuthError) {
+      switch (err.type) {
+        case "CredentialsSignin":
+        case "CallbackRouteError":
+          return {
+            success: false,
+            error: "Invalid credentials",
+            statusCode: 401,
+          }
+        case "AccessDenied":
+          return {
+            success: false,
+            error:
+              "Please verify your email, sign up again to resend verification email",
+            statusCode: 401,
+          }
+        // custom error
+        case "OAuthAccountAlreadyLinked" as AuthError["type"]:
+          return {
+            success: false,
+            error: "Login with your Google or Github account",
+            statusCode: 401,
+          }
+        default:
+          return {
+            success: false,
+            error: "Oops. Something went wrong",
+            statusCode: 500,
+          }
+      }
     }
+
+    console.error(err)
+    return { success: false, error: "Internal Server Error", statusCode: 500 }
+  }
+}
+
+export async function signUp(values: SignUpInput): Promise<Res> {
+  const validatedFields = signUpInputSchema.safeParse(values)
+
+  if (!validatedFields.success) {
+    return { success: false, error: "Invalid Fields", statusCode: 401 }
   }
 
-  await setSession(user)
+  const { email, password, confirmPassword } = validatedFields.data
 
-  redirect("/")
-})
+  try {
+    // const isEmailInvited = await db.inviteTeam.findFirst({
+    //   where: {
+    //     email,
+    //   },
+    // })
 
-export const signUp = validatedAction(signUpSchema, async (data, _formData) => {
-  const { email, password, confirmPassword, firstName, lastName } = data
+    // if (!isEmailInvited) {
+    //   return {
+    //     success: false,
+    //     error: "You're not invited to join the team",
+    //     statusCode: 401,
+    //   }
+    // }
 
-  const isEmailExist = await db.user.findFirst({
-    where: { email },
-  })
+    const existingUser = await db.user.findFirst({
+      where: {
+        email,
+      },
+    })
 
-  if (isEmailExist) {
-    return {
-      error: "User already exist",
+    if (existingUser)
+      return {
+        statusCode: 401,
+        success: false,
+        error: "Email already exists",
+      }
+
+    if (password !== confirmPassword) {
+      return { error: "Passwords don't match", success: false, statusCode: 401 }
     }
-  }
 
-  const hashedPassword = await hashPassword(password)
-  const randomNumber = Math.floor(Math.random() * 6) + 1
+    const passwordHash = await hashPassword(password)
 
-  if (password !== confirmPassword) {
+    await db.user.create({
+      data: {
+        email,
+        hashedPassword: passwordHash,
+      },
+    })
+
     return {
-      error: "The passwords did not match",
+      success: true,
     }
+  } catch (err) {
+    console.error(err)
+    return { success: false, error: "Internal Server Error", statusCode: 500 }
   }
+}
 
-  const newUser = {
-    role: "USER",
-    email,
-    hashedPassword: hashedPassword,
-    name: `${firstName} ${lastName}`,
-    image: `/avatar-${randomNumber}.png`,
-  }
-
-  await db.user.create({
-    data: newUser,
-  })
-
-  redirect("/login")
-})
+export async function logout() {
+  return await signOut()
+}

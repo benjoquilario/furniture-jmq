@@ -1,0 +1,112 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String    @id @default(cuid())
+  name           String?
+  email          String    @unique
+  emailVerified  DateTime?
+  hashedPassword String?
+  role           String    @default("USER")
+
+  image    String?
+  accounts Account[]
+  sessions Session[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Furniture Furniture[]
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
+model Furniture {
+  id           String         @id @default(cuid())
+  name         String
+  description  String?
+  selectedFile SelectedFile[]
+  measurements String?
+  pullOut      Int?           @default(0)
+  withStorage  Boolean?       @default(false)
+  shape        String?
+  size         String?
+  color        String?
+  cover        String?
+  seater       Int
+  sellerId     String
+  seller       User           @relation(fields: [sellerId], references: [id])
+  price        Float
+  status       String?
+  // Add these essential fields:
+  make         String // Brand/Manufacturer (e.g., "IKEA", "Ashley Furniture")
+  model        String? // Model name/number (e.g., "BILLY", "L-Shaped Sectional")
+  category     String // Type of furniture (e.g., "Chair", "Table", "Sofa", "Bed")
+  condition    String         @default("New") // "New", "Used", "Refurbished"
+  material     String? // Primary material (e.g., "Wood", "Metal", "Fabric", "Leather")
+  style        String? // Design style (e.g., "Modern", "Traditional", "Rustic")
+  weight       Float? // Weight in kg or lbs
+  dimensions   String? // Structured dimensions (e.g., "120x80x75 cm")
+  isAvailable  Boolean        @default(true) // Availability status
+  stockCount   Int?           @default(1) // Number of items in stock
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+
+model SelectedFile {
+  id          String     @id @default(uuid())
+  url         String
+  furniture   Furniture? @relation(fields: [furnitureId], references: [id], onDelete: Cascade)
+  furnitureId String?
+  key         String
+}

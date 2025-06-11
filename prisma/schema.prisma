@@ -6,11 +6,12 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url   = env("DATABASE_URL")
 }
 
 model User {
@@ -87,6 +88,18 @@ model Furniture {
   sellerId    String
   seller      User     @relation(fields: [sellerId], references: [id])
   price       Float
+  status      String?
+  // Add these essential fields:
+  make        String   // Brand/Manufacturer (e.g., "IKEA", "Ashley Furniture")
+  model       String?  // Model name/number (e.g., "BILLY", "L-Shaped Sectional")
+  category    String   // Type of furniture (e.g., "Chair", "Table", "Sofa", "Bed")
+  condition   String   @default("New") // "New", "Used", "Refurbished"
+  material    String?  // Primary material (e.g., "Wood", "Metal", "Fabric", "Leather")
+  style       String?  // Design style (e.g., "Modern", "Traditional", "Rustic")
+  weight      Float?   // Weight in kg or lbs
+  dimensions  String?  // Structured dimensions (e.g., "120x80x75 cm")
+  isAvailable Boolean  @default(true) // Availability status
+  stockCount  Int?     @default(1) // Number of items in stock
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

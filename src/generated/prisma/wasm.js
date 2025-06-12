@@ -166,36 +166,27 @@ exports.Prisma.FurnitureScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
-  measurements: 'measurements',
-  pullOut: 'pullOut',
-  withStorage: 'withStorage',
-  shape: 'shape',
-  size: 'size',
-  color: 'color',
-  cover: 'cover',
-  seater: 'seater',
-  sellerId: 'sellerId',
-  price: 'price',
-  status: 'status',
-  make: 'make',
-  model: 'model',
   category: 'category',
-  condition: 'condition',
+  brand: 'brand',
+  model: 'model',
+  color: 'color',
   material: 'material',
-  style: 'style',
-  weight: 'weight',
   dimensions: 'dimensions',
+  condition: 'condition',
   isAvailable: 'isAvailable',
   stockCount: 'stockCount',
+  price: 'price',
+  sellerId: 'sellerId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.SelectedFileScalarFieldEnum = {
+exports.Prisma.FurnitureImageScalarFieldEnum = {
   id: 'id',
   url: 'url',
+  key: 'key',
   furnitureId: 'furnitureId',
-  key: 'key'
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -220,7 +211,7 @@ exports.Prisma.ModelName = {
   Session: 'Session',
   VerificationToken: 'VerificationToken',
   Furniture: 'Furniture',
-  SelectedFile: 'SelectedFile'
+  FurnitureImage: 'FurnitureImage'
 };
 
 /**

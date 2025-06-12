@@ -2,211 +2,372 @@
 
 import Link from "next/link"
 import { useState } from "react"
+import { motion } from "framer-motion"
 import {
   MapPin,
   Package,
-  BedDouble,
-  Ungroup,
-  Grid2x2,
-  LayoutPanelLeft,
   Heart,
   Eye,
   Star,
+  Calendar,
+  User,
+  ShoppingCart,
+  ArrowRight,
+  Badge,
+  Palette,
+  Ruler,
+  Tag,
 } from "lucide-react"
+import { Badge as BadgeComponent } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 
+// Type based on your Prisma schema
 interface FurnitureItemProps {
-  furniture?: {
+  furniture: {
     id: string
     name: string
+    description?: string | null
+    category: string
+    brand: string
+    model?: string | null
+    color?: string | null
+    material?: string | null
+    dimensions?: string | null
+    condition: string
+    isAvailable: boolean
+    stockCount: number
     price: number
-    location?: string
-    images?: string[]
-    seater?: number
-    dimensions?: string
-    withStorage?: boolean
-    pullOut?: number
-    shape?: string
-    category?: string
-    condition?: string
-    rating?: number
-    make?: string
+    createdAt: Date
+    images: Array<{
+      id: string
+      url: string
+      key: string
+    }>
+    seller: {
+      id: string
+      name: string | null
+      email: string
+    }
   }
+}
+
+// Animation variants
+const cardVariants = {
+  hidden: {
+    opacity: 0,
+    y: 20,
+    scale: 0.95,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.4,
+      ease: "easeOut",
+    },
+  },
+  hover: {
+    y: -8,
+    scale: 1.02,
+    transition: {
+      duration: 0.3,
+      ease: "easeOut",
+    },
+  },
+}
+
+const imageVariants = {
+  hover: {
+    scale: 1.1,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  },
+}
+
+const overlayVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.3 },
+  },
+}
+
+const badgeVariants = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { delay: 0.1, duration: 0.3 },
+  },
+}
+
+const priceVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { delay: 0.2, duration: 0.3 },
+  },
 }
 
 const FurnitureItem = ({ furniture }: FurnitureItemProps) => {
   const [isLiked, setIsLiked] = useState(false)
   const [imageError, setImageError] = useState(false)
-
-  // Default data for demo
-  const data = furniture || {
-    id: "1",
-    name: "Sofa Bed",
-    price: 30000,
-    location: "Quezon City, Philippines",
-    images: [
-      "https://ourhome.ph/cdn/shop/files/OURHOME_COPENHAGENWHITE.jpg?v=1707891865&width=1200",
-    ],
-    seater: 1,
-    dimensions: "82x60",
-    withStorage: true,
-    pullOut: 2,
-    shape: "L Shape",
-    condition: "New",
-    rating: 4.5,
-    make: "JMQ Furniture",
-  }
+  const [isImageLoading, setIsImageLoading] = useState(true)
 
   const handleLikeToggle = (e: React.MouseEvent) => {
     e.preventDefault()
+    e.stopPropagation()
     setIsLiked(!isLiked)
   }
 
+  const handleQuickView = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    // Add quick view logic here
+  }
+
+  const formatDate = (date: Date) => {
+    return new Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(
+      Math.ceil((date.getTime() - Date.now()) / (1000 * 60 * 60 * 24)),
+      "day"
+    )
+  }
+
+  const getConditionColor = (condition: string) => {
+    switch (condition.toLowerCase()) {
+      case "new":
+        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
+      case "used":
+        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300"
+      case "refurbished":
+        return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300"
+      default:
+        return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300"
+    }
+  }
+
   return (
-    <div className="group relative">
-      <Link href={`/furniture/${data.id}`} className="block">
-        <div className="bg-card text-card-foreground flex flex-col overflow-hidden rounded-lg border shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg">
+    <motion.div
+      variants={cardVariants}
+      initial="hidden"
+      animate="visible"
+      whileHover="hover"
+      className="group relative"
+    >
+      <Link href={`/products/${furniture.id}`} className="block">
+        <div className="border-border/50 bg-card hover:shadow-primary/5 relative overflow-hidden rounded-xl border shadow-sm transition-all duration-300 hover:shadow-xl">
           {/* Image Container */}
           <div className="relative overflow-hidden">
-            <div className="relative aspect-[4/3]">
-              {!imageError ? (
-                <img
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  src={data.images?.[0] || "/placeholder-furniture.jpg"}
-                  alt={data.name}
-                  onError={() => setImageError(true)}
-                />
+            <div className="bg-muted relative aspect-[4/3]">
+              {!imageError && furniture.images?.[0] ? (
+                <>
+                  {isImageLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{
+                          duration: 1,
+                          repeat: Infinity,
+                          ease: "linear",
+                        }}
+                        className="border-primary h-6 w-6 rounded-full border-2 border-t-transparent"
+                      />
+                    </div>
+                  )}
+                  <motion.img
+                    variants={imageVariants}
+                    className="h-full w-full object-cover"
+                    src={furniture.images[0].url}
+                    alt={furniture.name}
+                    onLoad={() => setIsImageLoading(false)}
+                    onError={() => {
+                      setImageError(true)
+                      setIsImageLoading(false)
+                    }}
+                  />
+                </>
               ) : (
                 <div className="bg-muted flex h-full w-full items-center justify-center">
-                  <Package className="text-muted-foreground size-12" />
+                  <Package className="text-muted-foreground h-12 w-12" />
                 </div>
               )}
 
-              {/* Overlay Elements */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              {/* Gradient Overlay */}
+              <motion.div
+                variants={overlayVariants}
+                initial="hidden"
+                whileHover="visible"
+                className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"
+              />
 
-              {/* Condition Badge */}
-              <div className="absolute top-3 left-3">
-                <span className="bg-background/90 text-foreground inline-flex items-center rounded-md border px-2.5 py-1 text-xs font-medium backdrop-blur-sm">
-                  {data.condition}
-                </span>
+              {/* Top Badges */}
+              <div className="absolute top-3 left-3 flex flex-col gap-2">
+                <motion.div variants={badgeVariants}>
+                  <BadgeComponent
+                    variant="secondary"
+                    className={`${getConditionColor(furniture.condition)} border-0 font-medium shadow-sm backdrop-blur-sm`}
+                  >
+                    {furniture.condition}
+                  </BadgeComponent>
+                </motion.div>
+
+                {!furniture.isAvailable && (
+                  <motion.div variants={badgeVariants}>
+                    <BadgeComponent
+                      variant="destructive"
+                      className="border-0 shadow-sm backdrop-blur-sm"
+                    >
+                      Sold Out
+                    </BadgeComponent>
+                  </motion.div>
+                )}
+
+                {furniture.stockCount <= 5 && furniture.isAvailable && (
+                  <motion.div variants={badgeVariants}>
+                    <BadgeComponent
+                      variant="outline"
+                      className="border-orange-200 bg-orange-50 text-orange-700 dark:border-orange-800 dark:bg-orange-950 dark:text-orange-300"
+                    >
+                      Only {furniture.stockCount} left
+                    </BadgeComponent>
+                  </motion.div>
+                )}
               </div>
 
               {/* Action Buttons */}
-              <div className="absolute top-3 right-3 flex translate-x-2 flex-col gap-2 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-                <button
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileHover={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3 }}
+                className="absolute top-3 right-3 flex flex-col gap-2"
+              >
+                <Button
+                  size="icon"
+                  variant="secondary"
                   onClick={handleLikeToggle}
-                  className="bg-background/90 hover:bg-background rounded-md border p-2 shadow-sm backdrop-blur-sm transition-all duration-200 hover:scale-110 hover:shadow-md"
+                  className="h-9 w-9 shadow-sm backdrop-blur-sm transition-all hover:scale-110"
                 >
                   <Heart
-                    className={`size-4 transition-colors duration-200 ${
-                      isLiked
-                        ? "fill-destructive text-destructive"
-                        : "text-muted-foreground hover:text-foreground"
+                    className={`h-4 w-4 transition-colors ${
+                      isLiked ? "fill-red-500 text-red-500" : ""
                     }`}
                   />
-                </button>
-                <button className="bg-background/90 hover:bg-background rounded-md border p-2 shadow-sm backdrop-blur-sm transition-all duration-200 hover:scale-110 hover:shadow-md">
-                  <Eye className="text-muted-foreground hover:text-foreground size-4 transition-colors duration-200" />
-                </button>
-              </div>
+                </Button>
+                <Button
+                  size="icon"
+                  variant="secondary"
+                  onClick={handleQuickView}
+                  className="h-9 w-9 shadow-sm backdrop-blur-sm transition-all hover:scale-110"
+                >
+                  <Eye className="h-4 w-4" />
+                </Button>
+              </motion.div>
 
               {/* Price Badge */}
-              <div className="absolute right-3 bottom-3 translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                <div className="bg-primary rounded-md border px-3 py-1.5 shadow-lg">
-                  <span className="text-primary-foreground text-sm font-semibold">
-                    ₱{data.price.toLocaleString()}
+              <motion.div
+                variants={priceVariants}
+                initial="hidden"
+                whileHover="visible"
+                className="absolute right-3 bottom-3"
+              >
+                <div className="bg-primary rounded-lg px-3 py-2 shadow-lg backdrop-blur-sm">
+                  <span className="text-primary-foreground text-sm font-bold">
+                    ₱{furniture.price.toLocaleString()}
                   </span>
                 </div>
-              </div>
+              </motion.div>
+
+              {/* Image Count Indicator */}
+              {furniture.images.length > 1 && (
+                <div className="absolute bottom-3 left-3">
+                  <BadgeComponent
+                    variant="secondary"
+                    className="border-0 bg-black/50 text-white backdrop-blur-sm"
+                  >
+                    +{furniture.images.length - 1} more
+                  </BadgeComponent>
+                </div>
+              )}
             </div>
           </div>
 
           {/* Content */}
-          <div className="space-y-3 p-4">
+          <div className="space-y-4 p-5">
             {/* Header */}
             <div className="space-y-2">
-              <div className="flex items-start justify-between">
-                <h3 className="text-foreground group-hover:text-primary line-clamp-1 text-lg font-semibold transition-colors duration-200">
-                  {data.name}
+              <div className="flex items-start justify-between gap-2">
+                <h3 className="text-foreground group-hover:text-primary line-clamp-2 text-lg leading-tight font-semibold transition-colors">
+                  {furniture.name}
                 </h3>
-                {data.rating && (
-                  <div className="flex items-center gap-1 text-xs text-yellow-600 dark:text-yellow-500">
-                    <Star className="size-3 fill-current" />
-                    <span className="font-medium">{data.rating}</span>
-                  </div>
+                <BadgeComponent variant="outline" className="shrink-0 text-xs">
+                  {furniture.category}
+                </BadgeComponent>
+              </div>
+
+              <div className="text-muted-foreground flex items-center gap-2 text-sm">
+                <User className="h-4 w-4" />
+                <span className="font-medium">{furniture.brand}</span>
+                {furniture.model && (
+                  <>
+                    <span>•</span>
+                    <span>{furniture.model}</span>
+                  </>
                 )}
               </div>
 
-              {data.make && (
-                <p className="text-muted-foreground text-sm font-medium">
-                  {data.make}
+              {furniture.description && (
+                <p className="text-muted-foreground line-clamp-2 text-sm">
+                  {furniture.description}
                 </p>
               )}
-
-              <div className="text-muted-foreground flex items-center gap-1">
-                <MapPin className="size-4 flex-shrink-0" />
-                <span className="truncate text-sm">{data.location}</span>
-              </div>
             </div>
 
             {/* Features */}
             <div className="flex flex-wrap gap-2">
-              {data.seater && (
-                <div className="bg-secondary text-secondary-foreground hover:bg-secondary/80 flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors duration-200">
-                  <BedDouble className="size-3.5" />
-                  <span>{data.seater} Seater</span>
+              {furniture.color && (
+                <div className="bg-secondary text-secondary-foreground flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium">
+                  <Palette className="h-3.5 w-3.5" />
+                  <span>{furniture.color}</span>
                 </div>
               )}
 
-              {data.dimensions && (
-                <div className="bg-secondary text-secondary-foreground hover:bg-secondary/80 flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors duration-200">
-                  <Grid2x2 className="size-3.5" />
-                  <span>{data.dimensions}</span>
+              {furniture.material && (
+                <div className="bg-secondary text-secondary-foreground flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium">
+                  <Tag className="h-3.5 w-3.5" />
+                  <span>{furniture.material}</span>
                 </div>
               )}
 
-              {data.withStorage && (
-                <div className="bg-secondary text-secondary-foreground hover:bg-secondary/80 flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors duration-200">
-                  <Package className="size-3.5" />
-                  <span>Storage</span>
-                </div>
-              )}
-
-              {data.pullOut && data.pullOut > 0 && (
-                <div className="bg-secondary text-secondary-foreground hover:bg-secondary/80 flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors duration-200">
-                  <LayoutPanelLeft className="size-3.5" />
-                  <span>{data.pullOut} Pull out</span>
-                </div>
-              )}
-
-              {data.shape && (
-                <div className="bg-secondary text-secondary-foreground hover:bg-secondary/80 flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors duration-200">
-                  <Ungroup className="size-3.5" />
-                  <span>{data.shape}</span>
+              {furniture.dimensions && (
+                <div className="bg-secondary text-secondary-foreground flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium">
+                  <Ruler className="h-3.5 w-3.5" />
+                  <span>{furniture.dimensions}</span>
                 </div>
               )}
             </div>
 
             {/* Footer */}
-            <div className="flex items-center justify-between border-t pt-3">
+            <div className="flex items-center justify-between border-t pt-4">
               <div className="space-y-1">
-                <p className="text-muted-foreground text-xs tracking-wide uppercase">
-                  For Sale
-                </p>
+                <div className="text-muted-foreground flex items-center gap-1 text-xs">
+                  <Calendar className="h-3 w-3" />
+                  <span>Listed {formatDate(furniture.createdAt)}</span>
+                </div>
                 <p className="text-foreground text-sm font-medium">
-                  {data.name}
-                </p>
-              </div>
-              <div className="text-right">
-                <p className="text-foreground text-xl font-bold">
-                  ₱{data.price.toLocaleString()}
+                  By {furniture.seller.name || furniture.seller.email}
                 </p>
               </div>
             </div>
+
+            {/* CTA Button */}
           </div>
         </div>
       </Link>
-    </div>
+    </motion.div>
   )
 }
 

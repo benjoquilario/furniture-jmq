@@ -71,7 +71,7 @@ const furnitureData = {
   cover: "Premium Fabric",
   seater: 6,
   price: 45000,
-  make: "IKEA",
+  make: "JMQ Furniture",
   model: "KIVIK L-Shaped",
   category: "Sofa",
   condition: "New",
@@ -279,9 +279,9 @@ const FurnitureData = () => {
               <div className="text-primary text-3xl font-bold">
                 ₱{furnitureData.price.toLocaleString()}
               </div>
-              <p className="text-muted-foreground text-sm">
+              {/* <p className="text-muted-foreground text-sm">
                 Stock: {furnitureData.stockCount} available
-              </p>
+              </p> */}
             </div>
 
             {/* Features */}
@@ -336,7 +336,7 @@ const FurnitureData = () => {
             </Card>
 
             {/* Quantity & Actions */}
-            <div className="space-y-4">
+            {/* <div className="space-y-4">
               <div className="flex items-center gap-4">
                 <label className="font-medium">Quantity:</label>
                 <div className="flex items-center rounded-md border">
@@ -367,19 +367,7 @@ const FurnitureData = () => {
                   </Button>
                 </div>
               </div>
-
-              <div className="flex gap-3">
-                <Button className="flex-1 transition-all duration-200 hover:scale-105">
-                  Add to Cart
-                </Button>
-                <Button
-                  variant="outline"
-                  className="flex-1 transition-all duration-200 hover:scale-105"
-                >
-                  Buy Now
-                </Button>
-              </div>
-            </div>
+            </div> */}
 
             {/* Delivery Info */}
             <div className="bg-muted/30 space-y-3 rounded-lg p-4">
@@ -389,11 +377,38 @@ const FurnitureData = () => {
               </div>
               <div className="flex items-center gap-2 text-sm">
                 <Clock className="text-primary h-4 w-4" />
-                <span>Ships within 3-5 business days</span>
+                <span>Ships within 4-5 business days</span>
               </div>
-              <div className="flex items-center gap-2 text-sm">
+              {/* <div className="flex items-center gap-2 text-sm">
                 <Shield className="text-primary h-4 w-4" />
                 <span>30-day return policy</span>
+              </div> */}
+              <div className="mt-1 flex items-center gap-1">
+                <div className="rounded-full bg-green-100 px-2 py-1 text-xs font-medium text-green-800">
+                  ✓ Successfully Delivered
+                </div>
+              </div>
+              <div className="text-muted-foreground mt-2 text-xs">
+                <p>
+                  This item is customizable by client. If you want this same
+                  product, contact us for details.
+                </p>
+              </div>
+
+              <div className="mt-4 space-y-3">
+                <div className="rounded-lg border border-blue-200 bg-blue-50 p-3">
+                  <p className="text-sm font-medium text-blue-800">
+                    Want to customize this furniture?
+                  </p>
+                  <p className="mt-1 text-xs text-blue-600">
+                    We offer customization services for size, color, materials,
+                    and design modifications.
+                  </p>
+                </div>
+                <Button variant="outline" className="w-full">
+                  <MessageCircle className="mr-2 h-4 w-4" />
+                  Contact Us for Custom Details
+                </Button>
               </div>
             </div>
           </div>

@@ -72,41 +72,40 @@ model VerificationToken {
 }
 
 model Furniture {
-  id           String         @id @default(cuid())
-  name         String
-  description  String?
-  selectedFile SelectedFile[]
-  measurements String?
-  pullOut      Int?           @default(0)
-  withStorage  Boolean?       @default(false)
-  shape        String?
-  size         String?
-  color        String?
-  cover        String?
-  seater       Int
-  sellerId     String
-  seller       User           @relation(fields: [sellerId], references: [id])
-  price        Float
-  status       String?
-  // Add these essential fields:
-  make         String // Brand/Manufacturer (e.g., "IKEA", "Ashley Furniture")
-  model        String? // Model name/number (e.g., "BILLY", "L-Shaped Sectional")
-  category     String // Type of furniture (e.g., "Chair", "Table", "Sofa", "Bed")
-  condition    String         @default("New") // "New", "Used", "Refurbished"
-  material     String? // Primary material (e.g., "Wood", "Metal", "Fabric", "Leather")
-  style        String? // Design style (e.g., "Modern", "Traditional", "Rustic")
-  weight       Float? // Weight in kg or lbs
-  dimensions   String? // Structured dimensions (e.g., "120x80x75 cm")
-  isAvailable  Boolean        @default(true) // Availability status
-  stockCount   Int?           @default(1) // Number of items in stock
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  id          String           @id @default(cuid())
+  name        String
+  description String?
+  images      FurnitureImage[]
+
+  // Core furniture properties
+  category   String // Type of furniture (e.g., "Chair", "Table", "Sofa", "Bed")
+  brand      String // Brand/Manufacturer (e.g., "IKEA", "Ashley Furniture")
+  model      String? // Model name/number (e.g., "BILLY", "L-Shaped Sectional")
+  color      String?
+  material   String? // Primary material (e.g., "Wood", "Metal", "Fabric", "Leather")
+  dimensions String? // Structured dimensions (e.g., "120x80x75 cm")
+
+  // Condition and availability
+  condition   String  @default("New") // "New", "Used", "Refurbished"
+  isAvailable Boolean @default(true)
+  stockCount  Int     @default(1)
+
+  // Pricing and seller
+  price    Float // Changed to Float for decimal prices
+  sellerId String
+  seller   User   @relation(fields: [sellerId], references: [id])
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-model SelectedFile {
+model FurnitureImage {
   id          String     @id @default(uuid())
   url         String
+  key         String // For storage management
   furniture   Furniture? @relation(fields: [furnitureId], references: [id], onDelete: Cascade)
   furnitureId String?
-  key         String
+
+  createdAt DateTime @default(now())
 }

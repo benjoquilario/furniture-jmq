@@ -39,10 +39,10 @@ export type VerificationToken = $Result.DefaultSelection<Prisma.$VerificationTok
  */
 export type Furniture = $Result.DefaultSelection<Prisma.$FurniturePayload>
 /**
- * Model SelectedFile
+ * Model FurnitureImage
  * 
  */
-export type SelectedFile = $Result.DefaultSelection<Prisma.$SelectedFilePayload>
+export type FurnitureImage = $Result.DefaultSelection<Prisma.$FurnitureImagePayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -220,14 +220,14 @@ export class PrismaClient<
   get furniture(): Prisma.FurnitureDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.selectedFile`: Exposes CRUD operations for the **SelectedFile** model.
+   * `prisma.furnitureImage`: Exposes CRUD operations for the **FurnitureImage** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more SelectedFiles
-    * const selectedFiles = await prisma.selectedFile.findMany()
+    * // Fetch zero or more FurnitureImages
+    * const furnitureImages = await prisma.furnitureImage.findMany()
     * ```
     */
-  get selectedFile(): Prisma.SelectedFileDelegate<ExtArgs, ClientOptions>;
+  get furnitureImage(): Prisma.FurnitureImageDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -673,7 +673,7 @@ export namespace Prisma {
     Session: 'Session',
     VerificationToken: 'VerificationToken',
     Furniture: 'Furniture',
-    SelectedFile: 'SelectedFile'
+    FurnitureImage: 'FurnitureImage'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -692,7 +692,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "account" | "session" | "verificationToken" | "furniture" | "selectedFile"
+      modelProps: "user" | "account" | "session" | "verificationToken" | "furniture" | "furnitureImage"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1066,77 +1066,77 @@ export namespace Prisma {
           }
         }
       }
-      SelectedFile: {
-        payload: Prisma.$SelectedFilePayload<ExtArgs>
-        fields: Prisma.SelectedFileFieldRefs
+      FurnitureImage: {
+        payload: Prisma.$FurnitureImagePayload<ExtArgs>
+        fields: Prisma.FurnitureImageFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.SelectedFileFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SelectedFilePayload> | null
+            args: Prisma.FurnitureImageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FurnitureImagePayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.SelectedFileFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SelectedFilePayload>
+            args: Prisma.FurnitureImageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FurnitureImagePayload>
           }
           findFirst: {
-            args: Prisma.SelectedFileFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SelectedFilePayload> | null
+            args: Prisma.FurnitureImageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FurnitureImagePayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.SelectedFileFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SelectedFilePayload>
+            args: Prisma.FurnitureImageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FurnitureImagePayload>
           }
           findMany: {
-            args: Prisma.SelectedFileFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SelectedFilePayload>[]
+            args: Prisma.FurnitureImageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FurnitureImagePayload>[]
           }
           create: {
-            args: Prisma.SelectedFileCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SelectedFilePayload>
+            args: Prisma.FurnitureImageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FurnitureImagePayload>
           }
           createMany: {
-            args: Prisma.SelectedFileCreateManyArgs<ExtArgs>
+            args: Prisma.FurnitureImageCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.SelectedFileCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SelectedFilePayload>[]
+            args: Prisma.FurnitureImageCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FurnitureImagePayload>[]
           }
           delete: {
-            args: Prisma.SelectedFileDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SelectedFilePayload>
+            args: Prisma.FurnitureImageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FurnitureImagePayload>
           }
           update: {
-            args: Prisma.SelectedFileUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SelectedFilePayload>
+            args: Prisma.FurnitureImageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FurnitureImagePayload>
           }
           deleteMany: {
-            args: Prisma.SelectedFileDeleteManyArgs<ExtArgs>
+            args: Prisma.FurnitureImageDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.SelectedFileUpdateManyArgs<ExtArgs>
+            args: Prisma.FurnitureImageUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.SelectedFileUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SelectedFilePayload>[]
+            args: Prisma.FurnitureImageUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FurnitureImagePayload>[]
           }
           upsert: {
-            args: Prisma.SelectedFileUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SelectedFilePayload>
+            args: Prisma.FurnitureImageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FurnitureImagePayload>
           }
           aggregate: {
-            args: Prisma.SelectedFileAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateSelectedFile>
+            args: Prisma.FurnitureImageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFurnitureImage>
           }
           groupBy: {
-            args: Prisma.SelectedFileGroupByArgs<ExtArgs>
-            result: $Utils.Optional<SelectedFileGroupByOutputType>[]
+            args: Prisma.FurnitureImageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FurnitureImageGroupByOutputType>[]
           }
           count: {
-            args: Prisma.SelectedFileCountArgs<ExtArgs>
-            result: $Utils.Optional<SelectedFileCountAggregateOutputType> | number
+            args: Prisma.FurnitureImageCountArgs<ExtArgs>
+            result: $Utils.Optional<FurnitureImageCountAggregateOutputType> | number
           }
         }
       }
@@ -1229,7 +1229,7 @@ export namespace Prisma {
     session?: SessionOmit
     verificationToken?: VerificationTokenOmit
     furniture?: FurnitureOmit
-    selectedFile?: SelectedFileOmit
+    furnitureImage?: FurnitureImageOmit
   }
 
   /* Types for Logging */
@@ -1373,11 +1373,11 @@ export namespace Prisma {
    */
 
   export type FurnitureCountOutputType = {
-    selectedFile: number
+    images: number
   }
 
   export type FurnitureCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    selectedFile?: boolean | FurnitureCountOutputTypeCountSelectedFileArgs
+    images?: boolean | FurnitureCountOutputTypeCountImagesArgs
   }
 
   // Custom InputTypes
@@ -1394,8 +1394,8 @@ export namespace Prisma {
   /**
    * FurnitureCountOutputType without action
    */
-  export type FurnitureCountOutputTypeCountSelectedFileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SelectedFileWhereInput
+  export type FurnitureCountOutputTypeCountImagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FurnitureImageWhereInput
   }
 
 
@@ -5817,46 +5817,30 @@ export namespace Prisma {
   }
 
   export type FurnitureAvgAggregateOutputType = {
-    pullOut: number | null
-    seater: number | null
-    price: number | null
-    weight: number | null
     stockCount: number | null
+    price: number | null
   }
 
   export type FurnitureSumAggregateOutputType = {
-    pullOut: number | null
-    seater: number | null
-    price: number | null
-    weight: number | null
     stockCount: number | null
+    price: number | null
   }
 
   export type FurnitureMinAggregateOutputType = {
     id: string | null
     name: string | null
     description: string | null
-    measurements: string | null
-    pullOut: number | null
-    withStorage: boolean | null
-    shape: string | null
-    size: string | null
-    color: string | null
-    cover: string | null
-    seater: number | null
-    sellerId: string | null
-    price: number | null
-    status: string | null
-    make: string | null
-    model: string | null
     category: string | null
-    condition: string | null
+    brand: string | null
+    model: string | null
+    color: string | null
     material: string | null
-    style: string | null
-    weight: number | null
     dimensions: string | null
+    condition: string | null
     isAvailable: boolean | null
     stockCount: number | null
+    price: number | null
+    sellerId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5865,27 +5849,17 @@ export namespace Prisma {
     id: string | null
     name: string | null
     description: string | null
-    measurements: string | null
-    pullOut: number | null
-    withStorage: boolean | null
-    shape: string | null
-    size: string | null
-    color: string | null
-    cover: string | null
-    seater: number | null
-    sellerId: string | null
-    price: number | null
-    status: string | null
-    make: string | null
-    model: string | null
     category: string | null
-    condition: string | null
+    brand: string | null
+    model: string | null
+    color: string | null
     material: string | null
-    style: string | null
-    weight: number | null
     dimensions: string | null
+    condition: string | null
     isAvailable: boolean | null
     stockCount: number | null
+    price: number | null
+    sellerId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -5894,27 +5868,17 @@ export namespace Prisma {
     id: number
     name: number
     description: number
-    measurements: number
-    pullOut: number
-    withStorage: number
-    shape: number
-    size: number
-    color: number
-    cover: number
-    seater: number
-    sellerId: number
-    price: number
-    status: number
-    make: number
-    model: number
     category: number
-    condition: number
+    brand: number
+    model: number
+    color: number
     material: number
-    style: number
-    weight: number
     dimensions: number
+    condition: number
     isAvailable: number
     stockCount: number
+    price: number
+    sellerId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -5922,46 +5886,30 @@ export namespace Prisma {
 
 
   export type FurnitureAvgAggregateInputType = {
-    pullOut?: true
-    seater?: true
-    price?: true
-    weight?: true
     stockCount?: true
+    price?: true
   }
 
   export type FurnitureSumAggregateInputType = {
-    pullOut?: true
-    seater?: true
-    price?: true
-    weight?: true
     stockCount?: true
+    price?: true
   }
 
   export type FurnitureMinAggregateInputType = {
     id?: true
     name?: true
     description?: true
-    measurements?: true
-    pullOut?: true
-    withStorage?: true
-    shape?: true
-    size?: true
-    color?: true
-    cover?: true
-    seater?: true
-    sellerId?: true
-    price?: true
-    status?: true
-    make?: true
-    model?: true
     category?: true
-    condition?: true
+    brand?: true
+    model?: true
+    color?: true
     material?: true
-    style?: true
-    weight?: true
     dimensions?: true
+    condition?: true
     isAvailable?: true
     stockCount?: true
+    price?: true
+    sellerId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5970,27 +5918,17 @@ export namespace Prisma {
     id?: true
     name?: true
     description?: true
-    measurements?: true
-    pullOut?: true
-    withStorage?: true
-    shape?: true
-    size?: true
-    color?: true
-    cover?: true
-    seater?: true
-    sellerId?: true
-    price?: true
-    status?: true
-    make?: true
-    model?: true
     category?: true
-    condition?: true
+    brand?: true
+    model?: true
+    color?: true
     material?: true
-    style?: true
-    weight?: true
     dimensions?: true
+    condition?: true
     isAvailable?: true
     stockCount?: true
+    price?: true
+    sellerId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -5999,27 +5937,17 @@ export namespace Prisma {
     id?: true
     name?: true
     description?: true
-    measurements?: true
-    pullOut?: true
-    withStorage?: true
-    shape?: true
-    size?: true
-    color?: true
-    cover?: true
-    seater?: true
-    sellerId?: true
-    price?: true
-    status?: true
-    make?: true
-    model?: true
     category?: true
-    condition?: true
+    brand?: true
+    model?: true
+    color?: true
     material?: true
-    style?: true
-    weight?: true
     dimensions?: true
+    condition?: true
     isAvailable?: true
     stockCount?: true
+    price?: true
+    sellerId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -6115,27 +6043,17 @@ export namespace Prisma {
     id: string
     name: string
     description: string | null
-    measurements: string | null
-    pullOut: number | null
-    withStorage: boolean | null
-    shape: string | null
-    size: string | null
-    color: string | null
-    cover: string | null
-    seater: number
-    sellerId: string
-    price: number
-    status: string | null
-    make: string
-    model: string | null
     category: string
-    condition: string
+    brand: string
+    model: string | null
+    color: string | null
     material: string | null
-    style: string | null
-    weight: number | null
     dimensions: string | null
+    condition: string
     isAvailable: boolean
-    stockCount: number | null
+    stockCount: number
+    price: number
+    sellerId: string
     createdAt: Date
     updatedAt: Date
     _count: FurnitureCountAggregateOutputType | null
@@ -6163,30 +6081,20 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
-    measurements?: boolean
-    pullOut?: boolean
-    withStorage?: boolean
-    shape?: boolean
-    size?: boolean
-    color?: boolean
-    cover?: boolean
-    seater?: boolean
-    sellerId?: boolean
-    price?: boolean
-    status?: boolean
-    make?: boolean
-    model?: boolean
     category?: boolean
-    condition?: boolean
+    brand?: boolean
+    model?: boolean
+    color?: boolean
     material?: boolean
-    style?: boolean
-    weight?: boolean
     dimensions?: boolean
+    condition?: boolean
     isAvailable?: boolean
     stockCount?: boolean
+    price?: boolean
+    sellerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    selectedFile?: boolean | Furniture$selectedFileArgs<ExtArgs>
+    images?: boolean | Furniture$imagesArgs<ExtArgs>
     seller?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | FurnitureCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["furniture"]>
@@ -6195,27 +6103,17 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
-    measurements?: boolean
-    pullOut?: boolean
-    withStorage?: boolean
-    shape?: boolean
-    size?: boolean
-    color?: boolean
-    cover?: boolean
-    seater?: boolean
-    sellerId?: boolean
-    price?: boolean
-    status?: boolean
-    make?: boolean
-    model?: boolean
     category?: boolean
-    condition?: boolean
+    brand?: boolean
+    model?: boolean
+    color?: boolean
     material?: boolean
-    style?: boolean
-    weight?: boolean
     dimensions?: boolean
+    condition?: boolean
     isAvailable?: boolean
     stockCount?: boolean
+    price?: boolean
+    sellerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     seller?: boolean | UserDefaultArgs<ExtArgs>
@@ -6225,27 +6123,17 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
-    measurements?: boolean
-    pullOut?: boolean
-    withStorage?: boolean
-    shape?: boolean
-    size?: boolean
-    color?: boolean
-    cover?: boolean
-    seater?: boolean
-    sellerId?: boolean
-    price?: boolean
-    status?: boolean
-    make?: boolean
-    model?: boolean
     category?: boolean
-    condition?: boolean
+    brand?: boolean
+    model?: boolean
+    color?: boolean
     material?: boolean
-    style?: boolean
-    weight?: boolean
     dimensions?: boolean
+    condition?: boolean
     isAvailable?: boolean
     stockCount?: boolean
+    price?: boolean
+    sellerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     seller?: boolean | UserDefaultArgs<ExtArgs>
@@ -6255,34 +6143,24 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
-    measurements?: boolean
-    pullOut?: boolean
-    withStorage?: boolean
-    shape?: boolean
-    size?: boolean
-    color?: boolean
-    cover?: boolean
-    seater?: boolean
-    sellerId?: boolean
-    price?: boolean
-    status?: boolean
-    make?: boolean
-    model?: boolean
     category?: boolean
-    condition?: boolean
+    brand?: boolean
+    model?: boolean
+    color?: boolean
     material?: boolean
-    style?: boolean
-    weight?: boolean
     dimensions?: boolean
+    condition?: boolean
     isAvailable?: boolean
     stockCount?: boolean
+    price?: boolean
+    sellerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type FurnitureOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "measurements" | "pullOut" | "withStorage" | "shape" | "size" | "color" | "cover" | "seater" | "sellerId" | "price" | "status" | "make" | "model" | "category" | "condition" | "material" | "style" | "weight" | "dimensions" | "isAvailable" | "stockCount" | "createdAt" | "updatedAt", ExtArgs["result"]["furniture"]>
+  export type FurnitureOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "category" | "brand" | "model" | "color" | "material" | "dimensions" | "condition" | "isAvailable" | "stockCount" | "price" | "sellerId" | "createdAt" | "updatedAt", ExtArgs["result"]["furniture"]>
   export type FurnitureInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    selectedFile?: boolean | Furniture$selectedFileArgs<ExtArgs>
+    images?: boolean | Furniture$imagesArgs<ExtArgs>
     seller?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | FurnitureCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -6296,34 +6174,24 @@ export namespace Prisma {
   export type $FurniturePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Furniture"
     objects: {
-      selectedFile: Prisma.$SelectedFilePayload<ExtArgs>[]
+      images: Prisma.$FurnitureImagePayload<ExtArgs>[]
       seller: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
       description: string | null
-      measurements: string | null
-      pullOut: number | null
-      withStorage: boolean | null
-      shape: string | null
-      size: string | null
-      color: string | null
-      cover: string | null
-      seater: number
-      sellerId: string
-      price: number
-      status: string | null
-      make: string
-      model: string | null
       category: string
-      condition: string
+      brand: string
+      model: string | null
+      color: string | null
       material: string | null
-      style: string | null
-      weight: number | null
       dimensions: string | null
+      condition: string
       isAvailable: boolean
-      stockCount: number | null
+      stockCount: number
+      price: number
+      sellerId: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["furniture"]>
@@ -6720,7 +6588,7 @@ export namespace Prisma {
    */
   export interface Prisma__FurnitureClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    selectedFile<T extends Furniture$selectedFileArgs<ExtArgs> = {}>(args?: Subset<T, Furniture$selectedFileArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SelectedFilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    images<T extends Furniture$imagesArgs<ExtArgs> = {}>(args?: Subset<T, Furniture$imagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FurnitureImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     seller<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -6754,27 +6622,17 @@ export namespace Prisma {
     readonly id: FieldRef<"Furniture", 'String'>
     readonly name: FieldRef<"Furniture", 'String'>
     readonly description: FieldRef<"Furniture", 'String'>
-    readonly measurements: FieldRef<"Furniture", 'String'>
-    readonly pullOut: FieldRef<"Furniture", 'Int'>
-    readonly withStorage: FieldRef<"Furniture", 'Boolean'>
-    readonly shape: FieldRef<"Furniture", 'String'>
-    readonly size: FieldRef<"Furniture", 'String'>
-    readonly color: FieldRef<"Furniture", 'String'>
-    readonly cover: FieldRef<"Furniture", 'String'>
-    readonly seater: FieldRef<"Furniture", 'Int'>
-    readonly sellerId: FieldRef<"Furniture", 'String'>
-    readonly price: FieldRef<"Furniture", 'Float'>
-    readonly status: FieldRef<"Furniture", 'String'>
-    readonly make: FieldRef<"Furniture", 'String'>
-    readonly model: FieldRef<"Furniture", 'String'>
     readonly category: FieldRef<"Furniture", 'String'>
-    readonly condition: FieldRef<"Furniture", 'String'>
+    readonly brand: FieldRef<"Furniture", 'String'>
+    readonly model: FieldRef<"Furniture", 'String'>
+    readonly color: FieldRef<"Furniture", 'String'>
     readonly material: FieldRef<"Furniture", 'String'>
-    readonly style: FieldRef<"Furniture", 'String'>
-    readonly weight: FieldRef<"Furniture", 'Float'>
     readonly dimensions: FieldRef<"Furniture", 'String'>
+    readonly condition: FieldRef<"Furniture", 'String'>
     readonly isAvailable: FieldRef<"Furniture", 'Boolean'>
     readonly stockCount: FieldRef<"Furniture", 'Int'>
+    readonly price: FieldRef<"Furniture", 'Float'>
+    readonly sellerId: FieldRef<"Furniture", 'String'>
     readonly createdAt: FieldRef<"Furniture", 'DateTime'>
     readonly updatedAt: FieldRef<"Furniture", 'DateTime'>
   }
@@ -7173,27 +7031,27 @@ export namespace Prisma {
   }
 
   /**
-   * Furniture.selectedFile
+   * Furniture.images
    */
-  export type Furniture$selectedFileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Furniture$imagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SelectedFile
+     * Select specific fields to fetch from the FurnitureImage
      */
-    select?: SelectedFileSelect<ExtArgs> | null
+    select?: FurnitureImageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the SelectedFile
+     * Omit specific fields from the FurnitureImage
      */
-    omit?: SelectedFileOmit<ExtArgs> | null
+    omit?: FurnitureImageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SelectedFileInclude<ExtArgs> | null
-    where?: SelectedFileWhereInput
-    orderBy?: SelectedFileOrderByWithRelationInput | SelectedFileOrderByWithRelationInput[]
-    cursor?: SelectedFileWhereUniqueInput
+    include?: FurnitureImageInclude<ExtArgs> | null
+    where?: FurnitureImageWhereInput
+    orderBy?: FurnitureImageOrderByWithRelationInput | FurnitureImageOrderByWithRelationInput[]
+    cursor?: FurnitureImageWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: SelectedFileScalarFieldEnum | SelectedFileScalarFieldEnum[]
+    distinct?: FurnitureImageScalarFieldEnum | FurnitureImageScalarFieldEnum[]
   }
 
   /**
@@ -7216,338 +7074,350 @@ export namespace Prisma {
 
 
   /**
-   * Model SelectedFile
+   * Model FurnitureImage
    */
 
-  export type AggregateSelectedFile = {
-    _count: SelectedFileCountAggregateOutputType | null
-    _min: SelectedFileMinAggregateOutputType | null
-    _max: SelectedFileMaxAggregateOutputType | null
+  export type AggregateFurnitureImage = {
+    _count: FurnitureImageCountAggregateOutputType | null
+    _min: FurnitureImageMinAggregateOutputType | null
+    _max: FurnitureImageMaxAggregateOutputType | null
   }
 
-  export type SelectedFileMinAggregateOutputType = {
+  export type FurnitureImageMinAggregateOutputType = {
     id: string | null
     url: string | null
-    furnitureId: string | null
     key: string | null
+    furnitureId: string | null
+    createdAt: Date | null
   }
 
-  export type SelectedFileMaxAggregateOutputType = {
+  export type FurnitureImageMaxAggregateOutputType = {
     id: string | null
     url: string | null
-    furnitureId: string | null
     key: string | null
+    furnitureId: string | null
+    createdAt: Date | null
   }
 
-  export type SelectedFileCountAggregateOutputType = {
+  export type FurnitureImageCountAggregateOutputType = {
     id: number
     url: number
-    furnitureId: number
     key: number
+    furnitureId: number
+    createdAt: number
     _all: number
   }
 
 
-  export type SelectedFileMinAggregateInputType = {
+  export type FurnitureImageMinAggregateInputType = {
     id?: true
     url?: true
-    furnitureId?: true
     key?: true
+    furnitureId?: true
+    createdAt?: true
   }
 
-  export type SelectedFileMaxAggregateInputType = {
+  export type FurnitureImageMaxAggregateInputType = {
     id?: true
     url?: true
-    furnitureId?: true
     key?: true
+    furnitureId?: true
+    createdAt?: true
   }
 
-  export type SelectedFileCountAggregateInputType = {
+  export type FurnitureImageCountAggregateInputType = {
     id?: true
     url?: true
-    furnitureId?: true
     key?: true
+    furnitureId?: true
+    createdAt?: true
     _all?: true
   }
 
-  export type SelectedFileAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FurnitureImageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which SelectedFile to aggregate.
+     * Filter which FurnitureImage to aggregate.
      */
-    where?: SelectedFileWhereInput
+    where?: FurnitureImageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of SelectedFiles to fetch.
+     * Determine the order of FurnitureImages to fetch.
      */
-    orderBy?: SelectedFileOrderByWithRelationInput | SelectedFileOrderByWithRelationInput[]
+    orderBy?: FurnitureImageOrderByWithRelationInput | FurnitureImageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: SelectedFileWhereUniqueInput
+    cursor?: FurnitureImageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` SelectedFiles from the position of the cursor.
+     * Take `±n` FurnitureImages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` SelectedFiles.
+     * Skip the first `n` FurnitureImages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned SelectedFiles
+     * Count returned FurnitureImages
     **/
-    _count?: true | SelectedFileCountAggregateInputType
+    _count?: true | FurnitureImageCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: SelectedFileMinAggregateInputType
+    _min?: FurnitureImageMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: SelectedFileMaxAggregateInputType
+    _max?: FurnitureImageMaxAggregateInputType
   }
 
-  export type GetSelectedFileAggregateType<T extends SelectedFileAggregateArgs> = {
-        [P in keyof T & keyof AggregateSelectedFile]: P extends '_count' | 'count'
+  export type GetFurnitureImageAggregateType<T extends FurnitureImageAggregateArgs> = {
+        [P in keyof T & keyof AggregateFurnitureImage]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateSelectedFile[P]>
-      : GetScalarType<T[P], AggregateSelectedFile[P]>
+        : GetScalarType<T[P], AggregateFurnitureImage[P]>
+      : GetScalarType<T[P], AggregateFurnitureImage[P]>
   }
 
 
 
 
-  export type SelectedFileGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SelectedFileWhereInput
-    orderBy?: SelectedFileOrderByWithAggregationInput | SelectedFileOrderByWithAggregationInput[]
-    by: SelectedFileScalarFieldEnum[] | SelectedFileScalarFieldEnum
-    having?: SelectedFileScalarWhereWithAggregatesInput
+  export type FurnitureImageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FurnitureImageWhereInput
+    orderBy?: FurnitureImageOrderByWithAggregationInput | FurnitureImageOrderByWithAggregationInput[]
+    by: FurnitureImageScalarFieldEnum[] | FurnitureImageScalarFieldEnum
+    having?: FurnitureImageScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: SelectedFileCountAggregateInputType | true
-    _min?: SelectedFileMinAggregateInputType
-    _max?: SelectedFileMaxAggregateInputType
+    _count?: FurnitureImageCountAggregateInputType | true
+    _min?: FurnitureImageMinAggregateInputType
+    _max?: FurnitureImageMaxAggregateInputType
   }
 
-  export type SelectedFileGroupByOutputType = {
+  export type FurnitureImageGroupByOutputType = {
     id: string
     url: string
-    furnitureId: string | null
     key: string
-    _count: SelectedFileCountAggregateOutputType | null
-    _min: SelectedFileMinAggregateOutputType | null
-    _max: SelectedFileMaxAggregateOutputType | null
+    furnitureId: string | null
+    createdAt: Date
+    _count: FurnitureImageCountAggregateOutputType | null
+    _min: FurnitureImageMinAggregateOutputType | null
+    _max: FurnitureImageMaxAggregateOutputType | null
   }
 
-  type GetSelectedFileGroupByPayload<T extends SelectedFileGroupByArgs> = Prisma.PrismaPromise<
+  type GetFurnitureImageGroupByPayload<T extends FurnitureImageGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<SelectedFileGroupByOutputType, T['by']> &
+      PickEnumerable<FurnitureImageGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof SelectedFileGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof FurnitureImageGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], SelectedFileGroupByOutputType[P]>
-            : GetScalarType<T[P], SelectedFileGroupByOutputType[P]>
+              : GetScalarType<T[P], FurnitureImageGroupByOutputType[P]>
+            : GetScalarType<T[P], FurnitureImageGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type SelectedFileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type FurnitureImageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     url?: boolean
-    furnitureId?: boolean
     key?: boolean
-    furniture?: boolean | SelectedFile$furnitureArgs<ExtArgs>
-  }, ExtArgs["result"]["selectedFile"]>
+    furnitureId?: boolean
+    createdAt?: boolean
+    furniture?: boolean | FurnitureImage$furnitureArgs<ExtArgs>
+  }, ExtArgs["result"]["furnitureImage"]>
 
-  export type SelectedFileSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type FurnitureImageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     url?: boolean
-    furnitureId?: boolean
     key?: boolean
-    furniture?: boolean | SelectedFile$furnitureArgs<ExtArgs>
-  }, ExtArgs["result"]["selectedFile"]>
+    furnitureId?: boolean
+    createdAt?: boolean
+    furniture?: boolean | FurnitureImage$furnitureArgs<ExtArgs>
+  }, ExtArgs["result"]["furnitureImage"]>
 
-  export type SelectedFileSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type FurnitureImageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     url?: boolean
-    furnitureId?: boolean
     key?: boolean
-    furniture?: boolean | SelectedFile$furnitureArgs<ExtArgs>
-  }, ExtArgs["result"]["selectedFile"]>
+    furnitureId?: boolean
+    createdAt?: boolean
+    furniture?: boolean | FurnitureImage$furnitureArgs<ExtArgs>
+  }, ExtArgs["result"]["furnitureImage"]>
 
-  export type SelectedFileSelectScalar = {
+  export type FurnitureImageSelectScalar = {
     id?: boolean
     url?: boolean
-    furnitureId?: boolean
     key?: boolean
+    furnitureId?: boolean
+    createdAt?: boolean
   }
 
-  export type SelectedFileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "url" | "furnitureId" | "key", ExtArgs["result"]["selectedFile"]>
-  export type SelectedFileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    furniture?: boolean | SelectedFile$furnitureArgs<ExtArgs>
+  export type FurnitureImageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "url" | "key" | "furnitureId" | "createdAt", ExtArgs["result"]["furnitureImage"]>
+  export type FurnitureImageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    furniture?: boolean | FurnitureImage$furnitureArgs<ExtArgs>
   }
-  export type SelectedFileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    furniture?: boolean | SelectedFile$furnitureArgs<ExtArgs>
+  export type FurnitureImageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    furniture?: boolean | FurnitureImage$furnitureArgs<ExtArgs>
   }
-  export type SelectedFileIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    furniture?: boolean | SelectedFile$furnitureArgs<ExtArgs>
+  export type FurnitureImageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    furniture?: boolean | FurnitureImage$furnitureArgs<ExtArgs>
   }
 
-  export type $SelectedFilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "SelectedFile"
+  export type $FurnitureImagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "FurnitureImage"
     objects: {
       furniture: Prisma.$FurniturePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       url: string
-      furnitureId: string | null
       key: string
-    }, ExtArgs["result"]["selectedFile"]>
+      furnitureId: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["furnitureImage"]>
     composites: {}
   }
 
-  type SelectedFileGetPayload<S extends boolean | null | undefined | SelectedFileDefaultArgs> = $Result.GetResult<Prisma.$SelectedFilePayload, S>
+  type FurnitureImageGetPayload<S extends boolean | null | undefined | FurnitureImageDefaultArgs> = $Result.GetResult<Prisma.$FurnitureImagePayload, S>
 
-  type SelectedFileCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<SelectedFileFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: SelectedFileCountAggregateInputType | true
+  type FurnitureImageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FurnitureImageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FurnitureImageCountAggregateInputType | true
     }
 
-  export interface SelectedFileDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SelectedFile'], meta: { name: 'SelectedFile' } }
+  export interface FurnitureImageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FurnitureImage'], meta: { name: 'FurnitureImage' } }
     /**
-     * Find zero or one SelectedFile that matches the filter.
-     * @param {SelectedFileFindUniqueArgs} args - Arguments to find a SelectedFile
+     * Find zero or one FurnitureImage that matches the filter.
+     * @param {FurnitureImageFindUniqueArgs} args - Arguments to find a FurnitureImage
      * @example
-     * // Get one SelectedFile
-     * const selectedFile = await prisma.selectedFile.findUnique({
+     * // Get one FurnitureImage
+     * const furnitureImage = await prisma.furnitureImage.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends SelectedFileFindUniqueArgs>(args: SelectSubset<T, SelectedFileFindUniqueArgs<ExtArgs>>): Prisma__SelectedFileClient<$Result.GetResult<Prisma.$SelectedFilePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends FurnitureImageFindUniqueArgs>(args: SelectSubset<T, FurnitureImageFindUniqueArgs<ExtArgs>>): Prisma__FurnitureImageClient<$Result.GetResult<Prisma.$FurnitureImagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one SelectedFile that matches the filter or throw an error with `error.code='P2025'`
+     * Find one FurnitureImage that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {SelectedFileFindUniqueOrThrowArgs} args - Arguments to find a SelectedFile
+     * @param {FurnitureImageFindUniqueOrThrowArgs} args - Arguments to find a FurnitureImage
      * @example
-     * // Get one SelectedFile
-     * const selectedFile = await prisma.selectedFile.findUniqueOrThrow({
+     * // Get one FurnitureImage
+     * const furnitureImage = await prisma.furnitureImage.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends SelectedFileFindUniqueOrThrowArgs>(args: SelectSubset<T, SelectedFileFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SelectedFileClient<$Result.GetResult<Prisma.$SelectedFilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends FurnitureImageFindUniqueOrThrowArgs>(args: SelectSubset<T, FurnitureImageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FurnitureImageClient<$Result.GetResult<Prisma.$FurnitureImagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first SelectedFile that matches the filter.
+     * Find the first FurnitureImage that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SelectedFileFindFirstArgs} args - Arguments to find a SelectedFile
+     * @param {FurnitureImageFindFirstArgs} args - Arguments to find a FurnitureImage
      * @example
-     * // Get one SelectedFile
-     * const selectedFile = await prisma.selectedFile.findFirst({
+     * // Get one FurnitureImage
+     * const furnitureImage = await prisma.furnitureImage.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends SelectedFileFindFirstArgs>(args?: SelectSubset<T, SelectedFileFindFirstArgs<ExtArgs>>): Prisma__SelectedFileClient<$Result.GetResult<Prisma.$SelectedFilePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends FurnitureImageFindFirstArgs>(args?: SelectSubset<T, FurnitureImageFindFirstArgs<ExtArgs>>): Prisma__FurnitureImageClient<$Result.GetResult<Prisma.$FurnitureImagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first SelectedFile that matches the filter or
+     * Find the first FurnitureImage that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SelectedFileFindFirstOrThrowArgs} args - Arguments to find a SelectedFile
+     * @param {FurnitureImageFindFirstOrThrowArgs} args - Arguments to find a FurnitureImage
      * @example
-     * // Get one SelectedFile
-     * const selectedFile = await prisma.selectedFile.findFirstOrThrow({
+     * // Get one FurnitureImage
+     * const furnitureImage = await prisma.furnitureImage.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends SelectedFileFindFirstOrThrowArgs>(args?: SelectSubset<T, SelectedFileFindFirstOrThrowArgs<ExtArgs>>): Prisma__SelectedFileClient<$Result.GetResult<Prisma.$SelectedFilePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends FurnitureImageFindFirstOrThrowArgs>(args?: SelectSubset<T, FurnitureImageFindFirstOrThrowArgs<ExtArgs>>): Prisma__FurnitureImageClient<$Result.GetResult<Prisma.$FurnitureImagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more SelectedFiles that matches the filter.
+     * Find zero or more FurnitureImages that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SelectedFileFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {FurnitureImageFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all SelectedFiles
-     * const selectedFiles = await prisma.selectedFile.findMany()
+     * // Get all FurnitureImages
+     * const furnitureImages = await prisma.furnitureImage.findMany()
      * 
-     * // Get first 10 SelectedFiles
-     * const selectedFiles = await prisma.selectedFile.findMany({ take: 10 })
+     * // Get first 10 FurnitureImages
+     * const furnitureImages = await prisma.furnitureImage.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const selectedFileWithIdOnly = await prisma.selectedFile.findMany({ select: { id: true } })
+     * const furnitureImageWithIdOnly = await prisma.furnitureImage.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends SelectedFileFindManyArgs>(args?: SelectSubset<T, SelectedFileFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SelectedFilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends FurnitureImageFindManyArgs>(args?: SelectSubset<T, FurnitureImageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FurnitureImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a SelectedFile.
-     * @param {SelectedFileCreateArgs} args - Arguments to create a SelectedFile.
+     * Create a FurnitureImage.
+     * @param {FurnitureImageCreateArgs} args - Arguments to create a FurnitureImage.
      * @example
-     * // Create one SelectedFile
-     * const SelectedFile = await prisma.selectedFile.create({
+     * // Create one FurnitureImage
+     * const FurnitureImage = await prisma.furnitureImage.create({
      *   data: {
-     *     // ... data to create a SelectedFile
+     *     // ... data to create a FurnitureImage
      *   }
      * })
      * 
      */
-    create<T extends SelectedFileCreateArgs>(args: SelectSubset<T, SelectedFileCreateArgs<ExtArgs>>): Prisma__SelectedFileClient<$Result.GetResult<Prisma.$SelectedFilePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends FurnitureImageCreateArgs>(args: SelectSubset<T, FurnitureImageCreateArgs<ExtArgs>>): Prisma__FurnitureImageClient<$Result.GetResult<Prisma.$FurnitureImagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many SelectedFiles.
-     * @param {SelectedFileCreateManyArgs} args - Arguments to create many SelectedFiles.
+     * Create many FurnitureImages.
+     * @param {FurnitureImageCreateManyArgs} args - Arguments to create many FurnitureImages.
      * @example
-     * // Create many SelectedFiles
-     * const selectedFile = await prisma.selectedFile.createMany({
+     * // Create many FurnitureImages
+     * const furnitureImage = await prisma.furnitureImage.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends SelectedFileCreateManyArgs>(args?: SelectSubset<T, SelectedFileCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends FurnitureImageCreateManyArgs>(args?: SelectSubset<T, FurnitureImageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many SelectedFiles and returns the data saved in the database.
-     * @param {SelectedFileCreateManyAndReturnArgs} args - Arguments to create many SelectedFiles.
+     * Create many FurnitureImages and returns the data saved in the database.
+     * @param {FurnitureImageCreateManyAndReturnArgs} args - Arguments to create many FurnitureImages.
      * @example
-     * // Create many SelectedFiles
-     * const selectedFile = await prisma.selectedFile.createManyAndReturn({
+     * // Create many FurnitureImages
+     * const furnitureImage = await prisma.furnitureImage.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many SelectedFiles and only return the `id`
-     * const selectedFileWithIdOnly = await prisma.selectedFile.createManyAndReturn({
+     * // Create many FurnitureImages and only return the `id`
+     * const furnitureImageWithIdOnly = await prisma.furnitureImage.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -7557,28 +7427,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends SelectedFileCreateManyAndReturnArgs>(args?: SelectSubset<T, SelectedFileCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SelectedFilePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends FurnitureImageCreateManyAndReturnArgs>(args?: SelectSubset<T, FurnitureImageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FurnitureImagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a SelectedFile.
-     * @param {SelectedFileDeleteArgs} args - Arguments to delete one SelectedFile.
+     * Delete a FurnitureImage.
+     * @param {FurnitureImageDeleteArgs} args - Arguments to delete one FurnitureImage.
      * @example
-     * // Delete one SelectedFile
-     * const SelectedFile = await prisma.selectedFile.delete({
+     * // Delete one FurnitureImage
+     * const FurnitureImage = await prisma.furnitureImage.delete({
      *   where: {
-     *     // ... filter to delete one SelectedFile
+     *     // ... filter to delete one FurnitureImage
      *   }
      * })
      * 
      */
-    delete<T extends SelectedFileDeleteArgs>(args: SelectSubset<T, SelectedFileDeleteArgs<ExtArgs>>): Prisma__SelectedFileClient<$Result.GetResult<Prisma.$SelectedFilePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends FurnitureImageDeleteArgs>(args: SelectSubset<T, FurnitureImageDeleteArgs<ExtArgs>>): Prisma__FurnitureImageClient<$Result.GetResult<Prisma.$FurnitureImagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one SelectedFile.
-     * @param {SelectedFileUpdateArgs} args - Arguments to update one SelectedFile.
+     * Update one FurnitureImage.
+     * @param {FurnitureImageUpdateArgs} args - Arguments to update one FurnitureImage.
      * @example
-     * // Update one SelectedFile
-     * const selectedFile = await prisma.selectedFile.update({
+     * // Update one FurnitureImage
+     * const furnitureImage = await prisma.furnitureImage.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -7588,30 +7458,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends SelectedFileUpdateArgs>(args: SelectSubset<T, SelectedFileUpdateArgs<ExtArgs>>): Prisma__SelectedFileClient<$Result.GetResult<Prisma.$SelectedFilePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends FurnitureImageUpdateArgs>(args: SelectSubset<T, FurnitureImageUpdateArgs<ExtArgs>>): Prisma__FurnitureImageClient<$Result.GetResult<Prisma.$FurnitureImagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more SelectedFiles.
-     * @param {SelectedFileDeleteManyArgs} args - Arguments to filter SelectedFiles to delete.
+     * Delete zero or more FurnitureImages.
+     * @param {FurnitureImageDeleteManyArgs} args - Arguments to filter FurnitureImages to delete.
      * @example
-     * // Delete a few SelectedFiles
-     * const { count } = await prisma.selectedFile.deleteMany({
+     * // Delete a few FurnitureImages
+     * const { count } = await prisma.furnitureImage.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends SelectedFileDeleteManyArgs>(args?: SelectSubset<T, SelectedFileDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends FurnitureImageDeleteManyArgs>(args?: SelectSubset<T, FurnitureImageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more SelectedFiles.
+     * Update zero or more FurnitureImages.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SelectedFileUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {FurnitureImageUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many SelectedFiles
-     * const selectedFile = await prisma.selectedFile.updateMany({
+     * // Update many FurnitureImages
+     * const furnitureImage = await prisma.furnitureImage.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -7621,14 +7491,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends SelectedFileUpdateManyArgs>(args: SelectSubset<T, SelectedFileUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends FurnitureImageUpdateManyArgs>(args: SelectSubset<T, FurnitureImageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more SelectedFiles and returns the data updated in the database.
-     * @param {SelectedFileUpdateManyAndReturnArgs} args - Arguments to update many SelectedFiles.
+     * Update zero or more FurnitureImages and returns the data updated in the database.
+     * @param {FurnitureImageUpdateManyAndReturnArgs} args - Arguments to update many FurnitureImages.
      * @example
-     * // Update many SelectedFiles
-     * const selectedFile = await prisma.selectedFile.updateManyAndReturn({
+     * // Update many FurnitureImages
+     * const furnitureImage = await prisma.furnitureImage.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -7637,8 +7507,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more SelectedFiles and only return the `id`
-     * const selectedFileWithIdOnly = await prisma.selectedFile.updateManyAndReturn({
+     * // Update zero or more FurnitureImages and only return the `id`
+     * const furnitureImageWithIdOnly = await prisma.furnitureImage.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -7651,56 +7521,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends SelectedFileUpdateManyAndReturnArgs>(args: SelectSubset<T, SelectedFileUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SelectedFilePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends FurnitureImageUpdateManyAndReturnArgs>(args: SelectSubset<T, FurnitureImageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FurnitureImagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one SelectedFile.
-     * @param {SelectedFileUpsertArgs} args - Arguments to update or create a SelectedFile.
+     * Create or update one FurnitureImage.
+     * @param {FurnitureImageUpsertArgs} args - Arguments to update or create a FurnitureImage.
      * @example
-     * // Update or create a SelectedFile
-     * const selectedFile = await prisma.selectedFile.upsert({
+     * // Update or create a FurnitureImage
+     * const furnitureImage = await prisma.furnitureImage.upsert({
      *   create: {
-     *     // ... data to create a SelectedFile
+     *     // ... data to create a FurnitureImage
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the SelectedFile we want to update
+     *     // ... the filter for the FurnitureImage we want to update
      *   }
      * })
      */
-    upsert<T extends SelectedFileUpsertArgs>(args: SelectSubset<T, SelectedFileUpsertArgs<ExtArgs>>): Prisma__SelectedFileClient<$Result.GetResult<Prisma.$SelectedFilePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends FurnitureImageUpsertArgs>(args: SelectSubset<T, FurnitureImageUpsertArgs<ExtArgs>>): Prisma__FurnitureImageClient<$Result.GetResult<Prisma.$FurnitureImagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of SelectedFiles.
+     * Count the number of FurnitureImages.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SelectedFileCountArgs} args - Arguments to filter SelectedFiles to count.
+     * @param {FurnitureImageCountArgs} args - Arguments to filter FurnitureImages to count.
      * @example
-     * // Count the number of SelectedFiles
-     * const count = await prisma.selectedFile.count({
+     * // Count the number of FurnitureImages
+     * const count = await prisma.furnitureImage.count({
      *   where: {
-     *     // ... the filter for the SelectedFiles we want to count
+     *     // ... the filter for the FurnitureImages we want to count
      *   }
      * })
     **/
-    count<T extends SelectedFileCountArgs>(
-      args?: Subset<T, SelectedFileCountArgs>,
+    count<T extends FurnitureImageCountArgs>(
+      args?: Subset<T, FurnitureImageCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], SelectedFileCountAggregateOutputType>
+          : GetScalarType<T['select'], FurnitureImageCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a SelectedFile.
+     * Allows you to perform aggregations operations on a FurnitureImage.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SelectedFileAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {FurnitureImageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -7720,13 +7590,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends SelectedFileAggregateArgs>(args: Subset<T, SelectedFileAggregateArgs>): Prisma.PrismaPromise<GetSelectedFileAggregateType<T>>
+    aggregate<T extends FurnitureImageAggregateArgs>(args: Subset<T, FurnitureImageAggregateArgs>): Prisma.PrismaPromise<GetFurnitureImageAggregateType<T>>
 
     /**
-     * Group by SelectedFile.
+     * Group by FurnitureImage.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {SelectedFileGroupByArgs} args - Group by arguments.
+     * @param {FurnitureImageGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -7741,14 +7611,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends SelectedFileGroupByArgs,
+      T extends FurnitureImageGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: SelectedFileGroupByArgs['orderBy'] }
-        : { orderBy?: SelectedFileGroupByArgs['orderBy'] },
+        ? { orderBy: FurnitureImageGroupByArgs['orderBy'] }
+        : { orderBy?: FurnitureImageGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -7797,22 +7667,22 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, SelectedFileGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSelectedFileGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, FurnitureImageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFurnitureImageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the SelectedFile model
+   * Fields of the FurnitureImage model
    */
-  readonly fields: SelectedFileFieldRefs;
+  readonly fields: FurnitureImageFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for SelectedFile.
+   * The delegate class that acts as a "Promise-like" for FurnitureImage.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__SelectedFileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__FurnitureImageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    furniture<T extends SelectedFile$furnitureArgs<ExtArgs> = {}>(args?: Subset<T, SelectedFile$furnitureArgs<ExtArgs>>): Prisma__FurnitureClient<$Result.GetResult<Prisma.$FurniturePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    furniture<T extends FurnitureImage$furnitureArgs<ExtArgs> = {}>(args?: Subset<T, FurnitureImage$furnitureArgs<ExtArgs>>): Prisma__FurnitureClient<$Result.GetResult<Prisma.$FurniturePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7839,412 +7709,413 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the SelectedFile model
+   * Fields of the FurnitureImage model
    */
-  interface SelectedFileFieldRefs {
-    readonly id: FieldRef<"SelectedFile", 'String'>
-    readonly url: FieldRef<"SelectedFile", 'String'>
-    readonly furnitureId: FieldRef<"SelectedFile", 'String'>
-    readonly key: FieldRef<"SelectedFile", 'String'>
+  interface FurnitureImageFieldRefs {
+    readonly id: FieldRef<"FurnitureImage", 'String'>
+    readonly url: FieldRef<"FurnitureImage", 'String'>
+    readonly key: FieldRef<"FurnitureImage", 'String'>
+    readonly furnitureId: FieldRef<"FurnitureImage", 'String'>
+    readonly createdAt: FieldRef<"FurnitureImage", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * SelectedFile findUnique
+   * FurnitureImage findUnique
    */
-  export type SelectedFileFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FurnitureImageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SelectedFile
+     * Select specific fields to fetch from the FurnitureImage
      */
-    select?: SelectedFileSelect<ExtArgs> | null
+    select?: FurnitureImageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the SelectedFile
+     * Omit specific fields from the FurnitureImage
      */
-    omit?: SelectedFileOmit<ExtArgs> | null
+    omit?: FurnitureImageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SelectedFileInclude<ExtArgs> | null
+    include?: FurnitureImageInclude<ExtArgs> | null
     /**
-     * Filter, which SelectedFile to fetch.
+     * Filter, which FurnitureImage to fetch.
      */
-    where: SelectedFileWhereUniqueInput
+    where: FurnitureImageWhereUniqueInput
   }
 
   /**
-   * SelectedFile findUniqueOrThrow
+   * FurnitureImage findUniqueOrThrow
    */
-  export type SelectedFileFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FurnitureImageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SelectedFile
+     * Select specific fields to fetch from the FurnitureImage
      */
-    select?: SelectedFileSelect<ExtArgs> | null
+    select?: FurnitureImageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the SelectedFile
+     * Omit specific fields from the FurnitureImage
      */
-    omit?: SelectedFileOmit<ExtArgs> | null
+    omit?: FurnitureImageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SelectedFileInclude<ExtArgs> | null
+    include?: FurnitureImageInclude<ExtArgs> | null
     /**
-     * Filter, which SelectedFile to fetch.
+     * Filter, which FurnitureImage to fetch.
      */
-    where: SelectedFileWhereUniqueInput
+    where: FurnitureImageWhereUniqueInput
   }
 
   /**
-   * SelectedFile findFirst
+   * FurnitureImage findFirst
    */
-  export type SelectedFileFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FurnitureImageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SelectedFile
+     * Select specific fields to fetch from the FurnitureImage
      */
-    select?: SelectedFileSelect<ExtArgs> | null
+    select?: FurnitureImageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the SelectedFile
+     * Omit specific fields from the FurnitureImage
      */
-    omit?: SelectedFileOmit<ExtArgs> | null
+    omit?: FurnitureImageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SelectedFileInclude<ExtArgs> | null
+    include?: FurnitureImageInclude<ExtArgs> | null
     /**
-     * Filter, which SelectedFile to fetch.
+     * Filter, which FurnitureImage to fetch.
      */
-    where?: SelectedFileWhereInput
+    where?: FurnitureImageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of SelectedFiles to fetch.
+     * Determine the order of FurnitureImages to fetch.
      */
-    orderBy?: SelectedFileOrderByWithRelationInput | SelectedFileOrderByWithRelationInput[]
+    orderBy?: FurnitureImageOrderByWithRelationInput | FurnitureImageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for SelectedFiles.
+     * Sets the position for searching for FurnitureImages.
      */
-    cursor?: SelectedFileWhereUniqueInput
+    cursor?: FurnitureImageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` SelectedFiles from the position of the cursor.
+     * Take `±n` FurnitureImages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` SelectedFiles.
+     * Skip the first `n` FurnitureImages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of SelectedFiles.
+     * Filter by unique combinations of FurnitureImages.
      */
-    distinct?: SelectedFileScalarFieldEnum | SelectedFileScalarFieldEnum[]
+    distinct?: FurnitureImageScalarFieldEnum | FurnitureImageScalarFieldEnum[]
   }
 
   /**
-   * SelectedFile findFirstOrThrow
+   * FurnitureImage findFirstOrThrow
    */
-  export type SelectedFileFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FurnitureImageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SelectedFile
+     * Select specific fields to fetch from the FurnitureImage
      */
-    select?: SelectedFileSelect<ExtArgs> | null
+    select?: FurnitureImageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the SelectedFile
+     * Omit specific fields from the FurnitureImage
      */
-    omit?: SelectedFileOmit<ExtArgs> | null
+    omit?: FurnitureImageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SelectedFileInclude<ExtArgs> | null
+    include?: FurnitureImageInclude<ExtArgs> | null
     /**
-     * Filter, which SelectedFile to fetch.
+     * Filter, which FurnitureImage to fetch.
      */
-    where?: SelectedFileWhereInput
+    where?: FurnitureImageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of SelectedFiles to fetch.
+     * Determine the order of FurnitureImages to fetch.
      */
-    orderBy?: SelectedFileOrderByWithRelationInput | SelectedFileOrderByWithRelationInput[]
+    orderBy?: FurnitureImageOrderByWithRelationInput | FurnitureImageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for SelectedFiles.
+     * Sets the position for searching for FurnitureImages.
      */
-    cursor?: SelectedFileWhereUniqueInput
+    cursor?: FurnitureImageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` SelectedFiles from the position of the cursor.
+     * Take `±n` FurnitureImages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` SelectedFiles.
+     * Skip the first `n` FurnitureImages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of SelectedFiles.
+     * Filter by unique combinations of FurnitureImages.
      */
-    distinct?: SelectedFileScalarFieldEnum | SelectedFileScalarFieldEnum[]
+    distinct?: FurnitureImageScalarFieldEnum | FurnitureImageScalarFieldEnum[]
   }
 
   /**
-   * SelectedFile findMany
+   * FurnitureImage findMany
    */
-  export type SelectedFileFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FurnitureImageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SelectedFile
+     * Select specific fields to fetch from the FurnitureImage
      */
-    select?: SelectedFileSelect<ExtArgs> | null
+    select?: FurnitureImageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the SelectedFile
+     * Omit specific fields from the FurnitureImage
      */
-    omit?: SelectedFileOmit<ExtArgs> | null
+    omit?: FurnitureImageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SelectedFileInclude<ExtArgs> | null
+    include?: FurnitureImageInclude<ExtArgs> | null
     /**
-     * Filter, which SelectedFiles to fetch.
+     * Filter, which FurnitureImages to fetch.
      */
-    where?: SelectedFileWhereInput
+    where?: FurnitureImageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of SelectedFiles to fetch.
+     * Determine the order of FurnitureImages to fetch.
      */
-    orderBy?: SelectedFileOrderByWithRelationInput | SelectedFileOrderByWithRelationInput[]
+    orderBy?: FurnitureImageOrderByWithRelationInput | FurnitureImageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing SelectedFiles.
+     * Sets the position for listing FurnitureImages.
      */
-    cursor?: SelectedFileWhereUniqueInput
+    cursor?: FurnitureImageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` SelectedFiles from the position of the cursor.
+     * Take `±n` FurnitureImages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` SelectedFiles.
+     * Skip the first `n` FurnitureImages.
      */
     skip?: number
-    distinct?: SelectedFileScalarFieldEnum | SelectedFileScalarFieldEnum[]
+    distinct?: FurnitureImageScalarFieldEnum | FurnitureImageScalarFieldEnum[]
   }
 
   /**
-   * SelectedFile create
+   * FurnitureImage create
    */
-  export type SelectedFileCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FurnitureImageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SelectedFile
+     * Select specific fields to fetch from the FurnitureImage
      */
-    select?: SelectedFileSelect<ExtArgs> | null
+    select?: FurnitureImageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the SelectedFile
+     * Omit specific fields from the FurnitureImage
      */
-    omit?: SelectedFileOmit<ExtArgs> | null
+    omit?: FurnitureImageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SelectedFileInclude<ExtArgs> | null
+    include?: FurnitureImageInclude<ExtArgs> | null
     /**
-     * The data needed to create a SelectedFile.
+     * The data needed to create a FurnitureImage.
      */
-    data: XOR<SelectedFileCreateInput, SelectedFileUncheckedCreateInput>
+    data: XOR<FurnitureImageCreateInput, FurnitureImageUncheckedCreateInput>
   }
 
   /**
-   * SelectedFile createMany
+   * FurnitureImage createMany
    */
-  export type SelectedFileCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FurnitureImageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many SelectedFiles.
+     * The data used to create many FurnitureImages.
      */
-    data: SelectedFileCreateManyInput | SelectedFileCreateManyInput[]
+    data: FurnitureImageCreateManyInput | FurnitureImageCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * SelectedFile createManyAndReturn
+   * FurnitureImage createManyAndReturn
    */
-  export type SelectedFileCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FurnitureImageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SelectedFile
+     * Select specific fields to fetch from the FurnitureImage
      */
-    select?: SelectedFileSelectCreateManyAndReturn<ExtArgs> | null
+    select?: FurnitureImageSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the SelectedFile
+     * Omit specific fields from the FurnitureImage
      */
-    omit?: SelectedFileOmit<ExtArgs> | null
+    omit?: FurnitureImageOmit<ExtArgs> | null
     /**
-     * The data used to create many SelectedFiles.
+     * The data used to create many FurnitureImages.
      */
-    data: SelectedFileCreateManyInput | SelectedFileCreateManyInput[]
+    data: FurnitureImageCreateManyInput | FurnitureImageCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SelectedFileIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: FurnitureImageIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * SelectedFile update
+   * FurnitureImage update
    */
-  export type SelectedFileUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FurnitureImageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SelectedFile
+     * Select specific fields to fetch from the FurnitureImage
      */
-    select?: SelectedFileSelect<ExtArgs> | null
+    select?: FurnitureImageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the SelectedFile
+     * Omit specific fields from the FurnitureImage
      */
-    omit?: SelectedFileOmit<ExtArgs> | null
+    omit?: FurnitureImageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SelectedFileInclude<ExtArgs> | null
+    include?: FurnitureImageInclude<ExtArgs> | null
     /**
-     * The data needed to update a SelectedFile.
+     * The data needed to update a FurnitureImage.
      */
-    data: XOR<SelectedFileUpdateInput, SelectedFileUncheckedUpdateInput>
+    data: XOR<FurnitureImageUpdateInput, FurnitureImageUncheckedUpdateInput>
     /**
-     * Choose, which SelectedFile to update.
+     * Choose, which FurnitureImage to update.
      */
-    where: SelectedFileWhereUniqueInput
+    where: FurnitureImageWhereUniqueInput
   }
 
   /**
-   * SelectedFile updateMany
+   * FurnitureImage updateMany
    */
-  export type SelectedFileUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FurnitureImageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update SelectedFiles.
+     * The data used to update FurnitureImages.
      */
-    data: XOR<SelectedFileUpdateManyMutationInput, SelectedFileUncheckedUpdateManyInput>
+    data: XOR<FurnitureImageUpdateManyMutationInput, FurnitureImageUncheckedUpdateManyInput>
     /**
-     * Filter which SelectedFiles to update
+     * Filter which FurnitureImages to update
      */
-    where?: SelectedFileWhereInput
+    where?: FurnitureImageWhereInput
     /**
-     * Limit how many SelectedFiles to update.
+     * Limit how many FurnitureImages to update.
      */
     limit?: number
   }
 
   /**
-   * SelectedFile updateManyAndReturn
+   * FurnitureImage updateManyAndReturn
    */
-  export type SelectedFileUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FurnitureImageUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SelectedFile
+     * Select specific fields to fetch from the FurnitureImage
      */
-    select?: SelectedFileSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: FurnitureImageSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the SelectedFile
+     * Omit specific fields from the FurnitureImage
      */
-    omit?: SelectedFileOmit<ExtArgs> | null
+    omit?: FurnitureImageOmit<ExtArgs> | null
     /**
-     * The data used to update SelectedFiles.
+     * The data used to update FurnitureImages.
      */
-    data: XOR<SelectedFileUpdateManyMutationInput, SelectedFileUncheckedUpdateManyInput>
+    data: XOR<FurnitureImageUpdateManyMutationInput, FurnitureImageUncheckedUpdateManyInput>
     /**
-     * Filter which SelectedFiles to update
+     * Filter which FurnitureImages to update
      */
-    where?: SelectedFileWhereInput
+    where?: FurnitureImageWhereInput
     /**
-     * Limit how many SelectedFiles to update.
+     * Limit how many FurnitureImages to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SelectedFileIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: FurnitureImageIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * SelectedFile upsert
+   * FurnitureImage upsert
    */
-  export type SelectedFileUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FurnitureImageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SelectedFile
+     * Select specific fields to fetch from the FurnitureImage
      */
-    select?: SelectedFileSelect<ExtArgs> | null
+    select?: FurnitureImageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the SelectedFile
+     * Omit specific fields from the FurnitureImage
      */
-    omit?: SelectedFileOmit<ExtArgs> | null
+    omit?: FurnitureImageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SelectedFileInclude<ExtArgs> | null
+    include?: FurnitureImageInclude<ExtArgs> | null
     /**
-     * The filter to search for the SelectedFile to update in case it exists.
+     * The filter to search for the FurnitureImage to update in case it exists.
      */
-    where: SelectedFileWhereUniqueInput
+    where: FurnitureImageWhereUniqueInput
     /**
-     * In case the SelectedFile found by the `where` argument doesn't exist, create a new SelectedFile with this data.
+     * In case the FurnitureImage found by the `where` argument doesn't exist, create a new FurnitureImage with this data.
      */
-    create: XOR<SelectedFileCreateInput, SelectedFileUncheckedCreateInput>
+    create: XOR<FurnitureImageCreateInput, FurnitureImageUncheckedCreateInput>
     /**
-     * In case the SelectedFile was found with the provided `where` argument, update it with this data.
+     * In case the FurnitureImage was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<SelectedFileUpdateInput, SelectedFileUncheckedUpdateInput>
+    update: XOR<FurnitureImageUpdateInput, FurnitureImageUncheckedUpdateInput>
   }
 
   /**
-   * SelectedFile delete
+   * FurnitureImage delete
    */
-  export type SelectedFileDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FurnitureImageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SelectedFile
+     * Select specific fields to fetch from the FurnitureImage
      */
-    select?: SelectedFileSelect<ExtArgs> | null
+    select?: FurnitureImageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the SelectedFile
+     * Omit specific fields from the FurnitureImage
      */
-    omit?: SelectedFileOmit<ExtArgs> | null
+    omit?: FurnitureImageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SelectedFileInclude<ExtArgs> | null
+    include?: FurnitureImageInclude<ExtArgs> | null
     /**
-     * Filter which SelectedFile to delete.
+     * Filter which FurnitureImage to delete.
      */
-    where: SelectedFileWhereUniqueInput
+    where: FurnitureImageWhereUniqueInput
   }
 
   /**
-   * SelectedFile deleteMany
+   * FurnitureImage deleteMany
    */
-  export type SelectedFileDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FurnitureImageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which SelectedFiles to delete
+     * Filter which FurnitureImages to delete
      */
-    where?: SelectedFileWhereInput
+    where?: FurnitureImageWhereInput
     /**
-     * Limit how many SelectedFiles to delete.
+     * Limit how many FurnitureImages to delete.
      */
     limit?: number
   }
 
   /**
-   * SelectedFile.furniture
+   * FurnitureImage.furniture
    */
-  export type SelectedFile$furnitureArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FurnitureImage$furnitureArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Furniture
      */
@@ -8261,21 +8132,21 @@ export namespace Prisma {
   }
 
   /**
-   * SelectedFile without action
+   * FurnitureImage without action
    */
-  export type SelectedFileDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FurnitureImageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the SelectedFile
+     * Select specific fields to fetch from the FurnitureImage
      */
-    select?: SelectedFileSelect<ExtArgs> | null
+    select?: FurnitureImageSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the SelectedFile
+     * Omit specific fields from the FurnitureImage
      */
-    omit?: SelectedFileOmit<ExtArgs> | null
+    omit?: FurnitureImageOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SelectedFileInclude<ExtArgs> | null
+    include?: FurnitureImageInclude<ExtArgs> | null
   }
 
 
@@ -8351,27 +8222,17 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     description: 'description',
-    measurements: 'measurements',
-    pullOut: 'pullOut',
-    withStorage: 'withStorage',
-    shape: 'shape',
-    size: 'size',
-    color: 'color',
-    cover: 'cover',
-    seater: 'seater',
-    sellerId: 'sellerId',
-    price: 'price',
-    status: 'status',
-    make: 'make',
-    model: 'model',
     category: 'category',
-    condition: 'condition',
+    brand: 'brand',
+    model: 'model',
+    color: 'color',
     material: 'material',
-    style: 'style',
-    weight: 'weight',
     dimensions: 'dimensions',
+    condition: 'condition',
     isAvailable: 'isAvailable',
     stockCount: 'stockCount',
+    price: 'price',
+    sellerId: 'sellerId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -8379,14 +8240,15 @@ export namespace Prisma {
   export type FurnitureScalarFieldEnum = (typeof FurnitureScalarFieldEnum)[keyof typeof FurnitureScalarFieldEnum]
 
 
-  export const SelectedFileScalarFieldEnum: {
+  export const FurnitureImageScalarFieldEnum: {
     id: 'id',
     url: 'url',
+    key: 'key',
     furnitureId: 'furnitureId',
-    key: 'key'
+    createdAt: 'createdAt'
   };
 
-  export type SelectedFileScalarFieldEnum = (typeof SelectedFileScalarFieldEnum)[keyof typeof SelectedFileScalarFieldEnum]
+  export type FurnitureImageScalarFieldEnum = (typeof FurnitureImageScalarFieldEnum)[keyof typeof FurnitureImageScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -8768,30 +8630,20 @@ export namespace Prisma {
     id?: StringFilter<"Furniture"> | string
     name?: StringFilter<"Furniture"> | string
     description?: StringNullableFilter<"Furniture"> | string | null
-    measurements?: StringNullableFilter<"Furniture"> | string | null
-    pullOut?: IntNullableFilter<"Furniture"> | number | null
-    withStorage?: BoolNullableFilter<"Furniture"> | boolean | null
-    shape?: StringNullableFilter<"Furniture"> | string | null
-    size?: StringNullableFilter<"Furniture"> | string | null
-    color?: StringNullableFilter<"Furniture"> | string | null
-    cover?: StringNullableFilter<"Furniture"> | string | null
-    seater?: IntFilter<"Furniture"> | number
-    sellerId?: StringFilter<"Furniture"> | string
-    price?: FloatFilter<"Furniture"> | number
-    status?: StringNullableFilter<"Furniture"> | string | null
-    make?: StringFilter<"Furniture"> | string
-    model?: StringNullableFilter<"Furniture"> | string | null
     category?: StringFilter<"Furniture"> | string
-    condition?: StringFilter<"Furniture"> | string
+    brand?: StringFilter<"Furniture"> | string
+    model?: StringNullableFilter<"Furniture"> | string | null
+    color?: StringNullableFilter<"Furniture"> | string | null
     material?: StringNullableFilter<"Furniture"> | string | null
-    style?: StringNullableFilter<"Furniture"> | string | null
-    weight?: FloatNullableFilter<"Furniture"> | number | null
     dimensions?: StringNullableFilter<"Furniture"> | string | null
+    condition?: StringFilter<"Furniture"> | string
     isAvailable?: BoolFilter<"Furniture"> | boolean
-    stockCount?: IntNullableFilter<"Furniture"> | number | null
+    stockCount?: IntFilter<"Furniture"> | number
+    price?: FloatFilter<"Furniture"> | number
+    sellerId?: StringFilter<"Furniture"> | string
     createdAt?: DateTimeFilter<"Furniture"> | Date | string
     updatedAt?: DateTimeFilter<"Furniture"> | Date | string
-    selectedFile?: SelectedFileListRelationFilter
+    images?: FurnitureImageListRelationFilter
     seller?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -8799,30 +8651,20 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrderInput | SortOrder
-    measurements?: SortOrderInput | SortOrder
-    pullOut?: SortOrderInput | SortOrder
-    withStorage?: SortOrderInput | SortOrder
-    shape?: SortOrderInput | SortOrder
-    size?: SortOrderInput | SortOrder
-    color?: SortOrderInput | SortOrder
-    cover?: SortOrderInput | SortOrder
-    seater?: SortOrder
-    sellerId?: SortOrder
-    price?: SortOrder
-    status?: SortOrderInput | SortOrder
-    make?: SortOrder
-    model?: SortOrderInput | SortOrder
     category?: SortOrder
-    condition?: SortOrder
+    brand?: SortOrder
+    model?: SortOrderInput | SortOrder
+    color?: SortOrderInput | SortOrder
     material?: SortOrderInput | SortOrder
-    style?: SortOrderInput | SortOrder
-    weight?: SortOrderInput | SortOrder
     dimensions?: SortOrderInput | SortOrder
+    condition?: SortOrder
     isAvailable?: SortOrder
-    stockCount?: SortOrderInput | SortOrder
+    stockCount?: SortOrder
+    price?: SortOrder
+    sellerId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    selectedFile?: SelectedFileOrderByRelationAggregateInput
+    images?: FurnitureImageOrderByRelationAggregateInput
     seller?: UserOrderByWithRelationInput
   }
 
@@ -8833,30 +8675,20 @@ export namespace Prisma {
     NOT?: FurnitureWhereInput | FurnitureWhereInput[]
     name?: StringFilter<"Furniture"> | string
     description?: StringNullableFilter<"Furniture"> | string | null
-    measurements?: StringNullableFilter<"Furniture"> | string | null
-    pullOut?: IntNullableFilter<"Furniture"> | number | null
-    withStorage?: BoolNullableFilter<"Furniture"> | boolean | null
-    shape?: StringNullableFilter<"Furniture"> | string | null
-    size?: StringNullableFilter<"Furniture"> | string | null
-    color?: StringNullableFilter<"Furniture"> | string | null
-    cover?: StringNullableFilter<"Furniture"> | string | null
-    seater?: IntFilter<"Furniture"> | number
-    sellerId?: StringFilter<"Furniture"> | string
-    price?: FloatFilter<"Furniture"> | number
-    status?: StringNullableFilter<"Furniture"> | string | null
-    make?: StringFilter<"Furniture"> | string
-    model?: StringNullableFilter<"Furniture"> | string | null
     category?: StringFilter<"Furniture"> | string
-    condition?: StringFilter<"Furniture"> | string
+    brand?: StringFilter<"Furniture"> | string
+    model?: StringNullableFilter<"Furniture"> | string | null
+    color?: StringNullableFilter<"Furniture"> | string | null
     material?: StringNullableFilter<"Furniture"> | string | null
-    style?: StringNullableFilter<"Furniture"> | string | null
-    weight?: FloatNullableFilter<"Furniture"> | number | null
     dimensions?: StringNullableFilter<"Furniture"> | string | null
+    condition?: StringFilter<"Furniture"> | string
     isAvailable?: BoolFilter<"Furniture"> | boolean
-    stockCount?: IntNullableFilter<"Furniture"> | number | null
+    stockCount?: IntFilter<"Furniture"> | number
+    price?: FloatFilter<"Furniture"> | number
+    sellerId?: StringFilter<"Furniture"> | string
     createdAt?: DateTimeFilter<"Furniture"> | Date | string
     updatedAt?: DateTimeFilter<"Furniture"> | Date | string
-    selectedFile?: SelectedFileListRelationFilter
+    images?: FurnitureImageListRelationFilter
     seller?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
@@ -8864,27 +8696,17 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrderInput | SortOrder
-    measurements?: SortOrderInput | SortOrder
-    pullOut?: SortOrderInput | SortOrder
-    withStorage?: SortOrderInput | SortOrder
-    shape?: SortOrderInput | SortOrder
-    size?: SortOrderInput | SortOrder
-    color?: SortOrderInput | SortOrder
-    cover?: SortOrderInput | SortOrder
-    seater?: SortOrder
-    sellerId?: SortOrder
-    price?: SortOrder
-    status?: SortOrderInput | SortOrder
-    make?: SortOrder
-    model?: SortOrderInput | SortOrder
     category?: SortOrder
-    condition?: SortOrder
+    brand?: SortOrder
+    model?: SortOrderInput | SortOrder
+    color?: SortOrderInput | SortOrder
     material?: SortOrderInput | SortOrder
-    style?: SortOrderInput | SortOrder
-    weight?: SortOrderInput | SortOrder
     dimensions?: SortOrderInput | SortOrder
+    condition?: SortOrder
     isAvailable?: SortOrder
-    stockCount?: SortOrderInput | SortOrder
+    stockCount?: SortOrder
+    price?: SortOrder
+    sellerId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: FurnitureCountOrderByAggregateInput
@@ -8901,79 +8723,74 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Furniture"> | string
     name?: StringWithAggregatesFilter<"Furniture"> | string
     description?: StringNullableWithAggregatesFilter<"Furniture"> | string | null
-    measurements?: StringNullableWithAggregatesFilter<"Furniture"> | string | null
-    pullOut?: IntNullableWithAggregatesFilter<"Furniture"> | number | null
-    withStorage?: BoolNullableWithAggregatesFilter<"Furniture"> | boolean | null
-    shape?: StringNullableWithAggregatesFilter<"Furniture"> | string | null
-    size?: StringNullableWithAggregatesFilter<"Furniture"> | string | null
-    color?: StringNullableWithAggregatesFilter<"Furniture"> | string | null
-    cover?: StringNullableWithAggregatesFilter<"Furniture"> | string | null
-    seater?: IntWithAggregatesFilter<"Furniture"> | number
-    sellerId?: StringWithAggregatesFilter<"Furniture"> | string
-    price?: FloatWithAggregatesFilter<"Furniture"> | number
-    status?: StringNullableWithAggregatesFilter<"Furniture"> | string | null
-    make?: StringWithAggregatesFilter<"Furniture"> | string
-    model?: StringNullableWithAggregatesFilter<"Furniture"> | string | null
     category?: StringWithAggregatesFilter<"Furniture"> | string
-    condition?: StringWithAggregatesFilter<"Furniture"> | string
+    brand?: StringWithAggregatesFilter<"Furniture"> | string
+    model?: StringNullableWithAggregatesFilter<"Furniture"> | string | null
+    color?: StringNullableWithAggregatesFilter<"Furniture"> | string | null
     material?: StringNullableWithAggregatesFilter<"Furniture"> | string | null
-    style?: StringNullableWithAggregatesFilter<"Furniture"> | string | null
-    weight?: FloatNullableWithAggregatesFilter<"Furniture"> | number | null
     dimensions?: StringNullableWithAggregatesFilter<"Furniture"> | string | null
+    condition?: StringWithAggregatesFilter<"Furniture"> | string
     isAvailable?: BoolWithAggregatesFilter<"Furniture"> | boolean
-    stockCount?: IntNullableWithAggregatesFilter<"Furniture"> | number | null
+    stockCount?: IntWithAggregatesFilter<"Furniture"> | number
+    price?: FloatWithAggregatesFilter<"Furniture"> | number
+    sellerId?: StringWithAggregatesFilter<"Furniture"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Furniture"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Furniture"> | Date | string
   }
 
-  export type SelectedFileWhereInput = {
-    AND?: SelectedFileWhereInput | SelectedFileWhereInput[]
-    OR?: SelectedFileWhereInput[]
-    NOT?: SelectedFileWhereInput | SelectedFileWhereInput[]
-    id?: StringFilter<"SelectedFile"> | string
-    url?: StringFilter<"SelectedFile"> | string
-    furnitureId?: StringNullableFilter<"SelectedFile"> | string | null
-    key?: StringFilter<"SelectedFile"> | string
+  export type FurnitureImageWhereInput = {
+    AND?: FurnitureImageWhereInput | FurnitureImageWhereInput[]
+    OR?: FurnitureImageWhereInput[]
+    NOT?: FurnitureImageWhereInput | FurnitureImageWhereInput[]
+    id?: StringFilter<"FurnitureImage"> | string
+    url?: StringFilter<"FurnitureImage"> | string
+    key?: StringFilter<"FurnitureImage"> | string
+    furnitureId?: StringNullableFilter<"FurnitureImage"> | string | null
+    createdAt?: DateTimeFilter<"FurnitureImage"> | Date | string
     furniture?: XOR<FurnitureNullableScalarRelationFilter, FurnitureWhereInput> | null
   }
 
-  export type SelectedFileOrderByWithRelationInput = {
+  export type FurnitureImageOrderByWithRelationInput = {
     id?: SortOrder
     url?: SortOrder
-    furnitureId?: SortOrderInput | SortOrder
     key?: SortOrder
+    furnitureId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
     furniture?: FurnitureOrderByWithRelationInput
   }
 
-  export type SelectedFileWhereUniqueInput = Prisma.AtLeast<{
+  export type FurnitureImageWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    AND?: SelectedFileWhereInput | SelectedFileWhereInput[]
-    OR?: SelectedFileWhereInput[]
-    NOT?: SelectedFileWhereInput | SelectedFileWhereInput[]
-    url?: StringFilter<"SelectedFile"> | string
-    furnitureId?: StringNullableFilter<"SelectedFile"> | string | null
-    key?: StringFilter<"SelectedFile"> | string
+    AND?: FurnitureImageWhereInput | FurnitureImageWhereInput[]
+    OR?: FurnitureImageWhereInput[]
+    NOT?: FurnitureImageWhereInput | FurnitureImageWhereInput[]
+    url?: StringFilter<"FurnitureImage"> | string
+    key?: StringFilter<"FurnitureImage"> | string
+    furnitureId?: StringNullableFilter<"FurnitureImage"> | string | null
+    createdAt?: DateTimeFilter<"FurnitureImage"> | Date | string
     furniture?: XOR<FurnitureNullableScalarRelationFilter, FurnitureWhereInput> | null
   }, "id">
 
-  export type SelectedFileOrderByWithAggregationInput = {
+  export type FurnitureImageOrderByWithAggregationInput = {
     id?: SortOrder
     url?: SortOrder
-    furnitureId?: SortOrderInput | SortOrder
     key?: SortOrder
-    _count?: SelectedFileCountOrderByAggregateInput
-    _max?: SelectedFileMaxOrderByAggregateInput
-    _min?: SelectedFileMinOrderByAggregateInput
+    furnitureId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: FurnitureImageCountOrderByAggregateInput
+    _max?: FurnitureImageMaxOrderByAggregateInput
+    _min?: FurnitureImageMinOrderByAggregateInput
   }
 
-  export type SelectedFileScalarWhereWithAggregatesInput = {
-    AND?: SelectedFileScalarWhereWithAggregatesInput | SelectedFileScalarWhereWithAggregatesInput[]
-    OR?: SelectedFileScalarWhereWithAggregatesInput[]
-    NOT?: SelectedFileScalarWhereWithAggregatesInput | SelectedFileScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"SelectedFile"> | string
-    url?: StringWithAggregatesFilter<"SelectedFile"> | string
-    furnitureId?: StringNullableWithAggregatesFilter<"SelectedFile"> | string | null
-    key?: StringWithAggregatesFilter<"SelectedFile"> | string
+  export type FurnitureImageScalarWhereWithAggregatesInput = {
+    AND?: FurnitureImageScalarWhereWithAggregatesInput | FurnitureImageScalarWhereWithAggregatesInput[]
+    OR?: FurnitureImageScalarWhereWithAggregatesInput[]
+    NOT?: FurnitureImageScalarWhereWithAggregatesInput | FurnitureImageScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"FurnitureImage"> | string
+    url?: StringWithAggregatesFilter<"FurnitureImage"> | string
+    key?: StringWithAggregatesFilter<"FurnitureImage"> | string
+    furnitureId?: StringNullableWithAggregatesFilter<"FurnitureImage"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"FurnitureImage"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -9284,29 +9101,19 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
-    measurements?: string | null
-    pullOut?: number | null
-    withStorage?: boolean | null
-    shape?: string | null
-    size?: string | null
-    color?: string | null
-    cover?: string | null
-    seater: number
-    price: number
-    status?: string | null
-    make: string
-    model?: string | null
     category: string
-    condition?: string
+    brand: string
+    model?: string | null
+    color?: string | null
     material?: string | null
-    style?: string | null
-    weight?: number | null
     dimensions?: string | null
+    condition?: string
     isAvailable?: boolean
-    stockCount?: number | null
+    stockCount?: number
+    price: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    selectedFile?: SelectedFileCreateNestedManyWithoutFurnitureInput
+    images?: FurnitureImageCreateNestedManyWithoutFurnitureInput
     seller: UserCreateNestedOneWithoutFurnitureInput
   }
 
@@ -9314,59 +9121,39 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
-    measurements?: string | null
-    pullOut?: number | null
-    withStorage?: boolean | null
-    shape?: string | null
-    size?: string | null
-    color?: string | null
-    cover?: string | null
-    seater: number
-    sellerId: string
-    price: number
-    status?: string | null
-    make: string
-    model?: string | null
     category: string
-    condition?: string
+    brand: string
+    model?: string | null
+    color?: string | null
     material?: string | null
-    style?: string | null
-    weight?: number | null
     dimensions?: string | null
+    condition?: string
     isAvailable?: boolean
-    stockCount?: number | null
+    stockCount?: number
+    price: number
+    sellerId: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    selectedFile?: SelectedFileUncheckedCreateNestedManyWithoutFurnitureInput
+    images?: FurnitureImageUncheckedCreateNestedManyWithoutFurnitureInput
   }
 
   export type FurnitureUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    measurements?: NullableStringFieldUpdateOperationsInput | string | null
-    pullOut?: NullableIntFieldUpdateOperationsInput | number | null
-    withStorage?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    shape?: NullableStringFieldUpdateOperationsInput | string | null
-    size?: NullableStringFieldUpdateOperationsInput | string | null
-    color?: NullableStringFieldUpdateOperationsInput | string | null
-    cover?: NullableStringFieldUpdateOperationsInput | string | null
-    seater?: IntFieldUpdateOperationsInput | number
-    price?: FloatFieldUpdateOperationsInput | number
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    make?: StringFieldUpdateOperationsInput | string
-    model?: NullableStringFieldUpdateOperationsInput | string | null
     category?: StringFieldUpdateOperationsInput | string
-    condition?: StringFieldUpdateOperationsInput | string
+    brand?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
     material?: NullableStringFieldUpdateOperationsInput | string | null
-    style?: NullableStringFieldUpdateOperationsInput | string | null
-    weight?: NullableFloatFieldUpdateOperationsInput | number | null
     dimensions?: NullableStringFieldUpdateOperationsInput | string | null
+    condition?: StringFieldUpdateOperationsInput | string
     isAvailable?: BoolFieldUpdateOperationsInput | boolean
-    stockCount?: NullableIntFieldUpdateOperationsInput | number | null
+    stockCount?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    selectedFile?: SelectedFileUpdateManyWithoutFurnitureNestedInput
+    images?: FurnitureImageUpdateManyWithoutFurnitureNestedInput
     seller?: UserUpdateOneRequiredWithoutFurnitureNestedInput
   }
 
@@ -9374,57 +9161,37 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    measurements?: NullableStringFieldUpdateOperationsInput | string | null
-    pullOut?: NullableIntFieldUpdateOperationsInput | number | null
-    withStorage?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    shape?: NullableStringFieldUpdateOperationsInput | string | null
-    size?: NullableStringFieldUpdateOperationsInput | string | null
-    color?: NullableStringFieldUpdateOperationsInput | string | null
-    cover?: NullableStringFieldUpdateOperationsInput | string | null
-    seater?: IntFieldUpdateOperationsInput | number
-    sellerId?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    make?: StringFieldUpdateOperationsInput | string
-    model?: NullableStringFieldUpdateOperationsInput | string | null
     category?: StringFieldUpdateOperationsInput | string
-    condition?: StringFieldUpdateOperationsInput | string
+    brand?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
     material?: NullableStringFieldUpdateOperationsInput | string | null
-    style?: NullableStringFieldUpdateOperationsInput | string | null
-    weight?: NullableFloatFieldUpdateOperationsInput | number | null
     dimensions?: NullableStringFieldUpdateOperationsInput | string | null
+    condition?: StringFieldUpdateOperationsInput | string
     isAvailable?: BoolFieldUpdateOperationsInput | boolean
-    stockCount?: NullableIntFieldUpdateOperationsInput | number | null
+    stockCount?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
+    sellerId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    selectedFile?: SelectedFileUncheckedUpdateManyWithoutFurnitureNestedInput
+    images?: FurnitureImageUncheckedUpdateManyWithoutFurnitureNestedInput
   }
 
   export type FurnitureCreateManyInput = {
     id?: string
     name: string
     description?: string | null
-    measurements?: string | null
-    pullOut?: number | null
-    withStorage?: boolean | null
-    shape?: string | null
-    size?: string | null
-    color?: string | null
-    cover?: string | null
-    seater: number
-    sellerId: string
-    price: number
-    status?: string | null
-    make: string
-    model?: string | null
     category: string
-    condition?: string
+    brand: string
+    model?: string | null
+    color?: string | null
     material?: string | null
-    style?: string | null
-    weight?: number | null
     dimensions?: string | null
+    condition?: string
     isAvailable?: boolean
-    stockCount?: number | null
+    stockCount?: number
+    price: number
+    sellerId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -9433,26 +9200,16 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    measurements?: NullableStringFieldUpdateOperationsInput | string | null
-    pullOut?: NullableIntFieldUpdateOperationsInput | number | null
-    withStorage?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    shape?: NullableStringFieldUpdateOperationsInput | string | null
-    size?: NullableStringFieldUpdateOperationsInput | string | null
-    color?: NullableStringFieldUpdateOperationsInput | string | null
-    cover?: NullableStringFieldUpdateOperationsInput | string | null
-    seater?: IntFieldUpdateOperationsInput | number
-    price?: FloatFieldUpdateOperationsInput | number
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    make?: StringFieldUpdateOperationsInput | string
-    model?: NullableStringFieldUpdateOperationsInput | string | null
     category?: StringFieldUpdateOperationsInput | string
-    condition?: StringFieldUpdateOperationsInput | string
+    brand?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
     material?: NullableStringFieldUpdateOperationsInput | string | null
-    style?: NullableStringFieldUpdateOperationsInput | string | null
-    weight?: NullableFloatFieldUpdateOperationsInput | number | null
     dimensions?: NullableStringFieldUpdateOperationsInput | string | null
+    condition?: StringFieldUpdateOperationsInput | string
     isAvailable?: BoolFieldUpdateOperationsInput | boolean
-    stockCount?: NullableIntFieldUpdateOperationsInput | number | null
+    stockCount?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -9461,77 +9218,74 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    measurements?: NullableStringFieldUpdateOperationsInput | string | null
-    pullOut?: NullableIntFieldUpdateOperationsInput | number | null
-    withStorage?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    shape?: NullableStringFieldUpdateOperationsInput | string | null
-    size?: NullableStringFieldUpdateOperationsInput | string | null
-    color?: NullableStringFieldUpdateOperationsInput | string | null
-    cover?: NullableStringFieldUpdateOperationsInput | string | null
-    seater?: IntFieldUpdateOperationsInput | number
-    sellerId?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    make?: StringFieldUpdateOperationsInput | string
-    model?: NullableStringFieldUpdateOperationsInput | string | null
     category?: StringFieldUpdateOperationsInput | string
-    condition?: StringFieldUpdateOperationsInput | string
+    brand?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
     material?: NullableStringFieldUpdateOperationsInput | string | null
-    style?: NullableStringFieldUpdateOperationsInput | string | null
-    weight?: NullableFloatFieldUpdateOperationsInput | number | null
     dimensions?: NullableStringFieldUpdateOperationsInput | string | null
+    condition?: StringFieldUpdateOperationsInput | string
     isAvailable?: BoolFieldUpdateOperationsInput | boolean
-    stockCount?: NullableIntFieldUpdateOperationsInput | number | null
+    stockCount?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
+    sellerId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SelectedFileCreateInput = {
+  export type FurnitureImageCreateInput = {
     id?: string
     url: string
     key: string
-    furniture?: FurnitureCreateNestedOneWithoutSelectedFileInput
+    createdAt?: Date | string
+    furniture?: FurnitureCreateNestedOneWithoutImagesInput
   }
 
-  export type SelectedFileUncheckedCreateInput = {
+  export type FurnitureImageUncheckedCreateInput = {
     id?: string
     url: string
+    key: string
     furnitureId?: string | null
-    key: string
+    createdAt?: Date | string
   }
 
-  export type SelectedFileUpdateInput = {
+  export type FurnitureImageUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
-    furniture?: FurnitureUpdateOneWithoutSelectedFileNestedInput
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    furniture?: FurnitureUpdateOneWithoutImagesNestedInput
   }
 
-  export type SelectedFileUncheckedUpdateInput = {
+  export type FurnitureImageUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
     furnitureId?: NullableStringFieldUpdateOperationsInput | string | null
-    key?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SelectedFileCreateManyInput = {
+  export type FurnitureImageCreateManyInput = {
     id?: string
     url: string
-    furnitureId?: string | null
     key: string
+    furnitureId?: string | null
+    createdAt?: Date | string
   }
 
-  export type SelectedFileUpdateManyMutationInput = {
+  export type FurnitureImageUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SelectedFileUncheckedUpdateManyInput = {
+  export type FurnitureImageUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
     furnitureId?: NullableStringFieldUpdateOperationsInput | string | null
-    key?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -9861,9 +9615,9 @@ export namespace Prisma {
     expires?: SortOrder
   }
 
-  export type BoolNullableFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -9888,29 +9642,13 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type FloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  export type FurnitureImageListRelationFilter = {
+    every?: FurnitureImageWhereInput
+    some?: FurnitureImageWhereInput
+    none?: FurnitureImageWhereInput
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type SelectedFileListRelationFilter = {
-    every?: SelectedFileWhereInput
-    some?: SelectedFileWhereInput
-    none?: SelectedFileWhereInput
-  }
-
-  export type SelectedFileOrderByRelationAggregateInput = {
+  export type FurnitureImageOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -9918,64 +9656,41 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
-    measurements?: SortOrder
-    pullOut?: SortOrder
-    withStorage?: SortOrder
-    shape?: SortOrder
-    size?: SortOrder
-    color?: SortOrder
-    cover?: SortOrder
-    seater?: SortOrder
-    sellerId?: SortOrder
-    price?: SortOrder
-    status?: SortOrder
-    make?: SortOrder
-    model?: SortOrder
     category?: SortOrder
-    condition?: SortOrder
+    brand?: SortOrder
+    model?: SortOrder
+    color?: SortOrder
     material?: SortOrder
-    style?: SortOrder
-    weight?: SortOrder
     dimensions?: SortOrder
+    condition?: SortOrder
     isAvailable?: SortOrder
     stockCount?: SortOrder
+    price?: SortOrder
+    sellerId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type FurnitureAvgOrderByAggregateInput = {
-    pullOut?: SortOrder
-    seater?: SortOrder
-    price?: SortOrder
-    weight?: SortOrder
     stockCount?: SortOrder
+    price?: SortOrder
   }
 
   export type FurnitureMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
-    measurements?: SortOrder
-    pullOut?: SortOrder
-    withStorage?: SortOrder
-    shape?: SortOrder
-    size?: SortOrder
-    color?: SortOrder
-    cover?: SortOrder
-    seater?: SortOrder
-    sellerId?: SortOrder
-    price?: SortOrder
-    status?: SortOrder
-    make?: SortOrder
-    model?: SortOrder
     category?: SortOrder
-    condition?: SortOrder
+    brand?: SortOrder
+    model?: SortOrder
+    color?: SortOrder
     material?: SortOrder
-    style?: SortOrder
-    weight?: SortOrder
     dimensions?: SortOrder
+    condition?: SortOrder
     isAvailable?: SortOrder
     stockCount?: SortOrder
+    price?: SortOrder
+    sellerId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -9984,45 +9699,32 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
-    measurements?: SortOrder
-    pullOut?: SortOrder
-    withStorage?: SortOrder
-    shape?: SortOrder
-    size?: SortOrder
-    color?: SortOrder
-    cover?: SortOrder
-    seater?: SortOrder
-    sellerId?: SortOrder
-    price?: SortOrder
-    status?: SortOrder
-    make?: SortOrder
-    model?: SortOrder
     category?: SortOrder
-    condition?: SortOrder
+    brand?: SortOrder
+    model?: SortOrder
+    color?: SortOrder
     material?: SortOrder
-    style?: SortOrder
-    weight?: SortOrder
     dimensions?: SortOrder
+    condition?: SortOrder
     isAvailable?: SortOrder
     stockCount?: SortOrder
+    price?: SortOrder
+    sellerId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type FurnitureSumOrderByAggregateInput = {
-    pullOut?: SortOrder
-    seater?: SortOrder
-    price?: SortOrder
-    weight?: SortOrder
     stockCount?: SortOrder
+    price?: SortOrder
   }
 
-  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedBoolNullableFilter<$PrismaModel>
-    _max?: NestedBoolNullableFilter<$PrismaModel>
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -10057,54 +9759,33 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
-  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedFloatNullableFilter<$PrismaModel>
-    _min?: NestedFloatNullableFilter<$PrismaModel>
-    _max?: NestedFloatNullableFilter<$PrismaModel>
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
   export type FurnitureNullableScalarRelationFilter = {
     is?: FurnitureWhereInput | null
     isNot?: FurnitureWhereInput | null
   }
 
-  export type SelectedFileCountOrderByAggregateInput = {
+  export type FurnitureImageCountOrderByAggregateInput = {
     id?: SortOrder
     url?: SortOrder
-    furnitureId?: SortOrder
     key?: SortOrder
+    furnitureId?: SortOrder
+    createdAt?: SortOrder
   }
 
-  export type SelectedFileMaxOrderByAggregateInput = {
+  export type FurnitureImageMaxOrderByAggregateInput = {
     id?: SortOrder
     url?: SortOrder
-    furnitureId?: SortOrder
     key?: SortOrder
+    furnitureId?: SortOrder
+    createdAt?: SortOrder
   }
 
-  export type SelectedFileMinOrderByAggregateInput = {
+  export type FurnitureImageMinOrderByAggregateInput = {
     id?: SortOrder
     url?: SortOrder
-    furnitureId?: SortOrder
     key?: SortOrder
+    furnitureId?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type AccountCreateNestedManyWithoutUserInput = {
@@ -10285,11 +9966,11 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSessionsInput, UserUpdateWithoutSessionsInput>, UserUncheckedUpdateWithoutSessionsInput>
   }
 
-  export type SelectedFileCreateNestedManyWithoutFurnitureInput = {
-    create?: XOR<SelectedFileCreateWithoutFurnitureInput, SelectedFileUncheckedCreateWithoutFurnitureInput> | SelectedFileCreateWithoutFurnitureInput[] | SelectedFileUncheckedCreateWithoutFurnitureInput[]
-    connectOrCreate?: SelectedFileCreateOrConnectWithoutFurnitureInput | SelectedFileCreateOrConnectWithoutFurnitureInput[]
-    createMany?: SelectedFileCreateManyFurnitureInputEnvelope
-    connect?: SelectedFileWhereUniqueInput | SelectedFileWhereUniqueInput[]
+  export type FurnitureImageCreateNestedManyWithoutFurnitureInput = {
+    create?: XOR<FurnitureImageCreateWithoutFurnitureInput, FurnitureImageUncheckedCreateWithoutFurnitureInput> | FurnitureImageCreateWithoutFurnitureInput[] | FurnitureImageUncheckedCreateWithoutFurnitureInput[]
+    connectOrCreate?: FurnitureImageCreateOrConnectWithoutFurnitureInput | FurnitureImageCreateOrConnectWithoutFurnitureInput[]
+    createMany?: FurnitureImageCreateManyFurnitureInputEnvelope
+    connect?: FurnitureImageWhereUniqueInput | FurnitureImageWhereUniqueInput[]
   }
 
   export type UserCreateNestedOneWithoutFurnitureInput = {
@@ -10298,15 +9979,15 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type SelectedFileUncheckedCreateNestedManyWithoutFurnitureInput = {
-    create?: XOR<SelectedFileCreateWithoutFurnitureInput, SelectedFileUncheckedCreateWithoutFurnitureInput> | SelectedFileCreateWithoutFurnitureInput[] | SelectedFileUncheckedCreateWithoutFurnitureInput[]
-    connectOrCreate?: SelectedFileCreateOrConnectWithoutFurnitureInput | SelectedFileCreateOrConnectWithoutFurnitureInput[]
-    createMany?: SelectedFileCreateManyFurnitureInputEnvelope
-    connect?: SelectedFileWhereUniqueInput | SelectedFileWhereUniqueInput[]
+  export type FurnitureImageUncheckedCreateNestedManyWithoutFurnitureInput = {
+    create?: XOR<FurnitureImageCreateWithoutFurnitureInput, FurnitureImageUncheckedCreateWithoutFurnitureInput> | FurnitureImageCreateWithoutFurnitureInput[] | FurnitureImageUncheckedCreateWithoutFurnitureInput[]
+    connectOrCreate?: FurnitureImageCreateOrConnectWithoutFurnitureInput | FurnitureImageCreateOrConnectWithoutFurnitureInput[]
+    createMany?: FurnitureImageCreateManyFurnitureInputEnvelope
+    connect?: FurnitureImageWhereUniqueInput | FurnitureImageWhereUniqueInput[]
   }
 
-  export type NullableBoolFieldUpdateOperationsInput = {
-    set?: boolean | null
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -10325,30 +10006,18 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type NullableFloatFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
-  }
-
-  export type SelectedFileUpdateManyWithoutFurnitureNestedInput = {
-    create?: XOR<SelectedFileCreateWithoutFurnitureInput, SelectedFileUncheckedCreateWithoutFurnitureInput> | SelectedFileCreateWithoutFurnitureInput[] | SelectedFileUncheckedCreateWithoutFurnitureInput[]
-    connectOrCreate?: SelectedFileCreateOrConnectWithoutFurnitureInput | SelectedFileCreateOrConnectWithoutFurnitureInput[]
-    upsert?: SelectedFileUpsertWithWhereUniqueWithoutFurnitureInput | SelectedFileUpsertWithWhereUniqueWithoutFurnitureInput[]
-    createMany?: SelectedFileCreateManyFurnitureInputEnvelope
-    set?: SelectedFileWhereUniqueInput | SelectedFileWhereUniqueInput[]
-    disconnect?: SelectedFileWhereUniqueInput | SelectedFileWhereUniqueInput[]
-    delete?: SelectedFileWhereUniqueInput | SelectedFileWhereUniqueInput[]
-    connect?: SelectedFileWhereUniqueInput | SelectedFileWhereUniqueInput[]
-    update?: SelectedFileUpdateWithWhereUniqueWithoutFurnitureInput | SelectedFileUpdateWithWhereUniqueWithoutFurnitureInput[]
-    updateMany?: SelectedFileUpdateManyWithWhereWithoutFurnitureInput | SelectedFileUpdateManyWithWhereWithoutFurnitureInput[]
-    deleteMany?: SelectedFileScalarWhereInput | SelectedFileScalarWhereInput[]
+  export type FurnitureImageUpdateManyWithoutFurnitureNestedInput = {
+    create?: XOR<FurnitureImageCreateWithoutFurnitureInput, FurnitureImageUncheckedCreateWithoutFurnitureInput> | FurnitureImageCreateWithoutFurnitureInput[] | FurnitureImageUncheckedCreateWithoutFurnitureInput[]
+    connectOrCreate?: FurnitureImageCreateOrConnectWithoutFurnitureInput | FurnitureImageCreateOrConnectWithoutFurnitureInput[]
+    upsert?: FurnitureImageUpsertWithWhereUniqueWithoutFurnitureInput | FurnitureImageUpsertWithWhereUniqueWithoutFurnitureInput[]
+    createMany?: FurnitureImageCreateManyFurnitureInputEnvelope
+    set?: FurnitureImageWhereUniqueInput | FurnitureImageWhereUniqueInput[]
+    disconnect?: FurnitureImageWhereUniqueInput | FurnitureImageWhereUniqueInput[]
+    delete?: FurnitureImageWhereUniqueInput | FurnitureImageWhereUniqueInput[]
+    connect?: FurnitureImageWhereUniqueInput | FurnitureImageWhereUniqueInput[]
+    update?: FurnitureImageUpdateWithWhereUniqueWithoutFurnitureInput | FurnitureImageUpdateWithWhereUniqueWithoutFurnitureInput[]
+    updateMany?: FurnitureImageUpdateManyWithWhereWithoutFurnitureInput | FurnitureImageUpdateManyWithWhereWithoutFurnitureInput[]
+    deleteMany?: FurnitureImageScalarWhereInput | FurnitureImageScalarWhereInput[]
   }
 
   export type UserUpdateOneRequiredWithoutFurnitureNestedInput = {
@@ -10359,34 +10028,34 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFurnitureInput, UserUpdateWithoutFurnitureInput>, UserUncheckedUpdateWithoutFurnitureInput>
   }
 
-  export type SelectedFileUncheckedUpdateManyWithoutFurnitureNestedInput = {
-    create?: XOR<SelectedFileCreateWithoutFurnitureInput, SelectedFileUncheckedCreateWithoutFurnitureInput> | SelectedFileCreateWithoutFurnitureInput[] | SelectedFileUncheckedCreateWithoutFurnitureInput[]
-    connectOrCreate?: SelectedFileCreateOrConnectWithoutFurnitureInput | SelectedFileCreateOrConnectWithoutFurnitureInput[]
-    upsert?: SelectedFileUpsertWithWhereUniqueWithoutFurnitureInput | SelectedFileUpsertWithWhereUniqueWithoutFurnitureInput[]
-    createMany?: SelectedFileCreateManyFurnitureInputEnvelope
-    set?: SelectedFileWhereUniqueInput | SelectedFileWhereUniqueInput[]
-    disconnect?: SelectedFileWhereUniqueInput | SelectedFileWhereUniqueInput[]
-    delete?: SelectedFileWhereUniqueInput | SelectedFileWhereUniqueInput[]
-    connect?: SelectedFileWhereUniqueInput | SelectedFileWhereUniqueInput[]
-    update?: SelectedFileUpdateWithWhereUniqueWithoutFurnitureInput | SelectedFileUpdateWithWhereUniqueWithoutFurnitureInput[]
-    updateMany?: SelectedFileUpdateManyWithWhereWithoutFurnitureInput | SelectedFileUpdateManyWithWhereWithoutFurnitureInput[]
-    deleteMany?: SelectedFileScalarWhereInput | SelectedFileScalarWhereInput[]
+  export type FurnitureImageUncheckedUpdateManyWithoutFurnitureNestedInput = {
+    create?: XOR<FurnitureImageCreateWithoutFurnitureInput, FurnitureImageUncheckedCreateWithoutFurnitureInput> | FurnitureImageCreateWithoutFurnitureInput[] | FurnitureImageUncheckedCreateWithoutFurnitureInput[]
+    connectOrCreate?: FurnitureImageCreateOrConnectWithoutFurnitureInput | FurnitureImageCreateOrConnectWithoutFurnitureInput[]
+    upsert?: FurnitureImageUpsertWithWhereUniqueWithoutFurnitureInput | FurnitureImageUpsertWithWhereUniqueWithoutFurnitureInput[]
+    createMany?: FurnitureImageCreateManyFurnitureInputEnvelope
+    set?: FurnitureImageWhereUniqueInput | FurnitureImageWhereUniqueInput[]
+    disconnect?: FurnitureImageWhereUniqueInput | FurnitureImageWhereUniqueInput[]
+    delete?: FurnitureImageWhereUniqueInput | FurnitureImageWhereUniqueInput[]
+    connect?: FurnitureImageWhereUniqueInput | FurnitureImageWhereUniqueInput[]
+    update?: FurnitureImageUpdateWithWhereUniqueWithoutFurnitureInput | FurnitureImageUpdateWithWhereUniqueWithoutFurnitureInput[]
+    updateMany?: FurnitureImageUpdateManyWithWhereWithoutFurnitureInput | FurnitureImageUpdateManyWithWhereWithoutFurnitureInput[]
+    deleteMany?: FurnitureImageScalarWhereInput | FurnitureImageScalarWhereInput[]
   }
 
-  export type FurnitureCreateNestedOneWithoutSelectedFileInput = {
-    create?: XOR<FurnitureCreateWithoutSelectedFileInput, FurnitureUncheckedCreateWithoutSelectedFileInput>
-    connectOrCreate?: FurnitureCreateOrConnectWithoutSelectedFileInput
+  export type FurnitureCreateNestedOneWithoutImagesInput = {
+    create?: XOR<FurnitureCreateWithoutImagesInput, FurnitureUncheckedCreateWithoutImagesInput>
+    connectOrCreate?: FurnitureCreateOrConnectWithoutImagesInput
     connect?: FurnitureWhereUniqueInput
   }
 
-  export type FurnitureUpdateOneWithoutSelectedFileNestedInput = {
-    create?: XOR<FurnitureCreateWithoutSelectedFileInput, FurnitureUncheckedCreateWithoutSelectedFileInput>
-    connectOrCreate?: FurnitureCreateOrConnectWithoutSelectedFileInput
-    upsert?: FurnitureUpsertWithoutSelectedFileInput
+  export type FurnitureUpdateOneWithoutImagesNestedInput = {
+    create?: XOR<FurnitureCreateWithoutImagesInput, FurnitureUncheckedCreateWithoutImagesInput>
+    connectOrCreate?: FurnitureCreateOrConnectWithoutImagesInput
+    upsert?: FurnitureUpsertWithoutImagesInput
     disconnect?: FurnitureWhereInput | boolean
     delete?: FurnitureWhereInput | boolean
     connect?: FurnitureWhereUniqueInput
-    update?: XOR<XOR<FurnitureUpdateToOneWithWhereWithoutSelectedFileInput, FurnitureUpdateWithoutSelectedFileInput>, FurnitureUncheckedUpdateWithoutSelectedFileInput>
+    update?: XOR<XOR<FurnitureUpdateToOneWithWhereWithoutImagesInput, FurnitureUpdateWithoutImagesInput>, FurnitureUncheckedUpdateWithoutImagesInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -10550,9 +10219,9 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedBoolNullableFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedFloatFilter<$PrismaModel = never> = {
@@ -10566,17 +10235,12 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedBoolNullableFilter<$PrismaModel>
-    _max?: NestedBoolNullableFilter<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -10609,30 +10273,6 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedFloatNullableFilter<$PrismaModel>
-    _min?: NestedFloatNullableFilter<$PrismaModel>
-    _max?: NestedFloatNullableFilter<$PrismaModel>
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -10703,58 +10343,38 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
-    measurements?: string | null
-    pullOut?: number | null
-    withStorage?: boolean | null
-    shape?: string | null
-    size?: string | null
-    color?: string | null
-    cover?: string | null
-    seater: number
-    price: number
-    status?: string | null
-    make: string
-    model?: string | null
     category: string
-    condition?: string
+    brand: string
+    model?: string | null
+    color?: string | null
     material?: string | null
-    style?: string | null
-    weight?: number | null
     dimensions?: string | null
+    condition?: string
     isAvailable?: boolean
-    stockCount?: number | null
+    stockCount?: number
+    price: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    selectedFile?: SelectedFileCreateNestedManyWithoutFurnitureInput
+    images?: FurnitureImageCreateNestedManyWithoutFurnitureInput
   }
 
   export type FurnitureUncheckedCreateWithoutSellerInput = {
     id?: string
     name: string
     description?: string | null
-    measurements?: string | null
-    pullOut?: number | null
-    withStorage?: boolean | null
-    shape?: string | null
-    size?: string | null
-    color?: string | null
-    cover?: string | null
-    seater: number
-    price: number
-    status?: string | null
-    make: string
-    model?: string | null
     category: string
-    condition?: string
+    brand: string
+    model?: string | null
+    color?: string | null
     material?: string | null
-    style?: string | null
-    weight?: number | null
     dimensions?: string | null
+    condition?: string
     isAvailable?: boolean
-    stockCount?: number | null
+    stockCount?: number
+    price: number
     createdAt?: Date | string
     updatedAt?: Date | string
-    selectedFile?: SelectedFileUncheckedCreateNestedManyWithoutFurnitureInput
+    images?: FurnitureImageUncheckedCreateNestedManyWithoutFurnitureInput
   }
 
   export type FurnitureCreateOrConnectWithoutSellerInput = {
@@ -10852,27 +10472,17 @@ export namespace Prisma {
     id?: StringFilter<"Furniture"> | string
     name?: StringFilter<"Furniture"> | string
     description?: StringNullableFilter<"Furniture"> | string | null
-    measurements?: StringNullableFilter<"Furniture"> | string | null
-    pullOut?: IntNullableFilter<"Furniture"> | number | null
-    withStorage?: BoolNullableFilter<"Furniture"> | boolean | null
-    shape?: StringNullableFilter<"Furniture"> | string | null
-    size?: StringNullableFilter<"Furniture"> | string | null
-    color?: StringNullableFilter<"Furniture"> | string | null
-    cover?: StringNullableFilter<"Furniture"> | string | null
-    seater?: IntFilter<"Furniture"> | number
-    sellerId?: StringFilter<"Furniture"> | string
-    price?: FloatFilter<"Furniture"> | number
-    status?: StringNullableFilter<"Furniture"> | string | null
-    make?: StringFilter<"Furniture"> | string
-    model?: StringNullableFilter<"Furniture"> | string | null
     category?: StringFilter<"Furniture"> | string
-    condition?: StringFilter<"Furniture"> | string
+    brand?: StringFilter<"Furniture"> | string
+    model?: StringNullableFilter<"Furniture"> | string | null
+    color?: StringNullableFilter<"Furniture"> | string | null
     material?: StringNullableFilter<"Furniture"> | string | null
-    style?: StringNullableFilter<"Furniture"> | string | null
-    weight?: FloatNullableFilter<"Furniture"> | number | null
     dimensions?: StringNullableFilter<"Furniture"> | string | null
+    condition?: StringFilter<"Furniture"> | string
     isAvailable?: BoolFilter<"Furniture"> | boolean
-    stockCount?: IntNullableFilter<"Furniture"> | number | null
+    stockCount?: IntFilter<"Furniture"> | number
+    price?: FloatFilter<"Furniture"> | number
+    sellerId?: StringFilter<"Furniture"> | string
     createdAt?: DateTimeFilter<"Furniture"> | Date | string
     updatedAt?: DateTimeFilter<"Furniture"> | Date | string
   }
@@ -11021,25 +10631,27 @@ export namespace Prisma {
     Furniture?: FurnitureUncheckedUpdateManyWithoutSellerNestedInput
   }
 
-  export type SelectedFileCreateWithoutFurnitureInput = {
+  export type FurnitureImageCreateWithoutFurnitureInput = {
     id?: string
     url: string
     key: string
+    createdAt?: Date | string
   }
 
-  export type SelectedFileUncheckedCreateWithoutFurnitureInput = {
+  export type FurnitureImageUncheckedCreateWithoutFurnitureInput = {
     id?: string
     url: string
     key: string
+    createdAt?: Date | string
   }
 
-  export type SelectedFileCreateOrConnectWithoutFurnitureInput = {
-    where: SelectedFileWhereUniqueInput
-    create: XOR<SelectedFileCreateWithoutFurnitureInput, SelectedFileUncheckedCreateWithoutFurnitureInput>
+  export type FurnitureImageCreateOrConnectWithoutFurnitureInput = {
+    where: FurnitureImageWhereUniqueInput
+    create: XOR<FurnitureImageCreateWithoutFurnitureInput, FurnitureImageUncheckedCreateWithoutFurnitureInput>
   }
 
-  export type SelectedFileCreateManyFurnitureInputEnvelope = {
-    data: SelectedFileCreateManyFurnitureInput | SelectedFileCreateManyFurnitureInput[]
+  export type FurnitureImageCreateManyFurnitureInputEnvelope = {
+    data: FurnitureImageCreateManyFurnitureInput | FurnitureImageCreateManyFurnitureInput[]
     skipDuplicates?: boolean
   }
 
@@ -11076,30 +10688,31 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutFurnitureInput, UserUncheckedCreateWithoutFurnitureInput>
   }
 
-  export type SelectedFileUpsertWithWhereUniqueWithoutFurnitureInput = {
-    where: SelectedFileWhereUniqueInput
-    update: XOR<SelectedFileUpdateWithoutFurnitureInput, SelectedFileUncheckedUpdateWithoutFurnitureInput>
-    create: XOR<SelectedFileCreateWithoutFurnitureInput, SelectedFileUncheckedCreateWithoutFurnitureInput>
+  export type FurnitureImageUpsertWithWhereUniqueWithoutFurnitureInput = {
+    where: FurnitureImageWhereUniqueInput
+    update: XOR<FurnitureImageUpdateWithoutFurnitureInput, FurnitureImageUncheckedUpdateWithoutFurnitureInput>
+    create: XOR<FurnitureImageCreateWithoutFurnitureInput, FurnitureImageUncheckedCreateWithoutFurnitureInput>
   }
 
-  export type SelectedFileUpdateWithWhereUniqueWithoutFurnitureInput = {
-    where: SelectedFileWhereUniqueInput
-    data: XOR<SelectedFileUpdateWithoutFurnitureInput, SelectedFileUncheckedUpdateWithoutFurnitureInput>
+  export type FurnitureImageUpdateWithWhereUniqueWithoutFurnitureInput = {
+    where: FurnitureImageWhereUniqueInput
+    data: XOR<FurnitureImageUpdateWithoutFurnitureInput, FurnitureImageUncheckedUpdateWithoutFurnitureInput>
   }
 
-  export type SelectedFileUpdateManyWithWhereWithoutFurnitureInput = {
-    where: SelectedFileScalarWhereInput
-    data: XOR<SelectedFileUpdateManyMutationInput, SelectedFileUncheckedUpdateManyWithoutFurnitureInput>
+  export type FurnitureImageUpdateManyWithWhereWithoutFurnitureInput = {
+    where: FurnitureImageScalarWhereInput
+    data: XOR<FurnitureImageUpdateManyMutationInput, FurnitureImageUncheckedUpdateManyWithoutFurnitureInput>
   }
 
-  export type SelectedFileScalarWhereInput = {
-    AND?: SelectedFileScalarWhereInput | SelectedFileScalarWhereInput[]
-    OR?: SelectedFileScalarWhereInput[]
-    NOT?: SelectedFileScalarWhereInput | SelectedFileScalarWhereInput[]
-    id?: StringFilter<"SelectedFile"> | string
-    url?: StringFilter<"SelectedFile"> | string
-    furnitureId?: StringNullableFilter<"SelectedFile"> | string | null
-    key?: StringFilter<"SelectedFile"> | string
+  export type FurnitureImageScalarWhereInput = {
+    AND?: FurnitureImageScalarWhereInput | FurnitureImageScalarWhereInput[]
+    OR?: FurnitureImageScalarWhereInput[]
+    NOT?: FurnitureImageScalarWhereInput | FurnitureImageScalarWhereInput[]
+    id?: StringFilter<"FurnitureImage"> | string
+    url?: StringFilter<"FurnitureImage"> | string
+    key?: StringFilter<"FurnitureImage"> | string
+    furnitureId?: StringNullableFilter<"FurnitureImage"> | string | null
+    createdAt?: DateTimeFilter<"FurnitureImage"> | Date | string
   }
 
   export type UserUpsertWithoutFurnitureInput = {
@@ -11141,134 +10754,94 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type FurnitureCreateWithoutSelectedFileInput = {
+  export type FurnitureCreateWithoutImagesInput = {
     id?: string
     name: string
     description?: string | null
-    measurements?: string | null
-    pullOut?: number | null
-    withStorage?: boolean | null
-    shape?: string | null
-    size?: string | null
-    color?: string | null
-    cover?: string | null
-    seater: number
-    price: number
-    status?: string | null
-    make: string
-    model?: string | null
     category: string
-    condition?: string
+    brand: string
+    model?: string | null
+    color?: string | null
     material?: string | null
-    style?: string | null
-    weight?: number | null
     dimensions?: string | null
+    condition?: string
     isAvailable?: boolean
-    stockCount?: number | null
+    stockCount?: number
+    price: number
     createdAt?: Date | string
     updatedAt?: Date | string
     seller: UserCreateNestedOneWithoutFurnitureInput
   }
 
-  export type FurnitureUncheckedCreateWithoutSelectedFileInput = {
+  export type FurnitureUncheckedCreateWithoutImagesInput = {
     id?: string
     name: string
     description?: string | null
-    measurements?: string | null
-    pullOut?: number | null
-    withStorage?: boolean | null
-    shape?: string | null
-    size?: string | null
-    color?: string | null
-    cover?: string | null
-    seater: number
-    sellerId: string
-    price: number
-    status?: string | null
-    make: string
-    model?: string | null
     category: string
-    condition?: string
+    brand: string
+    model?: string | null
+    color?: string | null
     material?: string | null
-    style?: string | null
-    weight?: number | null
     dimensions?: string | null
+    condition?: string
     isAvailable?: boolean
-    stockCount?: number | null
+    stockCount?: number
+    price: number
+    sellerId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type FurnitureCreateOrConnectWithoutSelectedFileInput = {
+  export type FurnitureCreateOrConnectWithoutImagesInput = {
     where: FurnitureWhereUniqueInput
-    create: XOR<FurnitureCreateWithoutSelectedFileInput, FurnitureUncheckedCreateWithoutSelectedFileInput>
+    create: XOR<FurnitureCreateWithoutImagesInput, FurnitureUncheckedCreateWithoutImagesInput>
   }
 
-  export type FurnitureUpsertWithoutSelectedFileInput = {
-    update: XOR<FurnitureUpdateWithoutSelectedFileInput, FurnitureUncheckedUpdateWithoutSelectedFileInput>
-    create: XOR<FurnitureCreateWithoutSelectedFileInput, FurnitureUncheckedCreateWithoutSelectedFileInput>
+  export type FurnitureUpsertWithoutImagesInput = {
+    update: XOR<FurnitureUpdateWithoutImagesInput, FurnitureUncheckedUpdateWithoutImagesInput>
+    create: XOR<FurnitureCreateWithoutImagesInput, FurnitureUncheckedCreateWithoutImagesInput>
     where?: FurnitureWhereInput
   }
 
-  export type FurnitureUpdateToOneWithWhereWithoutSelectedFileInput = {
+  export type FurnitureUpdateToOneWithWhereWithoutImagesInput = {
     where?: FurnitureWhereInput
-    data: XOR<FurnitureUpdateWithoutSelectedFileInput, FurnitureUncheckedUpdateWithoutSelectedFileInput>
+    data: XOR<FurnitureUpdateWithoutImagesInput, FurnitureUncheckedUpdateWithoutImagesInput>
   }
 
-  export type FurnitureUpdateWithoutSelectedFileInput = {
+  export type FurnitureUpdateWithoutImagesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    measurements?: NullableStringFieldUpdateOperationsInput | string | null
-    pullOut?: NullableIntFieldUpdateOperationsInput | number | null
-    withStorage?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    shape?: NullableStringFieldUpdateOperationsInput | string | null
-    size?: NullableStringFieldUpdateOperationsInput | string | null
-    color?: NullableStringFieldUpdateOperationsInput | string | null
-    cover?: NullableStringFieldUpdateOperationsInput | string | null
-    seater?: IntFieldUpdateOperationsInput | number
-    price?: FloatFieldUpdateOperationsInput | number
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    make?: StringFieldUpdateOperationsInput | string
-    model?: NullableStringFieldUpdateOperationsInput | string | null
     category?: StringFieldUpdateOperationsInput | string
-    condition?: StringFieldUpdateOperationsInput | string
+    brand?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
     material?: NullableStringFieldUpdateOperationsInput | string | null
-    style?: NullableStringFieldUpdateOperationsInput | string | null
-    weight?: NullableFloatFieldUpdateOperationsInput | number | null
     dimensions?: NullableStringFieldUpdateOperationsInput | string | null
+    condition?: StringFieldUpdateOperationsInput | string
     isAvailable?: BoolFieldUpdateOperationsInput | boolean
-    stockCount?: NullableIntFieldUpdateOperationsInput | number | null
+    stockCount?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     seller?: UserUpdateOneRequiredWithoutFurnitureNestedInput
   }
 
-  export type FurnitureUncheckedUpdateWithoutSelectedFileInput = {
+  export type FurnitureUncheckedUpdateWithoutImagesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    measurements?: NullableStringFieldUpdateOperationsInput | string | null
-    pullOut?: NullableIntFieldUpdateOperationsInput | number | null
-    withStorage?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    shape?: NullableStringFieldUpdateOperationsInput | string | null
-    size?: NullableStringFieldUpdateOperationsInput | string | null
-    color?: NullableStringFieldUpdateOperationsInput | string | null
-    cover?: NullableStringFieldUpdateOperationsInput | string | null
-    seater?: IntFieldUpdateOperationsInput | number
-    sellerId?: StringFieldUpdateOperationsInput | string
-    price?: FloatFieldUpdateOperationsInput | number
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    make?: StringFieldUpdateOperationsInput | string
-    model?: NullableStringFieldUpdateOperationsInput | string | null
     category?: StringFieldUpdateOperationsInput | string
-    condition?: StringFieldUpdateOperationsInput | string
+    brand?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
     material?: NullableStringFieldUpdateOperationsInput | string | null
-    style?: NullableStringFieldUpdateOperationsInput | string | null
-    weight?: NullableFloatFieldUpdateOperationsInput | number | null
     dimensions?: NullableStringFieldUpdateOperationsInput | string | null
+    condition?: StringFieldUpdateOperationsInput | string
     isAvailable?: BoolFieldUpdateOperationsInput | boolean
-    stockCount?: NullableIntFieldUpdateOperationsInput | number | null
+    stockCount?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
+    sellerId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -11299,26 +10872,16 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
-    measurements?: string | null
-    pullOut?: number | null
-    withStorage?: boolean | null
-    shape?: string | null
-    size?: string | null
-    color?: string | null
-    cover?: string | null
-    seater: number
-    price: number
-    status?: string | null
-    make: string
-    model?: string | null
     category: string
-    condition?: string
+    brand: string
+    model?: string | null
+    color?: string | null
     material?: string | null
-    style?: string | null
-    weight?: number | null
     dimensions?: string | null
+    condition?: string
     isAvailable?: boolean
-    stockCount?: number | null
+    stockCount?: number
+    price: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -11393,110 +10956,84 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    measurements?: NullableStringFieldUpdateOperationsInput | string | null
-    pullOut?: NullableIntFieldUpdateOperationsInput | number | null
-    withStorage?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    shape?: NullableStringFieldUpdateOperationsInput | string | null
-    size?: NullableStringFieldUpdateOperationsInput | string | null
-    color?: NullableStringFieldUpdateOperationsInput | string | null
-    cover?: NullableStringFieldUpdateOperationsInput | string | null
-    seater?: IntFieldUpdateOperationsInput | number
-    price?: FloatFieldUpdateOperationsInput | number
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    make?: StringFieldUpdateOperationsInput | string
-    model?: NullableStringFieldUpdateOperationsInput | string | null
     category?: StringFieldUpdateOperationsInput | string
-    condition?: StringFieldUpdateOperationsInput | string
+    brand?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
     material?: NullableStringFieldUpdateOperationsInput | string | null
-    style?: NullableStringFieldUpdateOperationsInput | string | null
-    weight?: NullableFloatFieldUpdateOperationsInput | number | null
     dimensions?: NullableStringFieldUpdateOperationsInput | string | null
+    condition?: StringFieldUpdateOperationsInput | string
     isAvailable?: BoolFieldUpdateOperationsInput | boolean
-    stockCount?: NullableIntFieldUpdateOperationsInput | number | null
+    stockCount?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    selectedFile?: SelectedFileUpdateManyWithoutFurnitureNestedInput
+    images?: FurnitureImageUpdateManyWithoutFurnitureNestedInput
   }
 
   export type FurnitureUncheckedUpdateWithoutSellerInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    measurements?: NullableStringFieldUpdateOperationsInput | string | null
-    pullOut?: NullableIntFieldUpdateOperationsInput | number | null
-    withStorage?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    shape?: NullableStringFieldUpdateOperationsInput | string | null
-    size?: NullableStringFieldUpdateOperationsInput | string | null
-    color?: NullableStringFieldUpdateOperationsInput | string | null
-    cover?: NullableStringFieldUpdateOperationsInput | string | null
-    seater?: IntFieldUpdateOperationsInput | number
-    price?: FloatFieldUpdateOperationsInput | number
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    make?: StringFieldUpdateOperationsInput | string
-    model?: NullableStringFieldUpdateOperationsInput | string | null
     category?: StringFieldUpdateOperationsInput | string
-    condition?: StringFieldUpdateOperationsInput | string
+    brand?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
     material?: NullableStringFieldUpdateOperationsInput | string | null
-    style?: NullableStringFieldUpdateOperationsInput | string | null
-    weight?: NullableFloatFieldUpdateOperationsInput | number | null
     dimensions?: NullableStringFieldUpdateOperationsInput | string | null
+    condition?: StringFieldUpdateOperationsInput | string
     isAvailable?: BoolFieldUpdateOperationsInput | boolean
-    stockCount?: NullableIntFieldUpdateOperationsInput | number | null
+    stockCount?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    selectedFile?: SelectedFileUncheckedUpdateManyWithoutFurnitureNestedInput
+    images?: FurnitureImageUncheckedUpdateManyWithoutFurnitureNestedInput
   }
 
   export type FurnitureUncheckedUpdateManyWithoutSellerInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    measurements?: NullableStringFieldUpdateOperationsInput | string | null
-    pullOut?: NullableIntFieldUpdateOperationsInput | number | null
-    withStorage?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    shape?: NullableStringFieldUpdateOperationsInput | string | null
-    size?: NullableStringFieldUpdateOperationsInput | string | null
-    color?: NullableStringFieldUpdateOperationsInput | string | null
-    cover?: NullableStringFieldUpdateOperationsInput | string | null
-    seater?: IntFieldUpdateOperationsInput | number
-    price?: FloatFieldUpdateOperationsInput | number
-    status?: NullableStringFieldUpdateOperationsInput | string | null
-    make?: StringFieldUpdateOperationsInput | string
-    model?: NullableStringFieldUpdateOperationsInput | string | null
     category?: StringFieldUpdateOperationsInput | string
-    condition?: StringFieldUpdateOperationsInput | string
+    brand?: StringFieldUpdateOperationsInput | string
+    model?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
     material?: NullableStringFieldUpdateOperationsInput | string | null
-    style?: NullableStringFieldUpdateOperationsInput | string | null
-    weight?: NullableFloatFieldUpdateOperationsInput | number | null
     dimensions?: NullableStringFieldUpdateOperationsInput | string | null
+    condition?: StringFieldUpdateOperationsInput | string
     isAvailable?: BoolFieldUpdateOperationsInput | boolean
-    stockCount?: NullableIntFieldUpdateOperationsInput | number | null
+    stockCount?: IntFieldUpdateOperationsInput | number
+    price?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SelectedFileCreateManyFurnitureInput = {
+  export type FurnitureImageCreateManyFurnitureInput = {
     id?: string
     url: string
     key: string
+    createdAt?: Date | string
   }
 
-  export type SelectedFileUpdateWithoutFurnitureInput = {
+  export type FurnitureImageUpdateWithoutFurnitureInput = {
     id?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SelectedFileUncheckedUpdateWithoutFurnitureInput = {
+  export type FurnitureImageUncheckedUpdateWithoutFurnitureInput = {
     id?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SelectedFileUncheckedUpdateManyWithoutFurnitureInput = {
+  export type FurnitureImageUncheckedUpdateManyWithoutFurnitureInput = {
     id?: StringFieldUpdateOperationsInput | string
     url?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

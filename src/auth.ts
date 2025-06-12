@@ -19,6 +19,7 @@ const { providers: authConfigProviders, ...authConfigRest } = authConfig
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfigRest,
+  // @ts-expect-error
   adapter: PrismaAdapter(db),
   providers: [
     ...authConfigProviders,

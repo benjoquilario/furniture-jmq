@@ -16,6 +16,9 @@ import {
   Image as ImageIcon,
   CloudUpload,
   X,
+  Ruler,
+  Scale,
+  Tag,
 } from "lucide-react"
 
 // UI Components
@@ -49,8 +52,6 @@ import {
 import { Separator } from "@/components/ui/separator"
 
 // Custom Components
-import { FileUploader } from "@/components/file-uploader"
-import { Editor } from "./editor"
 import {
   FileUpload,
   FileUploadDropzone,
@@ -62,11 +63,18 @@ import {
   FileUploadTrigger,
 } from "@/components/ui/file-upload"
 
+// Validation schemas and types
+import {
+  CreateFurnitureSchema,
+  type CreateFurniture,
+  FurnitureCategory,
+  FurnitureCondition,
+  FurnitureMaterial,
+} from "../utils/validations/furnitures"
+
 // Utils and Actions
-import { createFurniture } from "./actions"
 import { useUploadThing } from "@/lib/uploadthing"
-import { type Furniture, furnitureSchema } from "@/lib/validations/furnitures"
-import { furnitureFormDefaults } from "../../default"
+import { createFurniture } from "../actions"
 
 // Animation variants for smooth transitions
 const containerVariants = {
@@ -117,33 +125,77 @@ const CreateForm = () => {
   const { startUpload, isUploading } = useUploadThing("imageUploader")
 
   // Form setup with validation
-  const form = useForm<Furniture>({
-    resolver: zodResolver(furnitureSchema),
+  const form = useForm<CreateFurniture>({
+    resolver: zodResolver(CreateFurnitureSchema),
     defaultValues: {
-      ...furnitureFormDefaults,
-      pullOut: Number(furnitureFormDefaults.pullOut) || 1,
-      seater: Number(furnitureFormDefaults.seater) || 1,
-      price: Number(furnitureFormDefaults.price) || 0,
-      stockCount: Number(furnitureFormDefaults.stockCount) || 1,
-      weight: Number(furnitureFormDefaults.weight) || 0,
-      selectedFile: [],
+      name: "",
+      description: "",
+      category: undefined,
+      brand: "",
+      model: "",
+      color: "",
+      material: undefined,
+      dimensions: "",
+      condition: "New",
+      isAvailable: true,
+      stockCount: 1,
+      price: 0,
+      images: [],
     },
   })
 
+  console.log("Form errors:", form.formState.errors)
+
   // Watch form state for conditional rendering
-  const watchedFiles = form.watch("selectedFile")
+  const watchedImages = form.watch("images")
   const isSubmitting = form.formState.isSubmitting
 
   // Enhanced submit handler with better error handling
-  const submit = React.useCallback(async (data: Furniture) => {
-    try {
-      // Show loading toast while processing
+  const submit = React.useCallback(
+    async (data: CreateFurniture) => {
+      try {
+        console.log("Form submission data:", data)
 
-      form.reset()
-    } catch (error) {
-      console.error("Form submission error:", error)
-    }
-  }, [])
+        // Handle file upload first
+        let uploadedImages: Array<{ url: string; key: string }> = []
+
+        if (
+          data.images &&
+          Array.isArray(data.images) &&
+          data.images.length > 0
+        ) {
+          const files = data.images as File[]
+
+          const uploadResults = await startUpload(files)
+
+          if (uploadResults && uploadResults.length > 0) {
+            uploadedImages = uploadResults.map((file) => ({
+              url: file.url,
+              key: file.key,
+            }))
+          }
+        }
+
+        // Prepare data for submission
+        const submitData = {
+          ...data,
+          images: uploadedImages,
+        }
+
+        console.log("Submit data:", submitData)
+
+        // TODO: Call your server action here
+        await createFurniture(submitData)
+
+        toast.success("Furniture created successfully!")
+        form.reset()
+      } catch (error) {
+        console.error("Form submission error:", error)
+        toast.error("An unexpected error occurred while creating furniture")
+      }
+    },
+    [form]
+  )
 
   return (
     <motion.main
@@ -194,15 +246,19 @@ const CreateForm = () => {
                 name="price"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Price (USD) *</FormLabel>
+                    <FormLabel>Price (PHP) *</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <DollarSign className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-gray-500" />
                         <Input
                           type="number"
-                          placeholder="1,599"
+                          step="0.01"
+                          placeholder="1599.99"
                           className="focus:ring-primary/20 pl-10 transition-all duration-200 focus:ring-2"
                           {...field}
+                          onChange={(e) =>
+                            field.onChange(parseFloat(e.target.value) || 0)
+                          }
                         />
                       </div>
                     </FormControl>
@@ -212,7 +268,7 @@ const CreateForm = () => {
               />
             </div>
 
-            {/* Category and Condition */}
+            {/* Category, Condition, and Brand */}
             <div className="grid gap-6 md:grid-cols-3">
               <FormField
                 control={form.control}
@@ -230,12 +286,11 @@ const CreateForm = () => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="sofa">Sofa</SelectItem>
-                        <SelectItem value="chair">Chair</SelectItem>
-                        <SelectItem value="table">Table</SelectItem>
-                        <SelectItem value="bed">Bed</SelectItem>
-                        <SelectItem value="storage">Storage</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
+                        {FurnitureCategory.options.map((category) => (
+                          <SelectItem key={category} value={category}>
+                            {category}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -259,9 +314,11 @@ const CreateForm = () => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="new">New</SelectItem>
-                        <SelectItem value="used">Used</SelectItem>
-                        <SelectItem value="refurbished">Refurbished</SelectItem>
+                        {FurnitureCondition.options.map((condition) => (
+                          <SelectItem key={condition} value={condition}>
+                            {condition}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -271,17 +328,69 @@ const CreateForm = () => {
 
               <FormField
                 control={form.control}
-                name="make"
+                name="brand"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Brand/Make *</FormLabel>
+                    <FormLabel>Brand *</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="e.g., JMQ"
+                        placeholder="e.g., JMQ Furniture"
                         className="focus:ring-primary/20 transition-all duration-200 focus:ring-2"
                         {...field}
                       />
                     </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            {/* Model and Material */}
+            <div className="grid gap-6 md:grid-cols-2">
+              <FormField
+                control={form.control}
+                name="model"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Model</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="e.g., Comfort Series X1"
+                        className="focus:ring-primary/20 transition-all duration-200 focus:ring-2"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Specific model name or number if available
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="material"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Material</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select material" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {FurnitureMaterial.options.map((material) => (
+                          <SelectItem key={material} value={material}>
+                            {material}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -295,7 +404,7 @@ const CreateForm = () => {
             description="Describe the physical characteristics of your furniture"
             icon={Shapes}
           >
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-6 md:grid-cols-2">
               <FormField
                 control={form.control}
                 name="color"
@@ -316,84 +425,56 @@ const CreateForm = () => {
 
               <FormField
                 control={form.control}
-                name="shape"
+                name="dimensions"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Shape</FormLabel>
+                    <FormLabel>Dimensions</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="e.g., L-Shape, Round"
+                        placeholder="e.g., 120x80x75 cm"
                         className="focus:ring-primary/20 transition-all duration-200 focus:ring-2"
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="material"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Material</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="e.g., Leather, Wood"
-                        className="focus:ring-primary/20 transition-all duration-200 focus:ring-2"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="size"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Size</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="e.g., 85x85 cm"
-                        className="focus:ring-primary/20 transition-all duration-200 focus:ring-2"
-                        {...field}
-                      />
-                    </FormControl>
+                    <FormDescription>
+                      Format: Length x Width x Height (unit)
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
             </div>
+          </FormSection>
 
-            {/* Seater and Storage Options */}
-            <div className="grid gap-6 md:grid-cols-3">
+          {/* Availability & Stock Section */}
+          <FormSection
+            title="Availability & Stock"
+            description="Manage availability and stock information"
+            icon={Tag}
+          >
+            <div className="grid gap-6 md:grid-cols-2">
               <FormField
                 control={form.control}
-                name="seater"
+                name="stockCount"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Number of Seats</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field?.value?.toString()}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select seats" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                          <SelectItem key={i} value={i.toString()}>
-                            {i} {i === 1 ? "Seat" : "Seats"}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <FormLabel>Stock Count *</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="1"
+                        min="0"
+                        max="9999"
+                        className="focus:ring-primary/20 transition-all duration-200 focus:ring-2"
+                        {...field}
+                        onChange={(e) =>
+                          field.onChange(parseInt(e.target.value) || 0)
+                        }
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Number of items available for sale
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -401,35 +482,7 @@ const CreateForm = () => {
 
               <FormField
                 control={form.control}
-                name="pullOut"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Pull-out Sections</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field?.value?.toString()}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Pull-out sections" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {[0, 1, 2, 3, 4].map((i) => (
-                          <SelectItem key={i} value={i.toString()}>
-                            {i} {i === 1 ? "Section" : "Sections"}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="withStorage"
+                name="isAvailable"
                 render={({ field }) => (
                   <FormItem className="flex items-center space-y-0 space-x-3 rounded-lg border p-4">
                     <FormControl>
@@ -440,10 +493,10 @@ const CreateForm = () => {
                     </FormControl>
                     <div className="space-y-1 leading-none">
                       <FormLabel className="text-sm font-medium">
-                        Has Storage Space
+                        Available for Sale
                       </FormLabel>
                       <FormDescription className="text-xs">
-                        Check if furniture includes storage compartments
+                        Mark as available for customers to purchase
                       </FormDescription>
                     </div>
                   </FormItem>
@@ -465,11 +518,18 @@ const CreateForm = () => {
                 <FormItem>
                   <FormLabel>Detailed Description</FormLabel>
                   <FormControl>
-                    <Editor {...field} />
+                    <Textarea
+                      placeholder="Describe your furniture's features, condition, and special characteristics..."
+                      className="focus:ring-primary/20 min-h-[120px] transition-all duration-200 focus:ring-2"
+                      {...field}
+                    />
                   </FormControl>
                   <FormDescription>
                     Describe the furniture's features, condition, and any
-                    special characteristics
+                    special characteristics. Include details about comfort,
+                    durability, weight, seater, how many pullout furniture have,
+                    if extendable, shape, style(Modern), and any unique selling
+                    points.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -485,56 +545,87 @@ const CreateForm = () => {
           >
             <FormField
               control={form.control}
-              name="selectedFile"
+              name="images"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Attachments</FormLabel>
+                  <FormLabel>
+                    Furniture Images *
+                    <span className="text-muted-foreground ml-2 text-sm font-normal">
+                      (1-10 images, 5MB each)
+                    </span>
+                  </FormLabel>
                   <FormControl>
-                    <FileUpload
-                      value={field.value}
-                      onValueChange={field.onChange}
-                      accept="image/*"
-                      maxFiles={4}
-                      maxSize={5 * 1024 * 1024}
-                      onFileReject={(_, message) => {
-                        form.setError("selectedFile", {
-                          message,
-                        })
-                      }}
-                      multiple
-                    >
-                      <FileUploadDropzone className="flex-row flex-wrap border-dotted text-center">
-                        <CloudUpload className="size-4" />
-                        Drag and drop or
-                        <FileUploadTrigger asChild>
-                          <Button variant="link" size="sm" className="p-0">
-                            choose files
-                          </Button>
-                        </FileUploadTrigger>
-                        to upload
-                      </FileUploadDropzone>
-                      <FileUploadList>
-                        {field.value.map((file, index) => (
-                          <FileUploadItem key={index} value={file}>
-                            <FileUploadItemPreview />
-                            <FileUploadItemMetadata />
-                            <FileUploadItemDelete asChild>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="size-7"
-                              >
-                                <X />
-                                <span className="sr-only">Delete</span>
-                              </Button>
-                            </FileUploadItemDelete>
-                          </FileUploadItem>
-                        ))}
-                      </FileUploadList>
-                    </FileUpload>
+                    <div className="relative">
+                      <FileUpload
+                        value={field.value}
+                        onValueChange={field.onChange}
+                        accept="image/*"
+                        maxFiles={10}
+                        maxSize={5 * 1024 * 1024}
+                        onFileReject={(_, message) => {
+                          form.setError("images", {
+                            message,
+                          })
+                        }}
+                        multiple
+                      >
+                        <FileUploadDropzone className="flex-row flex-wrap border-dotted text-center">
+                          <CloudUpload className="size-4" />
+                          Drag and drop or
+                          <FileUploadTrigger asChild>
+                            <Button variant="link" size="sm" className="p-0">
+                              choose files
+                            </Button>
+                          </FileUploadTrigger>
+                          to upload
+                        </FileUploadDropzone>
+                        <FileUploadList>
+                          {field.value &&
+                            Array.isArray(field.value) &&
+                            field.value.map((file, index) => (
+                              <FileUploadItem key={index} value={file}>
+                                <FileUploadItemPreview />
+                                <FileUploadItemMetadata />
+                                <FileUploadItemDelete asChild>
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="size-7"
+                                  >
+                                    <X />
+                                    <span className="sr-only">Delete</span>
+                                  </Button>
+                                </FileUploadItemDelete>
+                              </FileUploadItem>
+                            ))}
+                        </FileUploadList>
+                      </FileUpload>
+
+                      {/* Upload Progress Indicator */}
+                      <AnimatePresence>
+                        {isUploading && (
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="bg-background/80 absolute inset-0 flex items-center justify-center rounded-lg backdrop-blur-sm"
+                          >
+                            <div className="text-foreground flex items-center gap-2">
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                              <span className="text-sm font-medium">
+                                Uploading images...
+                              </span>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
                   </FormControl>
                   <FormDescription>
-                    Upload up to 2 images up to 5MB each.
+                    Upload clear, well-lit photos from multiple angles. Include
+                    shots of: front view, side view, any special features, and
+                    close-ups of materials. The first image will be the main
+                    display image.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

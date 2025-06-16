@@ -10,7 +10,7 @@ import {
   Eye,
   Star,
   Calendar,
-  User,
+  User as UserIcon,
   ShoppingCart,
   ArrowRight,
   Badge,
@@ -20,36 +20,7 @@ import {
 } from "lucide-react"
 import { Badge as BadgeComponent } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-
-// Type based on your Prisma schema
-interface FurnitureItemProps {
-  furniture: {
-    id: string
-    name: string
-    description?: string | null
-    category: string
-    brand: string
-    model?: string | null
-    color?: string | null
-    material?: string | null
-    dimensions?: string | null
-    condition: string
-    isAvailable: boolean
-    stockCount: number
-    price: number
-    createdAt: Date
-    images: Array<{
-      id: string
-      url: string
-      key: string
-    }>
-    seller: {
-      id: string
-      name: string | null
-      email: string
-    }
-  }
-}
+import type { FurnitureItem as IFurnitureItem } from "@/types"
 
 // Animation variants
 const cardVariants = {
@@ -113,7 +84,24 @@ const priceVariants = {
   },
 }
 
-const FurnitureItem = ({ furniture }: FurnitureItemProps) => {
+const FurnitureItem = ({
+  brand,
+  category,
+  color,
+  condition,
+  createdAt,
+  description,
+  dimensions,
+  id,
+  images,
+  isAvailable,
+  material,
+  model,
+  name,
+  price,
+  stockCount,
+  seller,
+}: IFurnitureItem) => {
   const [isLiked, setIsLiked] = useState(false)
   const [imageError, setImageError] = useState(false)
   const [isImageLoading, setIsImageLoading] = useState(true)
@@ -158,12 +146,12 @@ const FurnitureItem = ({ furniture }: FurnitureItemProps) => {
       whileHover="hover"
       className="group relative"
     >
-      <Link href={`/products/${furniture.id}`} className="block">
+      <Link href={`/products/${id}`} className="block">
         <div className="border-border/50 bg-card hover:shadow-primary/5 relative overflow-hidden rounded-xl border shadow-sm transition-all duration-300 hover:shadow-xl">
           {/* Image Container */}
           <div className="relative overflow-hidden">
             <div className="bg-muted relative aspect-[4/3]">
-              {!imageError && furniture.images?.[0] ? (
+              {!imageError && images?.[0] ? (
                 <>
                   {isImageLoading && (
                     <div className="absolute inset-0 flex items-center justify-center">
@@ -181,8 +169,8 @@ const FurnitureItem = ({ furniture }: FurnitureItemProps) => {
                   <motion.img
                     variants={imageVariants}
                     className="h-full w-full object-cover"
-                    src={furniture.images[0].url}
-                    alt={furniture.name}
+                    src={images[0].url}
+                    alt={name}
                     onLoad={() => setIsImageLoading(false)}
                     onError={() => {
                       setImageError(true)
@@ -209,13 +197,13 @@ const FurnitureItem = ({ furniture }: FurnitureItemProps) => {
                 <motion.div variants={badgeVariants}>
                   <BadgeComponent
                     variant="secondary"
-                    className={`${getConditionColor(furniture.condition)} border-0 font-medium shadow-sm backdrop-blur-sm`}
+                    className={`${getConditionColor(condition)} border-0 font-medium shadow-sm backdrop-blur-sm`}
                   >
-                    {furniture.condition}
+                    {condition}
                   </BadgeComponent>
                 </motion.div>
 
-                {!furniture.isAvailable && (
+                {!isAvailable && (
                   <motion.div variants={badgeVariants}>
                     <BadgeComponent
                       variant="destructive"
@@ -226,13 +214,13 @@ const FurnitureItem = ({ furniture }: FurnitureItemProps) => {
                   </motion.div>
                 )}
 
-                {furniture.stockCount <= 5 && furniture.isAvailable && (
+                {stockCount <= 5 && isAvailable && (
                   <motion.div variants={badgeVariants}>
                     <BadgeComponent
                       variant="outline"
                       className="border-orange-200 bg-orange-50 text-orange-700 dark:border-orange-800 dark:bg-orange-950 dark:text-orange-300"
                     >
-                      Only {furniture.stockCount} left
+                      Only {stockCount} left
                     </BadgeComponent>
                   </motion.div>
                 )}
@@ -276,19 +264,19 @@ const FurnitureItem = ({ furniture }: FurnitureItemProps) => {
               >
                 <div className="bg-primary rounded-lg px-3 py-2 shadow-lg backdrop-blur-sm">
                   <span className="text-primary-foreground text-sm font-bold">
-                    ₱{furniture.price.toLocaleString()}
+                    ₱{price.toLocaleString()}
                   </span>
                 </div>
               </motion.div>
 
               {/* Image Count Indicator */}
-              {furniture.images.length > 1 && (
+              {images.length > 1 && (
                 <div className="absolute bottom-3 left-3">
                   <BadgeComponent
                     variant="secondary"
                     className="border-0 bg-black/50 text-white backdrop-blur-sm"
                   >
-                    +{furniture.images.length - 1} more
+                    +{images.length - 1} more
                   </BadgeComponent>
                 </div>
               )}
@@ -301,51 +289,51 @@ const FurnitureItem = ({ furniture }: FurnitureItemProps) => {
             <div className="space-y-2">
               <div className="flex items-start justify-between gap-2">
                 <h3 className="text-foreground group-hover:text-primary line-clamp-2 text-lg leading-tight font-semibold transition-colors">
-                  {furniture.name}
+                  {name}
                 </h3>
                 <BadgeComponent variant="outline" className="shrink-0 text-xs">
-                  {furniture.category}
+                  {category}
                 </BadgeComponent>
               </div>
 
               <div className="text-muted-foreground flex items-center gap-2 text-sm">
-                <User className="h-4 w-4" />
-                <span className="font-medium">{furniture.brand}</span>
-                {furniture.model && (
+                <UserIcon className="h-4 w-4" />
+                <span className="font-medium">{brand}</span>
+                {model && (
                   <>
                     <span>•</span>
-                    <span>{furniture.model}</span>
+                    <span>{model}</span>
                   </>
                 )}
               </div>
 
-              {furniture.description && (
+              {description && (
                 <p className="text-muted-foreground line-clamp-2 text-sm">
-                  {furniture.description}
+                  {description}
                 </p>
               )}
             </div>
 
             {/* Features */}
             <div className="flex flex-wrap gap-2">
-              {furniture.color && (
+              {color && (
                 <div className="bg-secondary text-secondary-foreground flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium">
                   <Palette className="h-3.5 w-3.5" />
-                  <span>{furniture.color}</span>
+                  <span>{color}</span>
                 </div>
               )}
 
-              {furniture.material && (
+              {material && (
                 <div className="bg-secondary text-secondary-foreground flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium">
                   <Tag className="h-3.5 w-3.5" />
-                  <span>{furniture.material}</span>
+                  <span>{material}</span>
                 </div>
               )}
 
-              {furniture.dimensions && (
+              {dimensions && (
                 <div className="bg-secondary text-secondary-foreground flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium">
                   <Ruler className="h-3.5 w-3.5" />
-                  <span>{furniture.dimensions}</span>
+                  <span>{dimensions}</span>
                 </div>
               )}
             </div>
@@ -355,10 +343,10 @@ const FurnitureItem = ({ furniture }: FurnitureItemProps) => {
               <div className="space-y-1">
                 <div className="text-muted-foreground flex items-center gap-1 text-xs">
                   <Calendar className="h-3 w-3" />
-                  <span>Listed {formatDate(furniture.createdAt)}</span>
+                  <span>Listed {formatDate(createdAt)}</span>
                 </div>
                 <p className="text-foreground text-sm font-medium">
-                  By {furniture.seller.name || furniture.seller.email}
+                  By {seller.name || seller.email}
                 </p>
               </div>
             </div>

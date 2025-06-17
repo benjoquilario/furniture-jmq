@@ -13,13 +13,38 @@ const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   ...compat.config({
     rules: {
+      "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": [
         "warn",
-        { argsIgnorePattern: "^_" },
+        {
+          args: "all",
+          argsIgnorePattern: "^_",
+          caughtErrors: "all",
+          caughtErrorsIgnorePattern: "^_",
+          destructuredArrayIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          ignoreRestSiblings: true,
+        },
       ],
+      "@typescript-eslint/ban-ts-comment": "warn",
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-array-constructor": "off",
     },
+    ignorePatterns: [
+      "node_modules/",
+      "dist/",
+      "build/",
+      "coverage/",
+      ".next/",
+      "out/",
+      "public/",
+      "scripts/",
+      "cypress/",
+      "playwright/",
+      "jest.config.js",
+      "jest.setup.js",
+      "/src/generated/*",
+    ],
   }),
 ]
 

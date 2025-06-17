@@ -166,6 +166,7 @@ exports.Prisma.FurnitureScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
+  deliveredLocation: 'deliveredLocation',
   category: 'category',
   brand: 'brand',
   model: 'model',

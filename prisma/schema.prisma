@@ -78,6 +78,10 @@ model Furniture {
   description String?
   images      FurnitureImage[]
 
+  deliveredLocation String? // Relation to track delivery locations
+  // Optional: Add a relation to track delivery status
+  // This can be used to manage delivery status and history
+
   // Core furniture properties
   category    String   // Type of furniture (e.g., "Chair", "Table", "Sofa", "Bed")
   brand       String   // Brand/Manufacturer (e.g., "IKEA", "Ashley Furniture")

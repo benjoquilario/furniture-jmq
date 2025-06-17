@@ -1,4 +1,4 @@
-import CreateForm from "./create-form"
+import CreateForm from "../../components/create-form"
 
 const CreateFurnitures = () => {
   return (

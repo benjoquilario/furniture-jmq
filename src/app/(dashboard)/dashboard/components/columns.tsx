@@ -27,9 +27,9 @@ import {
   DollarSign,
   CheckCircle,
   XCircle,
+  Link,
 } from "lucide-react"
 import { formatDistanceToNow } from "date-fns"
-import { useRouter } from "next/navigation"
 
 interface ColumnActions {
   onDelete?: (id: string, name: string) => void
@@ -241,15 +241,14 @@ export const createColumns = (
     header: "Actions",
     cell: ({ row }) => {
       const furniture = row.original
-      const router = useRouter()
 
-      const handleViewDetails = () => {
-        router.push(`/products/${furniture.id}`)
-      }
+      // const handleViewDetails = () => {
+      //   router.push(`/products/${furniture.id}`)
+      // }
 
-      const handleEditProduct = () => {
-        router.push(`/dashboard/products/edit/${furniture.id}`)
-      }
+      // const handleEditProduct = () => {
+      //   router.push(`/dashboard/products/edit/${furniture.id}`)
+      // }
 
       const handleDeleteProduct = () => {
         if (actions?.onDelete) {
@@ -271,19 +270,23 @@ export const createColumns = (
           <DropdownMenuContent align="end" className="w-[160px]">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              className="cursor-pointer"
-              onClick={handleViewDetails}
-            >
-              <Eye className="mr-2 h-4 w-4" />
-              View Details
+            <DropdownMenuItem className="cursor-pointer" asChild>
+              <Link
+                href={`/dashboard/products/${furniture.id}`}
+                className="flex cursor-pointer items-center gap-2"
+              >
+                <Eye className="h-4 w-4" />
+                <span>View Details</span>
+              </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem
-              className="cursor-pointer"
-              onClick={handleEditProduct}
-            >
-              <Edit className="mr-2 h-4 w-4" />
-              Edit Product
+            <DropdownMenuItem className="cursor-pointer" asChild>
+              <Link
+                href={`/dashboard/products/edit/${furniture.id}`}
+                className="flex items-center gap-2"
+              >
+                <Edit className="mr-2 h-4 w-4" />
+                <span>Edit Product</span>
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem

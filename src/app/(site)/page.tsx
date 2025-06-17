@@ -10,6 +10,8 @@ const Home = async () => {
     },
   })
 
+  console.log(furnitures)
+
   return <Main data={furnitures} />
 }
 export default Home

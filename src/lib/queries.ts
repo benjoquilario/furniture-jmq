@@ -1,45 +1,14 @@
-import { cookies } from "next/headers"
-import { verifyToken } from "./auth/session"
+"server-only"
 import db from "./db"
 
-export async function getUser() {
-  const sessionCookie = (await cookies()).get("session")
-
-  if (!sessionCookie || !sessionCookie.value) {
-    return null
-  }
-
-  const sessionData = (await verifyToken(sessionCookie.value)) as any
-
-  const { payload: data } = sessionData
-
-  if (!data || !data.user) {
-    return null
-  }
-
-  if (new Date(data.expires) < new Date()) {
-    return null
-  }
-
-  const userId = data.user.id
-
-  const user = await db.user.findUnique({
+export const getFurnitureById = async (id: string) => {
+  return await db.furniture.findUnique({
     where: {
-      id: userId,
+      id,
     },
-  })
-
-  if (!user) {
-    return null
-  }
-
-  return user
-}
-
-export async function getAllFurniture() {
-  return await db.furniture.findMany({
     include: {
-      selectedFile: true,
+      images: true,
+      seller: true,
     },
   })
 }

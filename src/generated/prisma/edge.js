@@ -196,7 +196,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\christine\\Desktop\\THESIS\\furniture-jmq\\src\\generated\\prisma",
+      "value": "/workspaces/furniture-jmq/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -205,16 +205,17 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "debian-openssl-1.1.x",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\christine\\Desktop\\THESIS\\furniture-jmq\\prisma\\schema.prisma",
+    "sourceFilePath": "/workspaces/furniture-jmq/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null
+    "rootEnvPath": null,
+    "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
   "clientVersion": "6.9.0",

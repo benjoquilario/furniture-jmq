@@ -203,18 +203,16 @@ const FurnitureItem = ({
                   </BadgeComponent>
                 </motion.div>
 
-                {!isAvailable && (
-                  <motion.div variants={badgeVariants}>
-                    <BadgeComponent
-                      variant="destructive"
-                      className="border-0 shadow-sm backdrop-blur-sm"
-                    >
-                      Sold Out
-                    </BadgeComponent>
-                  </motion.div>
-                )}
+                <motion.div variants={badgeVariants}>
+                  <BadgeComponent
+                    variant="secondary"
+                    className="border-0 bg-green-600 text-white shadow-sm backdrop-blur-sm"
+                  >
+                    Delivered
+                  </BadgeComponent>
+                </motion.div>
 
-                {stockCount <= 5 && isAvailable && (
+                {/* {stockCount <= 5 && isAvailable && (
                   <motion.div variants={badgeVariants}>
                     <BadgeComponent
                       variant="outline"
@@ -223,7 +221,7 @@ const FurnitureItem = ({
                       Only {stockCount} left
                     </BadgeComponent>
                   </motion.div>
-                )}
+                )} */}
               </div>
 
               {/* Action Buttons */}

@@ -244,11 +244,11 @@ const Main = ({ data }: { data: IFurnitureItem[] }) => {
             <p className="text-muted-foreground text-sm">
               Showing {filteredFurniture.length} of {furniture.length} items
             </p>
-            {filteredFurniture.length > 0 && (
+            {/* {filteredFurniture.length > 0 && (
               <p className="text-muted-foreground text-sm">
                 Total value: ₱{totalValue.toLocaleString()}
               </p>
-            )}
+            )} */}
           </div>
         </motion.div>
 

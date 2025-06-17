@@ -78,6 +78,10 @@ model Furniture {
   description String?
   images      FurnitureImage[]
 
+  deliveredLocations DeliveredLocation[] // Relation to track delivery locations
+  // Optional: Add a relation to track delivery status
+  // This can be used to manage delivery status and history
+
   // Core furniture properties
   category    String   // Type of furniture (e.g., "Chair", "Table", "Sofa", "Bed")
   brand       String   // Brand/Manufacturer (e.g., "IKEA", "Ashley Furniture")
@@ -99,6 +103,17 @@ model Furniture {
   // Timestamps
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model DeliveredLocation {
+    id          String   @id @default(cuid())
+  location        String   // City of the delivery location
+  furnitureId    String
+  furniture      Furniture @relation(fields: [furnitureId], references: [id], onDelete: Cascade)
+  deliveryDate   DateTime // Date when the furniture was delivered
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  isDelivered    Boolean  @default(false) // Status of delivery
 }
 
 model FurnitureImage {

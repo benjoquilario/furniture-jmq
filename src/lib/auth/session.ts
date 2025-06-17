@@ -1,7 +1,7 @@
 import { compare, hash } from "bcryptjs"
 import { SignJWT, jwtVerify } from "jose"
 import { cookies } from "next/headers"
-import { type User } from "@prisma/client"
+import type { User } from "@/generated/prisma"
 import { env } from "@/env.mjs"
 
 const key = new TextEncoder().encode(env.AUTH_SECRET)

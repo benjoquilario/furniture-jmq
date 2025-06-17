@@ -1,11 +1,9 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { redirect } from "next/navigation"
 import { auth } from "@/auth"
 import db from "@/lib/db"
 import {
-  CreateFurnitureSchema,
   validateCreateFurniture,
   type CreateFurniture,
 } from "./utils/validations/furnitures"
@@ -137,6 +135,8 @@ export async function updateFurniture(
       throw new Error("You must be logged in to update furniture")
     }
 
+    console.log(data)
+
     // 2. Check if furniture exists and user owns it
     const existingFurniture = await db.furniture.findUnique({
       where: { id },
@@ -173,7 +173,7 @@ export async function updateFurniture(
     // 4. Update furniture in transaction
     const result = await db.$transaction(async (tx) => {
       // Update furniture data
-      const furniture = await tx.furniture.update({
+      await tx.furniture.update({
         where: { id },
         data: updateData,
       })
@@ -216,9 +216,9 @@ export async function updateFurniture(
     })
 
     // 5. Revalidate relevant pages
-    revalidatePath("/dashboard/products")
-    revalidatePath("/products")
-    revalidatePath(`/products/${id}`)
+    // revalidatePath("/dashboard/products")
+    // revalidatePath("/products")
+    // revalidatePath(`/products/${id}`)
 
     return {
       success: true,
@@ -348,5 +348,194 @@ export async function toggleFurnitureAvailability(
     }
 
     throw new Error("An unexpected error occurred while updating furniture")
+  }
+}
+
+/**
+ * Server action to get the products lists with paginations and filtering capabilities
+ * @param params - Query parameters for filtering and pagination
+ * @returns Paginated furniture list with metadata
+ */
+export async function getFurnitureList(params: {
+  page?: number
+  limit?: number
+  search?: string
+  category?: string
+  brand?: string
+  condition?: string
+  minPrice?: number
+  maxPrice?: number
+  isAvailable?: boolean
+  sortBy?: "name" | "price" | "createdAt"
+  sortOrder?: "asc" | "desc"
+  sellerId?: string // Optional: filter by specific seller
+}) {
+  try {
+    const {
+      page = 1,
+      limit = 10,
+      search,
+      category,
+      brand,
+      condition,
+      minPrice,
+      maxPrice,
+      isAvailable,
+      sortBy = "createdAt",
+      sortOrder = "desc",
+      sellerId,
+    } = params
+
+    // Calculate offset for pagination
+    const offset = (page - 1) * limit
+
+    // Build where clause for filtering
+    const where: any = {}
+
+    // Search filter (name or description)
+    if (search) {
+      where.OR = [
+        { name: { contains: search, mode: "insensitive" } },
+        { description: { contains: search, mode: "insensitive" } },
+      ]
+    }
+
+    // Category filter
+    if (category) {
+      where.category = category
+    }
+
+    // Brand filter
+    if (brand) {
+      where.brand = { contains: brand, mode: "insensitive" }
+    }
+
+    // Condition filter
+    if (condition) {
+      where.condition = condition
+    }
+
+    // Price range filter
+    if (minPrice !== undefined || maxPrice !== undefined) {
+      where.price = {}
+      if (minPrice !== undefined) where.price.gte = minPrice
+      if (maxPrice !== undefined) where.price.lte = maxPrice
+    }
+
+    // Availability filter
+    if (isAvailable !== undefined) {
+      where.isAvailable = isAvailable
+    }
+
+    // Seller filter
+    if (sellerId) {
+      where.sellerId = sellerId
+    }
+
+    // Build orderBy clause
+    const orderBy: any = {}
+    orderBy[sortBy] = sortOrder
+
+    // Execute queries in parallel
+    const [furniture, totalCount] = await Promise.all([
+      db.furniture.findMany({
+        // where,
+        // orderBy,
+        skip: offset,
+        take: limit,
+        include: {
+          images: true,
+          seller: true,
+        },
+      }),
+      db.furniture.count({ where }),
+    ])
+
+    console.log(furniture)
+
+    // Calculate pagination metadata
+    const totalPages = Math.ceil(totalCount / limit)
+    const hasNextPage = page < totalPages
+    const hasPrevPage = page > 1
+
+    return {
+      success: true,
+      data: furniture,
+      pagination: {
+        currentPage: page,
+        totalPages,
+        totalCount,
+        limit,
+        hasNextPage,
+        hasPrevPage,
+        nextPage: hasNextPage ? page + 1 : null,
+        prevPage: hasPrevPage ? page - 1 : null,
+      },
+    }
+  } catch (error) {
+    console.error("Error fetching furniture list:", error)
+
+    if (error instanceof Error) {
+      throw new Error(error.message)
+    }
+
+    throw new Error(
+      "An unexpected error occurred while fetching furniture list"
+    )
+  }
+}
+
+/**
+ * Server action to get available filter options for the furniture list
+ * @returns Available filter options
+ */
+export async function getFurnitureFilterOptions() {
+  try {
+    const [categories, brands, conditions] = await Promise.all([
+      db.furniture.findMany({
+        select: { category: true },
+        distinct: ["category"],
+        where: { category: { not: undefined } },
+      }),
+      db.furniture.findMany({
+        select: { brand: true },
+        distinct: ["brand"],
+        where: { brand: { not: undefined } },
+      }),
+      db.furniture.findMany({
+        select: { condition: true },
+        distinct: ["condition"],
+        where: { condition: { not: undefined } },
+      }),
+    ])
+
+    // Get price range
+    const priceRange = await db.furniture.aggregate({
+      _min: { price: true },
+      _max: { price: true },
+    })
+
+    return {
+      success: true,
+      data: {
+        categories: categories.map((item) => item.category),
+        brands: brands.map((item) => item.brand),
+        conditions: conditions.map((item) => item.condition),
+        priceRange: {
+          min: priceRange._min.price || 0,
+          max: priceRange._max.price || 0,
+        },
+      },
+    }
+  } catch (error) {
+    console.error("Error fetching filter options:", error)
+
+    if (error instanceof Error) {
+      throw new Error(error.message)
+    }
+
+    throw new Error(
+      "An unexpected error occurred while fetching filter options"
+    )
   }
 }

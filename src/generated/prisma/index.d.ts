@@ -5830,6 +5830,7 @@ export namespace Prisma {
     id: string | null
     name: string | null
     description: string | null
+    deliveredLocation: string | null
     category: string | null
     brand: string | null
     model: string | null
@@ -5849,6 +5850,7 @@ export namespace Prisma {
     id: string | null
     name: string | null
     description: string | null
+    deliveredLocation: string | null
     category: string | null
     brand: string | null
     model: string | null
@@ -5868,6 +5870,7 @@ export namespace Prisma {
     id: number
     name: number
     description: number
+    deliveredLocation: number
     category: number
     brand: number
     model: number
@@ -5899,6 +5902,7 @@ export namespace Prisma {
     id?: true
     name?: true
     description?: true
+    deliveredLocation?: true
     category?: true
     brand?: true
     model?: true
@@ -5918,6 +5922,7 @@ export namespace Prisma {
     id?: true
     name?: true
     description?: true
+    deliveredLocation?: true
     category?: true
     brand?: true
     model?: true
@@ -5937,6 +5942,7 @@ export namespace Prisma {
     id?: true
     name?: true
     description?: true
+    deliveredLocation?: true
     category?: true
     brand?: true
     model?: true
@@ -6043,6 +6049,7 @@ export namespace Prisma {
     id: string
     name: string
     description: string | null
+    deliveredLocation: string | null
     category: string
     brand: string
     model: string | null
@@ -6081,6 +6088,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
+    deliveredLocation?: boolean
     category?: boolean
     brand?: boolean
     model?: boolean
@@ -6103,6 +6111,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
+    deliveredLocation?: boolean
     category?: boolean
     brand?: boolean
     model?: boolean
@@ -6123,6 +6132,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
+    deliveredLocation?: boolean
     category?: boolean
     brand?: boolean
     model?: boolean
@@ -6143,6 +6153,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
+    deliveredLocation?: boolean
     category?: boolean
     brand?: boolean
     model?: boolean
@@ -6158,7 +6169,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type FurnitureOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "category" | "brand" | "model" | "color" | "material" | "dimensions" | "condition" | "isAvailable" | "stockCount" | "price" | "sellerId" | "createdAt" | "updatedAt", ExtArgs["result"]["furniture"]>
+  export type FurnitureOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "deliveredLocation" | "category" | "brand" | "model" | "color" | "material" | "dimensions" | "condition" | "isAvailable" | "stockCount" | "price" | "sellerId" | "createdAt" | "updatedAt", ExtArgs["result"]["furniture"]>
   export type FurnitureInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     images?: boolean | Furniture$imagesArgs<ExtArgs>
     seller?: boolean | UserDefaultArgs<ExtArgs>
@@ -6181,6 +6192,7 @@ export namespace Prisma {
       id: string
       name: string
       description: string | null
+      deliveredLocation: string | null
       category: string
       brand: string
       model: string | null
@@ -6622,6 +6634,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Furniture", 'String'>
     readonly name: FieldRef<"Furniture", 'String'>
     readonly description: FieldRef<"Furniture", 'String'>
+    readonly deliveredLocation: FieldRef<"Furniture", 'String'>
     readonly category: FieldRef<"Furniture", 'String'>
     readonly brand: FieldRef<"Furniture", 'String'>
     readonly model: FieldRef<"Furniture", 'String'>
@@ -8222,6 +8235,7 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     description: 'description',
+    deliveredLocation: 'deliveredLocation',
     category: 'category',
     brand: 'brand',
     model: 'model',
@@ -8630,6 +8644,7 @@ export namespace Prisma {
     id?: StringFilter<"Furniture"> | string
     name?: StringFilter<"Furniture"> | string
     description?: StringNullableFilter<"Furniture"> | string | null
+    deliveredLocation?: StringNullableFilter<"Furniture"> | string | null
     category?: StringFilter<"Furniture"> | string
     brand?: StringFilter<"Furniture"> | string
     model?: StringNullableFilter<"Furniture"> | string | null
@@ -8651,6 +8666,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrderInput | SortOrder
+    deliveredLocation?: SortOrderInput | SortOrder
     category?: SortOrder
     brand?: SortOrder
     model?: SortOrderInput | SortOrder
@@ -8675,6 +8691,7 @@ export namespace Prisma {
     NOT?: FurnitureWhereInput | FurnitureWhereInput[]
     name?: StringFilter<"Furniture"> | string
     description?: StringNullableFilter<"Furniture"> | string | null
+    deliveredLocation?: StringNullableFilter<"Furniture"> | string | null
     category?: StringFilter<"Furniture"> | string
     brand?: StringFilter<"Furniture"> | string
     model?: StringNullableFilter<"Furniture"> | string | null
@@ -8696,6 +8713,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrderInput | SortOrder
+    deliveredLocation?: SortOrderInput | SortOrder
     category?: SortOrder
     brand?: SortOrder
     model?: SortOrderInput | SortOrder
@@ -8723,6 +8741,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Furniture"> | string
     name?: StringWithAggregatesFilter<"Furniture"> | string
     description?: StringNullableWithAggregatesFilter<"Furniture"> | string | null
+    deliveredLocation?: StringNullableWithAggregatesFilter<"Furniture"> | string | null
     category?: StringWithAggregatesFilter<"Furniture"> | string
     brand?: StringWithAggregatesFilter<"Furniture"> | string
     model?: StringNullableWithAggregatesFilter<"Furniture"> | string | null
@@ -9101,6 +9120,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    deliveredLocation?: string | null
     category: string
     brand: string
     model?: string | null
@@ -9121,6 +9141,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    deliveredLocation?: string | null
     category: string
     brand: string
     model?: string | null
@@ -9141,6 +9162,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveredLocation?: NullableStringFieldUpdateOperationsInput | string | null
     category?: StringFieldUpdateOperationsInput | string
     brand?: StringFieldUpdateOperationsInput | string
     model?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9161,6 +9183,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveredLocation?: NullableStringFieldUpdateOperationsInput | string | null
     category?: StringFieldUpdateOperationsInput | string
     brand?: StringFieldUpdateOperationsInput | string
     model?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9181,6 +9204,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    deliveredLocation?: string | null
     category: string
     brand: string
     model?: string | null
@@ -9200,6 +9224,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveredLocation?: NullableStringFieldUpdateOperationsInput | string | null
     category?: StringFieldUpdateOperationsInput | string
     brand?: StringFieldUpdateOperationsInput | string
     model?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9218,6 +9243,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveredLocation?: NullableStringFieldUpdateOperationsInput | string | null
     category?: StringFieldUpdateOperationsInput | string
     brand?: StringFieldUpdateOperationsInput | string
     model?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9656,6 +9682,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
+    deliveredLocation?: SortOrder
     category?: SortOrder
     brand?: SortOrder
     model?: SortOrder
@@ -9680,6 +9707,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
+    deliveredLocation?: SortOrder
     category?: SortOrder
     brand?: SortOrder
     model?: SortOrder
@@ -9699,6 +9727,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
+    deliveredLocation?: SortOrder
     category?: SortOrder
     brand?: SortOrder
     model?: SortOrder
@@ -10343,6 +10372,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    deliveredLocation?: string | null
     category: string
     brand: string
     model?: string | null
@@ -10362,6 +10392,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    deliveredLocation?: string | null
     category: string
     brand: string
     model?: string | null
@@ -10472,6 +10503,7 @@ export namespace Prisma {
     id?: StringFilter<"Furniture"> | string
     name?: StringFilter<"Furniture"> | string
     description?: StringNullableFilter<"Furniture"> | string | null
+    deliveredLocation?: StringNullableFilter<"Furniture"> | string | null
     category?: StringFilter<"Furniture"> | string
     brand?: StringFilter<"Furniture"> | string
     model?: StringNullableFilter<"Furniture"> | string | null
@@ -10758,6 +10790,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    deliveredLocation?: string | null
     category: string
     brand: string
     model?: string | null
@@ -10777,6 +10810,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    deliveredLocation?: string | null
     category: string
     brand: string
     model?: string | null
@@ -10812,6 +10846,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveredLocation?: NullableStringFieldUpdateOperationsInput | string | null
     category?: StringFieldUpdateOperationsInput | string
     brand?: StringFieldUpdateOperationsInput | string
     model?: NullableStringFieldUpdateOperationsInput | string | null
@@ -10831,6 +10866,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveredLocation?: NullableStringFieldUpdateOperationsInput | string | null
     category?: StringFieldUpdateOperationsInput | string
     brand?: StringFieldUpdateOperationsInput | string
     model?: NullableStringFieldUpdateOperationsInput | string | null
@@ -10872,6 +10908,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    deliveredLocation?: string | null
     category: string
     brand: string
     model?: string | null
@@ -10956,6 +10993,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveredLocation?: NullableStringFieldUpdateOperationsInput | string | null
     category?: StringFieldUpdateOperationsInput | string
     brand?: StringFieldUpdateOperationsInput | string
     model?: NullableStringFieldUpdateOperationsInput | string | null
@@ -10975,6 +11013,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveredLocation?: NullableStringFieldUpdateOperationsInput | string | null
     category?: StringFieldUpdateOperationsInput | string
     brand?: StringFieldUpdateOperationsInput | string
     model?: NullableStringFieldUpdateOperationsInput | string | null
@@ -10994,6 +11033,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveredLocation?: NullableStringFieldUpdateOperationsInput | string | null
     category?: StringFieldUpdateOperationsInput | string
     brand?: StringFieldUpdateOperationsInput | string
     model?: NullableStringFieldUpdateOperationsInput | string | null

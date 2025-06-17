@@ -1,42 +1,25 @@
 "use client"
 
-import * as React from "react"
+import { useState, useCallback, useEffect, useMemo, useTransition } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
+  type SortingState,
+  type ColumnDef,
 } from "@tanstack/react-table"
 import {
-  ArrowUpDown,
-  ChevronDown,
-  MoreHorizontal,
-  Search,
-  Filter,
-  Eye,
-  Edit,
-  Trash2,
-} from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
-import { format } from "date-fns"
-
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 import {
   Table,
   TableBody,
@@ -45,521 +28,607 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Skeleton } from "@/components/ui/skeleton"
+import {
+  Search,
+  Filter,
+  Plus,
+  Package,
+  ChevronLeft,
+  ChevronRight,
+  RefreshCw,
+} from "lucide-react"
+import { toast } from "sonner"
+import type { Furniture, FurnitureImage, User } from "@/generated/prisma"
+import {
+  getFurnitureList,
+  deleteFurniture,
+  getFurnitureFilterOptions,
+} from "../products/actions"
 
-// Define the furniture type based on your schema
-export type Furniture = {
-  id: string
-  name: string
-  description?: string
-  measurements?: string
-  pullOut?: number
-  withStorage?: boolean
-  shape?: string
-  size?: string
-  color?: string
-  cover?: string
-  seater: number
-  sellerId: string
-  price: number
-  status?: string
-  make: string
-  model?: string
-  category: string
-  condition: string
-  material?: string
-  style?: string
-  weight?: number
-  dimensions?: string
-  isAvailable: boolean
-  stockCount?: number
-  createdAt: Date
-  updatedAt: Date
-  selectedFile: Array<{ id: string; url: string; key: string }>
-  seller: { id: string; name?: string; email: string; image?: string }
+// Types
+interface FurnitureWithRelation extends Furniture {
+  images: FurnitureImage[]
+  seller: User
 }
 
-// Status badge component with animations
-const StatusBadge = ({
-  status,
-  isAvailable,
-}: {
-  status?: string
-  isAvailable: boolean
-}) => {
-  const getStatusConfig = () => {
-    if (!isAvailable)
-      return { variant: "destructive" as const, text: "Out of Stock" }
-    if (status === "sold")
-      return { variant: "secondary" as const, text: "Sold" }
-    if (status === "pending")
-      return { variant: "outline" as const, text: "Pending" }
-    return { variant: "default" as const, text: "Available" }
-  }
-
-  const config = getStatusConfig()
-
-  return (
-    <motion.div
-      initial={{ scale: 0.8, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ duration: 0.2 }}
-    >
-      <Badge variant={config.variant}>{config.text}</Badge>
-    </motion.div>
-  )
+interface FilterOptions {
+  categories: string[]
+  brands: string[]
+  conditions: string[]
+  priceRange: { min: number; max: number }
 }
 
-// Condition badge component
-const ConditionBadge = ({ condition }: { condition: string }) => {
-  const getVariant = () => {
-    switch (condition.toLowerCase()) {
-      case "new":
-        return "default" as const
-      case "used":
-        return "secondary" as const
-      case "refurbished":
-        return "outline" as const
-      default:
-        return "secondary" as const
-    }
-  }
-
-  return (
-    <Badge variant={getVariant()} className="capitalize">
-      {condition}
-    </Badge>
-  )
+interface FurnitureTableProps<TData, TValue> {
+  columns: ColumnDef<TData, TValue>[]
+  className?: string
 }
 
-// Image preview component
-const ImagePreview = ({ images }: { images: Array<{ url: string }> }) => {
-  if (!images || images.length === 0) {
-    return (
-      <div className="bg-muted flex h-12 w-12 items-center justify-center rounded-md">
-        <span className="text-muted-foreground text-xs">No Image</span>
-      </div>
-    )
-  }
-
-  return (
-    <motion.div
-      whileHover={{ scale: 1.05 }}
-      transition={{ duration: 0.2 }}
-      className="relative h-12 w-12 overflow-hidden rounded-md"
-    >
-      <img
-        src={images[0].url}
-        alt="Furniture"
-        className="h-full w-full object-cover"
-      />
-      {images.length > 1 && (
-        <div className="bg-primary text-primary-foreground absolute -right-1 -bottom-1 flex h-5 w-5 items-center justify-center rounded-full text-xs">
-          +{images.length - 1}
-        </div>
-      )}
-    </motion.div>
-  )
+interface PaginationInfo {
+  currentPage: number
+  totalPages: number
+  totalCount: number
+  limit: number
+  hasNextPage: boolean
+  hasPrevPage: boolean
+  nextPage: number | null
+  prevPage: number | null
 }
 
-// Define columns
-export const columns: ColumnDef<Furniture>[] = [
-  {
-    accessorKey: "selectedFile",
-    header: "Image",
-    cell: ({ row }) => <ImagePreview images={row.getValue("selectedFile")} />,
-    enableSorting: false,
-  },
-  {
-    accessorKey: "name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="h-auto p-0 hover:bg-transparent"
-        >
-          Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    cell: ({ row }) => {
-      const furniture = row.original
-      return (
-        <div className="space-y-1">
-          <div className="font-medium">{furniture.name}</div>
-          <div className="text-muted-foreground text-sm">
-            {furniture.make} {furniture.model && `- ${furniture.model}`}
-          </div>
-        </div>
-      )
-    },
-  },
-  {
-    accessorKey: "category",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="h-auto p-0 hover:bg-transparent"
-        >
-          Category
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    cell: ({ row }) => (
-      <Badge variant="outline" className="capitalize">
-        {row.getValue("category")}
-      </Badge>
-    ),
-  },
-  {
-    accessorKey: "price",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="h-auto p-0 hover:bg-transparent"
-        >
-          Price
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    cell: ({ row }) => {
-      const price = parseFloat(row.getValue("price"))
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(price)
-      return <div className="font-medium">{formatted}</div>
-    },
-  },
-  {
-    accessorKey: "condition",
-    header: "Condition",
-    cell: ({ row }) => <ConditionBadge condition={row.getValue("condition")} />,
-  },
-  {
-    accessorKey: "isAvailable",
-    header: "Status",
-    cell: ({ row }) => (
-      <StatusBadge
-        status={row.original.status}
-        isAvailable={row.getValue("isAvailable")}
-      />
-    ),
-  },
-  {
-    accessorKey: "stockCount",
-    header: "Stock",
-    cell: ({ row }) => {
-      const stock = row.getValue("stockCount") as number
-      return (
-        <div className="text-center">
-          <span
-            className={stock && stock > 0 ? "text-green-600" : "text-red-600"}
-          >
-            {stock || 0}
-          </span>
-        </div>
-      )
-    },
-  },
-  {
-    accessorKey: "seller",
-    header: "Seller",
-    cell: ({ row }) => {
-      const seller = row.getValue("seller") as Furniture["seller"]
-      return (
-        <div className="flex items-center space-x-2">
-          <Avatar className="h-8 w-8">
-            <AvatarImage src={seller.image} />
-            <AvatarFallback>
-              {seller.name?.charAt(0) || seller.email.charAt(0)}
-            </AvatarFallback>
-          </Avatar>
-          <div>
-            <div className="text-sm font-medium">
-              {seller.name || "Unknown"}
-            </div>
-            <div className="text-muted-foreground text-xs">{seller.email}</div>
-          </div>
-        </div>
-      )
-    },
-  },
-  {
-    accessorKey: "createdAt",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="h-auto p-0 hover:bg-transparent"
-        >
-          Created At
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    },
-    cell: ({ row }) => {
-      return format(new Date(row.getValue("createdAt")), "MMM dd, yyyy")
-    },
-  },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const furniture = row.original
+// Constants
+const DEFAULT_PAGE_SIZE = 10
+const SORT_OPTIONS = [
+  { value: "createdAt", label: "Date Created" },
+  { value: "name", label: "Name" },
+  { value: "price", label: "Price" },
+] as const
 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(furniture.id)}
-            >
-              Copy furniture ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Eye className="mr-2 h-4 w-4" />
-              View details
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Edit className="mr-2 h-4 w-4" />
-              Edit furniture
-            </DropdownMenuItem>
-            <DropdownMenuItem className="text-destructive">
-              <Trash2 className="mr-2 h-4 w-4" />
-              Delete furniture
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
-  },
-]
+const CONDITION_OPTIONS = [
+  { value: "NEW", label: "New" },
+  { value: "EXCELLENT", label: "Excellent" },
+  { value: "GOOD", label: "Good" },
+  { value: "FAIR", label: "Fair" },
+  { value: "POOR", label: "Poor" },
+] as const
 
-interface FurnitureTableProps {
-  data: Furniture[]
-  isLoading?: boolean
-}
+const FurnitureTable = <TData, TValue>({
+  columns,
+  className,
+}: FurnitureTableProps<TData, TValue>) => {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const [isPending, startTransition] = useTransition()
 
-export function FurnitureTable({
-  data,
-  isLoading = false,
-}: FurnitureTableProps) {
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = React.useState({})
+  // Data state
+  const [data, setData] = useState<FurnitureWithRelation[]>([])
+  const [pagination, setPagination] = useState<PaginationInfo | null>(null)
+  const [filterOptions, setFilterOptions] = useState<FilterOptions | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [isRefreshing, setIsRefreshing] = useState(false)
 
-  const table = useReactTable({
-    data,
-    columns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
-    },
+  // Filter state - initialize from URL params
+  const [filters, setFilters] = useState({
+    search: searchParams.get("search") || "",
+    category: searchParams.get("category") || "",
+    brand: searchParams.get("brand") || "",
+    condition: searchParams.get("condition") || "",
+    isAvailable: searchParams.get("available")
+      ? searchParams.get("available") === "true"
+      : undefined,
+    minPrice: searchParams.get("minPrice")
+      ? Number(searchParams.get("minPrice"))
+      : undefined,
+    maxPrice: searchParams.get("maxPrice")
+      ? Number(searchParams.get("maxPrice"))
+      : undefined,
   })
 
-  if (isLoading) {
-    return (
-      <div className="w-full space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="bg-muted h-10 w-80 animate-pulse rounded-md" />
-          <div className="bg-muted h-10 w-32 animate-pulse rounded-md" />
-        </div>
-        <div className="rounded-md border">
-          <div className="bg-muted h-12 animate-pulse" />
-          {[...Array(5)].map((_, i) => (
-            <div key={i} className="bg-muted/50 h-16 animate-pulse border-t" />
-          ))}
-        </div>
-      </div>
-    )
-  }
+  const [sorting, setSorting] = useState<SortingState>([
+    { id: searchParams.get("sortBy") || "createdAt", desc: true },
+  ])
+
+  const [currentPage, setCurrentPage] = useState(
+    Number(searchParams.get("page")) || 1
+  )
+
+  // Delete state
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const [selectedFurnitureId, setSelectedFurnitureId] = useState<string | null>(
+    null
+  )
+  const [selectedFurnitureName, setSelectedFurnitureName] = useState<string>("")
+
+  // Memoized sort configuration
+  const sortBy = useMemo(() => sorting[0]?.id || "createdAt", [sorting])
+  const sortOrder = useMemo(
+    () => (sorting[0]?.desc ? "desc" : "asc"),
+    [sorting]
+  )
+
+  // Load filter options on mount
+  const loadFilterOptions = useCallback(async () => {
+    try {
+      const result = await getFurnitureFilterOptions()
+      if (result.success) {
+        setFilterOptions(result.data)
+      }
+    } catch (error) {
+      console.error("Failed to load filter options:", error)
+      toast.error("Failed to load filter options")
+    }
+  }, [])
+
+  console.log(data)
+
+  // Load furniture data
+  const loadData = useCallback(
+    async (showLoader = true) => {
+      if (showLoader) setIsLoading(true)
+      else setIsRefreshing(true)
+
+      try {
+        const params = {
+          page: currentPage,
+          limit: DEFAULT_PAGE_SIZE,
+          search: filters.search || undefined,
+          category: filters.category || undefined,
+          brand: filters.brand || undefined,
+          condition: filters.condition || undefined,
+          isAvailable: filters.isAvailable,
+          minPrice: filters.minPrice,
+          maxPrice: filters.maxPrice,
+          sortBy: sortBy as "name" | "price" | "createdAt",
+          sortOrder: sortOrder as "asc" | "desc",
+        }
+
+        const result = await getFurnitureList(params)
+
+        if (result.success) {
+          setData(result.data)
+          setPagination(result.pagination)
+        } else {
+          toast.error("Failed to load furniture data")
+        }
+      } catch (error) {
+        console.error("Failed to load furniture data:", error)
+        toast.error("Failed to load furniture data")
+      } finally {
+        setIsLoading(false)
+        setIsRefreshing(false)
+      }
+    },
+    [currentPage, filters, sortBy, sortOrder]
+  )
+
+  // Update URL params when filters change
+  const updateUrlParams = useCallback(() => {
+    const params = new URLSearchParams()
+
+    if (filters.search) params.set("search", filters.search)
+    if (filters.category) params.set("category", filters.category)
+    if (filters.brand) params.set("brand", filters.brand)
+    if (filters.condition) params.set("condition", filters.condition)
+    if (filters.isAvailable !== undefined)
+      params.set("available", String(filters.isAvailable))
+    if (filters.minPrice) params.set("minPrice", String(filters.minPrice))
+    if (filters.maxPrice) params.set("maxPrice", String(filters.maxPrice))
+    if (currentPage > 1) params.set("page", String(currentPage))
+    if (sortBy !== "createdAt") params.set("sortBy", sortBy)
+    if (sortOrder !== "desc") params.set("sortOrder", sortOrder)
+
+    const paramString = params.toString()
+    const newUrl = paramString ? `?${paramString}` : window.location.pathname
+
+    router.replace(newUrl, { scroll: false })
+  }, [filters, currentPage, sortBy, sortOrder, router])
+
+  // Initialize data and filter options
+  useEffect(() => {
+    loadFilterOptions()
+    loadData()
+  }, [loadFilterOptions, loadData])
+
+  // Update URL when filters change
+  useEffect(() => {
+    updateUrlParams()
+  }, [updateUrlParams])
+
+  // Table configuration
+  const table = useReactTable({
+    data: data as TData[],
+    columns,
+    state: { sorting },
+    onSortingChange: setSorting,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    manualSorting: true,
+    manualPagination: true,
+    pageCount: pagination?.totalPages || 0,
+  })
+
+  // Event handlers
+  const handleFilterChange = useCallback(
+    (key: keyof typeof filters, value: any) => {
+      setFilters((prev) => ({ ...prev, [key]: value }))
+      setCurrentPage(1) // Reset to first page when filters change
+    },
+    []
+  )
+
+  const handleSearch = useCallback(
+    (value: string) => {
+      handleFilterChange("search", value)
+    },
+    [handleFilterChange]
+  )
+
+  const handleCategoryChange = useCallback(
+    (value: string) => {
+      handleFilterChange("category", value === "all" ? "" : value)
+    },
+    [handleFilterChange]
+  )
+
+  const handleConditionChange = useCallback(
+    (value: string) => {
+      handleFilterChange("condition", value === "all" ? "" : value)
+    },
+    [handleFilterChange]
+  )
+
+  const handlePageChange = useCallback((page: number) => {
+    setCurrentPage(page)
+  }, [])
+
+  const handleRefresh = useCallback(() => {
+    loadData(false)
+  }, [loadData])
+
+  const handleAddProduct = useCallback(() => {
+    router.push("/dashboard/products/new")
+  }, [router])
+
+  const handleRowClick = useCallback(
+    (e: React.MouseEvent, furnitureId: string) => {
+      if ((e.target as HTMLElement).closest('[role="button"]')) return
+      router.push(`/products/${furnitureId}`)
+    },
+    [router]
+  )
+
+  const openDeleteDialog = useCallback((id: string, name: string) => {
+    setSelectedFurnitureId(id)
+    setSelectedFurnitureName(name)
+    setDeleteDialogOpen(true)
+  }, [])
+
+  const closeDeleteDialog = useCallback(() => {
+    setDeleteDialogOpen(false)
+    setSelectedFurnitureId(null)
+    setSelectedFurnitureName("")
+  }, [])
+
+  const handleDelete = useCallback(async () => {
+    if (!selectedFurnitureId) return
+
+    startTransition(async () => {
+      try {
+        const result = await deleteFurniture(selectedFurnitureId)
+
+        if (result.success) {
+          toast.success(result.message)
+          closeDeleteDialog()
+          loadData(false) // Reload data after successful deletion
+        } else {
+          toast.error(result.message)
+        }
+      } catch (error) {
+        console.error("Failed to delete furniture:", error)
+        toast.error("An unexpected error occurred")
+      }
+    })
+  }, [selectedFurnitureId, closeDeleteDialog, loadData])
+
+  // Clear all filters
+  const clearFilters = useCallback(() => {
+    setFilters({
+      search: "",
+      category: "",
+      brand: "",
+      condition: "",
+      isAvailable: undefined,
+      minPrice: undefined,
+      maxPrice: undefined,
+    })
+    setCurrentPage(1)
+    setSorting([{ id: "createdAt", desc: true }])
+  }, [])
 
   return (
-    <motion.div
-      className="w-full space-y-4"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
+    <div className="space-y-4 px-6">
+      {/* Header Section */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <div className="relative">
-            <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform" />
-            <Input
-              placeholder="Search furniture..."
-              value={
-                (table.getColumn("name")?.getFilterValue() as string) ?? ""
-              }
-              onChange={(event) =>
-                table.getColumn("name")?.setFilterValue(event.target.value)
-              }
-              className="max-w-sm pl-10"
-            />
-          </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm">
-                <Filter className="mr-2 h-4 w-4" />
-                Filter
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start">
-              <DropdownMenuLabel>Filter by category</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              {/* Add category filters here */}
-            </DropdownMenuContent>
-          </DropdownMenu>
+        <div>
+          <h2 className="text-2xl font-bold tracking-tight">
+            Furniture Inventory
+          </h2>
+          <p className="text-muted-foreground">
+            Manage your furniture products and track deliveries
+          </p>
         </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline">
-              Columns <ChevronDown className="ml-2 h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                )
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex items-center space-x-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleRefresh}
+            disabled={isRefreshing}
+          >
+            <RefreshCw
+              className={`mr-2 h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`}
+            />
+            Refresh
+          </Button>
+          <Button onClick={handleAddProduct}>
+            <Plus className="mr-2 h-4 w-4" />
+            Add Product
+          </Button>
+        </div>
       </div>
-      <motion.div
-        className="rounded-md border"
-        layout
-        transition={{ duration: 0.3 }}
-      >
+
+      {/* Filters Section */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            {/* Search */}
+            <div className="relative">
+              <Search className="text-muted-foreground absolute top-2.5 left-2 h-4 w-4" />
+              <Input
+                placeholder="Search products..."
+                value={filters.search}
+                onChange={(e) => handleSearch(e.target.value)}
+                className="w-[300px] pl-8"
+              />
+            </div>
+
+            {/* Category Filter */}
+            <Select
+              value={filters.category || "all"}
+              onValueChange={handleCategoryChange}
+            >
+              <SelectTrigger className="w-[150px]">
+                <Filter className="mr-2 h-4 w-4" />
+                <SelectValue placeholder="Category" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Categories</SelectItem>
+                {filterOptions?.categories.map((category) => (
+                  <SelectItem key={category} value={category}>
+                    {category}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            {/* Condition Filter */}
+            <Select
+              value={filters.condition || "all"}
+              onValueChange={handleConditionChange}
+            >
+              <SelectTrigger className="w-[130px]">
+                <SelectValue placeholder="Condition" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Conditions</SelectItem>
+                {CONDITION_OPTIONS.map((condition) => (
+                  <SelectItem key={condition.value} value={condition.value}>
+                    {condition.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            {/* Clear Filters */}
+            <Button variant="outline" size="sm" onClick={clearFilters}>
+              Clear
+            </Button>
+          </div>
+
+          {/* Results Count */}
+          <div className="text-muted-foreground text-sm">
+            {pagination ? (
+              <>
+                Showing {(pagination.currentPage - 1) * pagination.limit + 1} to{" "}
+                {Math.min(
+                  pagination.currentPage * pagination.limit,
+                  pagination.totalCount
+                )}{" "}
+                of {pagination.totalCount} products
+              </>
+            ) : (
+              "Loading..."
+            )}
+          </div>
+        </div>
+
+        {/* Active Filters */}
+        {(filters.search || filters.category || filters.condition) && (
+          <div className="flex items-center space-x-2">
+            <span className="text-muted-foreground text-sm">
+              Active filters:
+            </span>
+            {filters.search && (
+              <Badge variant="secondary">Search: {filters.search}</Badge>
+            )}
+            {filters.category && (
+              <Badge variant="secondary">Category: {filters.category}</Badge>
+            )}
+            {filters.condition && (
+              <Badge variant="secondary">Condition: {filters.condition}</Badge>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Table Section */}
+      <div className="bg-card rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  )
-                })}
+              <TableRow key={headerGroup.id} className="hover:bg-transparent">
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id} className="font-semibold">
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>
           <TableBody>
-            <AnimatePresence>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <motion.tr
-                    key={row.id}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 20 }}
-                    transition={{ duration: 0.3 }}
-                    className="hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors"
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    ))}
-                  </motion.tr>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ duration: 0.5 }}
-                    >
-                      No furniture found.
-                    </motion.div>
-                  </TableCell>
+            {isLoading ? (
+              // Loading skeleton
+              Array.from({ length: 5 }).map((_, index) => (
+                <TableRow key={index}>
+                  {columns.map((_, cellIndex) => (
+                    <TableCell key={cellIndex}>
+                      <Skeleton className="h-6 w-full" />
+                    </TableCell>
+                  ))}
                 </TableRow>
-              )}
-            </AnimatePresence>
+              ))
+            ) : table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  className="hover:bg-muted/50 cursor-pointer transition-colors"
+                  // onClick={(e) => handleRowClick(e, (row.original as any).id)}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id} className="py-4">
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  <div className="flex flex-col items-center justify-center space-y-2">
+                    <Package className="text-muted-foreground h-8 w-8" />
+                    <div className="text-muted-foreground text-sm">
+                      No furniture products found.
+                    </div>
+                  </div>
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
-      </motion.div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="text-muted-foreground flex-1 text-sm">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
       </div>
-    </motion.div>
+
+      {/* Pagination Section */}
+      {pagination && pagination.totalPages > 1 && (
+        <div className="flex items-center justify-between space-x-2 py-4">
+          <div className="text-muted-foreground text-sm">
+            Page {pagination.currentPage} of {pagination.totalPages}
+          </div>
+          <div className="flex items-center space-x-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => handlePageChange(pagination.currentPage - 1)}
+              disabled={!pagination.hasPrevPage || isLoading}
+            >
+              <ChevronLeft className="h-4 w-4" />
+              Previous
+            </Button>
+
+            {/* Page numbers */}
+            <div className="flex items-center space-x-1">
+              {Array.from(
+                { length: Math.min(5, pagination.totalPages) },
+                (_, i) => {
+                  const pageNum = i + 1
+                  return (
+                    <Button
+                      key={pageNum}
+                      variant={
+                        pageNum === pagination.currentPage
+                          ? "default"
+                          : "outline"
+                      }
+                      size="sm"
+                      onClick={() => handlePageChange(pageNum)}
+                      disabled={isLoading}
+                    >
+                      {pageNum}
+                    </Button>
+                  )
+                }
+              )}
+            </div>
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => handlePageChange(pagination.currentPage + 1)}
+              disabled={!pagination.hasNextPage || isLoading}
+            >
+              Next
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete{" "}
+              <span className="font-semibold">"{selectedFurnitureName}"</span>{" "}
+              and remove all associated data including images and delivery
+              records.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isPending} onClick={closeDeleteDialog}>
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDelete}
+              disabled={isPending}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {isPending ? "Deleting..." : "Delete"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
   )
 }
+
+export default FurnitureTable

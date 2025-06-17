@@ -3,19 +3,19 @@ import { z } from "zod"
 // Enums for better type safety
 export const FurnitureCondition = z.enum(["New", "Used", "Refurbished"])
 
-export const FurnitureCategory = z.enum([
-  "Chair",
-  "Table",
-  "Sofa",
-  "Bed",
-  "Dresser",
-  "Bookshelf",
-  "Desk",
-  "Cabinet",
-  "Wardrobe",
-  "Nightstand",
-  "Other",
-])
+// export const FurnitureCategory = z.enum([
+//   "Chair",
+//   "Table",
+//   "Sofa",
+//   "Bed",
+//   "Dresser",
+//   "Bookshelf",
+//   "Desk",
+//   "Cabinet",
+//   "Wardrobe",
+//   "Nightstand",
+//   "Other",
+// ])
 
 export const FurnitureMaterial = z.enum([
   "Wood",
@@ -54,7 +54,7 @@ export const FurnitureSchema = z.object({
     .or(z.literal("")),
 
   // Core furniture properties
-  category: FurnitureCategory,
+  category: z.string(),
 
   brand: z
     .string()
@@ -74,19 +74,16 @@ export const FurnitureSchema = z.object({
     .optional()
     .or(z.literal("")),
 
-  material: FurnitureMaterial.optional(),
+  material: z.string(),
 
   dimensions: z
     .string()
-    .regex(
-      /^\d+(\.\d+)?\s*x\s*\d+(\.\d+)?\s*x\s*\d+(\.\d+)?\s*(cm|in|m)$/i,
-      "Dimensions must be in format: Length x Width x Height (unit). Example: 120x80x75 cm"
-    )
+    .max(100, "Dimensions must not exceed 100 characters")
     .optional()
     .or(z.literal("")),
 
   // Condition and availability
-  condition: FurnitureCondition.default("New"),
+  condition: z.string(),
 
   isAvailable: z.boolean().default(true),
 
@@ -104,6 +101,8 @@ export const FurnitureSchema = z.object({
     .max(999999.99, "Price cannot exceed 999,999.99")
     .multipleOf(0.01, "Price can only have up to 2 decimal places"),
 
+  deliveredLocation: z.string().optional(),
+
   // Images
   images: z
     .array(z.instanceof(File))
@@ -117,15 +116,22 @@ export const CreateFurnitureSchema = FurnitureSchema.omit({
 })
 
 // Schema for updating furniture (all fields optional except ID)
-export const UpdateFurnitureSchema = FurnitureSchema.partial().extend({
-  id: z.string().cuid("Invalid furniture ID format"),
-})
+export const UpdateFurnitureSchema = FurnitureSchema.partial()
+  .omit({
+    images: true,
+  })
+  .extend({
+    images: z
+      .array(z.instanceof(File))
+      .max(10, "Maximum 10 images allowed")
+      .optional(),
+  })
 
 // Schema for furniture query/filter parameters
 export const FurnitureQuerySchema = z.object({
-  category: FurnitureCategory.optional(),
-  condition: FurnitureCondition.optional(),
-  material: FurnitureMaterial.optional(),
+  category: z.string().optional(),
+  condition: z.string().optional(),
+  material: z.string().optional(),
   brand: z.string().optional(),
   minPrice: z.number().min(0).optional(),
   maxPrice: z.number().min(0).optional(),
@@ -144,7 +150,7 @@ export type UpdateFurniture = z.infer<typeof UpdateFurnitureSchema>
 export type FurnitureImage = z.infer<typeof FurnitureImageSchema>
 export type FurnitureQuery = z.infer<typeof FurnitureQuerySchema>
 export type FurnitureConditionType = z.infer<typeof FurnitureCondition>
-export type FurnitureCategoryType = z.infer<typeof FurnitureCategory>
+// export type FurnitureCategoryType = z.infer<typeof FurnitureCategory>
 export type FurnitureMaterialType = z.infer<typeof FurnitureMaterial>
 
 // Utility function to validate furniture data

@@ -89,98 +89,19 @@ import {
   CreateFurnitureSchema,
   UpdateFurniture,
   UpdateFurnitureSchema,
-} from "../products/utils/validations/furnitures"
+} from "../validations/furnitures"
 import { useUploadThing } from "@/lib/uploadthing"
-
-// Types matching your Prisma schema
-interface FurnitureImage {
-  id: string
-  url: string
-  key: string
-  createdAt: Date
-}
-
-interface User {
-  id: string
-  name: string | null
-  email: string
-  image: string | null
-  role: string
-}
-
-interface Furniture {
-  id: string
-  name: string
-  description: string | null
-  category: string
-  brand: string
-  model: string | null
-  color: string | null
-  material: string | null
-  dimensions: string | null
-  condition: string
-  isAvailable: boolean
-  stockCount: number
-  price: number
-  sellerId: string
-  seller: User
-  images: FurnitureImage[]
-  deliveredLocation: string | null
-  createdAt: Date
-  updatedAt: Date
-}
-
+import { categories, conditions, materials } from "../utils/contants"
+import { itemVariants } from "../validations/variants"
+import { useProductStore } from "@/store/product"
+import type { Furniture, FurnitureImage, User } from "@/generated/prisma"
 // Form validation schema
 
-interface EditFormProps {
-  furniture: Furniture
-  // onSave: (data: FurnitureFormData, newImages: File[]) => Promise<void>
-  // onImageDelete: (imageId: string) => Promise<void>
-}
-
-// Constants
-const categories = [
-  "Sofa",
-  "Chair",
-  "Table",
-  "Bed",
-  "Cabinet",
-  "Desk",
-  "Dresser",
-  "Bookshelf",
-  "Wardrobe",
-  "Nightstand",
-  "Other",
-] as const
-
-const conditions = ["New", "Used", "Refurbished", "Damaged"]
-
-const materials = [
-  "Wood",
-  "Metal",
-  "Fabric",
-  "Leather",
-  "Plastic",
-  "Glass",
-  "Composite",
-]
-
-// Animation variants for smooth transitions
-const containerVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      staggerChildren: 0.1,
-    },
-  },
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 10 },
-  visible: { opacity: 1, y: 0 },
+interface EditFormProps extends Furniture {
+  furniture: Furniture & {
+    images: FurnitureImage[]
+    seller: User
+  }
 }
 
 // Form section component for better organization
@@ -209,12 +130,7 @@ const FormSection = ({
   </motion.div>
 )
 
-const EditForm = ({
-  furniture,
-  // onSave,
-  // onImageDelete,
-  // isLoading = false,
-}: EditFormProps) => {
+const EditForm = ({ furniture }: EditFormProps) => {
   const router = useRouter()
   const [selectedImages, setSelectedImages] = useState<File[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -223,6 +139,11 @@ const EditForm = ({
   // const [isUploading, setIsUploading] = useState(false)
   const { startUpload, isUploading } = useUploadThing("imageUploader")
 
+  const { deletedKeys, setDeletedKeys } = useProductStore()
+
+  const [fileState, setFileState] = React.useState<FurnitureImage[]>(
+    furniture.images
+  )
   // Form setup with validation
   const form = useForm<UpdateFurniture>({
     resolver: zodResolver(UpdateFurnitureSchema),
@@ -240,11 +161,26 @@ const EditForm = ({
       stockCount: furniture.stockCount,
       price: furniture.price,
       deliveredLocation: furniture.deliveredLocation || "",
+      images: [],
     },
   })
 
   // Watch form state for conditional rendering
   const watchedImages = selectedImages
+
+  const handleOnRemove = React.useCallback(
+    (id: string, key: string) => {
+      if (!fileState) return
+      const newFiles = fileState.filter((file) => file.id !== id)
+      setFileState(newFiles)
+
+      setDeletedFiles(id)
+      setDeletedKeys(key)
+    },
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [fileState]
+  )
 
   // Handle existing image deletion
   const handleDeleteExistingImage = async (imageId: string) => {

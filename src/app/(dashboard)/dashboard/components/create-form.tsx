@@ -70,7 +70,7 @@ import {
   // FurnitureCategory,
   FurnitureCondition,
   FurnitureMaterial,
-} from "../products/utils/validations/furnitures"
+} from "../validations/furnitures"
 
 // Utils and Actions
 import { useUploadThing } from "@/lib/uploadthing"

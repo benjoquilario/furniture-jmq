@@ -6,7 +6,8 @@ import db from "@/lib/db"
 import {
   validateCreateFurniture,
   type CreateFurniture,
-} from "./utils/validations/furnitures"
+} from "../validations/furnitures"
+import { UTApi } from "uploadthing/server"
 
 // Type for the processed furniture data
 type ProcessedFurnitureData = Omit<CreateFurniture, "images"> & {
@@ -126,16 +127,18 @@ export async function createFurniture(data: ProcessedFurnitureData) {
  */
 export async function updateFurniture(
   id: string,
-  data: Partial<ProcessedFurnitureData>
+  data: Partial<ProcessedFurnitureData>,
+  fileIds: string[],
+  deletedKeys: string[]
 ) {
   try {
     // 1. Authentication check
     const session = await auth()
+    const utapi = new UTApi()
+
     if (!session?.user?.id) {
       throw new Error("You must be logged in to update furniture")
     }
-
-    console.log(data)
 
     // 2. Check if furniture exists and user owns it
     const existingFurniture = await db.furniture.findUnique({
@@ -179,24 +182,30 @@ export async function updateFurniture(
       })
 
       // Handle image updates if provided
-      if (data.images) {
+      if (fileIds.length > 0 && deletedKeys.length) {
         // Delete existing images
         await tx.furnitureImage.deleteMany({
-          where: { furnitureId: id },
+          where: {
+            id: {
+              in: fileIds,
+            },
+          },
         })
 
-        // Create new images
-        if (data.images.length > 0) {
-          const imageRecords = data.images.map((image) => ({
-            url: image.url,
-            key: image.key,
-            furnitureId: id,
-          }))
+        await utapi.deleteFiles(deletedKeys)
+      }
 
-          await tx.furnitureImage.createMany({
-            data: imageRecords,
-          })
-        }
+      if (data.images) {
+        // Create new images
+        const imageRecords = data.images.map((image) => ({
+          url: image.url,
+          key: image.key,
+          furnitureId: id,
+        }))
+
+        await tx.furnitureImage.createMany({
+          data: imageRecords,
+        })
       }
 
       // Return updated furniture with images

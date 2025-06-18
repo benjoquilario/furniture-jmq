@@ -41,7 +41,7 @@ const Login = () => {
     try {
       const res = await login(data)
 
-      if (res.success) window.location.href = "/dashboard"
+      if (res.success) window.location.href = "/"
       else {
         if (res.error) setError(res.error)
       }

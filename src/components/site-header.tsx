@@ -27,7 +27,7 @@ const SiteHeader = () => {
 
   const navigationItems = [
     { href: "/", icon: BedSingle, label: "Furniture" },
-    { href: "/sellers", icon: Users, label: "Sellers" },
+    { href: "/customize", icon: Users, label: "Customize" },
     { href: "/about", icon: User, label: "About Us" },
   ]
 
@@ -79,9 +79,9 @@ const SiteHeader = () => {
             className="relative transition-all duration-200 hover:scale-110"
           >
             <ShoppingCart className="h-5 w-5" />
-            <span className="bg-primary text-primary-foreground absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full text-xs">
+            {/* <span className="bg-primary text-primary-foreground absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full text-xs">
               3
-            </span>
+            </span> */}
           </Button>
 
           <div className="bg-border h-6 w-px" />
@@ -124,9 +124,9 @@ const SiteHeader = () => {
             className="relative transition-all duration-200 hover:scale-110"
           >
             <ShoppingCart className="h-5 w-5" />
-            <span className="bg-primary text-primary-foreground absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full text-xs">
+            {/* <span className="bg-primary text-primary-foreground absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full text-xs">
               3
-            </span>
+            </span> */}
           </Button>
 
           {/* Mobile Menu */}

@@ -197,3 +197,41 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .glass-panel {
+    @apply rounded-lg border border-white/10 bg-black/20 backdrop-blur-md;
+  }
+
+  .control-button {
+    @apply bg-primary-600 hover:bg-primary-700 rounded-lg px-4 py-2 font-medium text-white transition-colors duration-200;
+  }
+
+  .control-slider {
+    @apply h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-700;
+  }
+
+  .control-slider::-webkit-slider-thumb {
+    @apply bg-primary-500 h-4 w-4 cursor-pointer appearance-none rounded-full;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

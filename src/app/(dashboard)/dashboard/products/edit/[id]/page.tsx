@@ -15,11 +15,12 @@ const EditProductPage = async ({
     return <div>Furniture not found</div>
   }
 
+  console.log(furnitureData)
+
   return (
     <div>
-      EditProductPage
       <Suspense>
-        <EditForm furniture={furnitureData} />
+        <EditForm furniture={furnitureData} {...furnitureData} />
       </Suspense>
     </div>
   )

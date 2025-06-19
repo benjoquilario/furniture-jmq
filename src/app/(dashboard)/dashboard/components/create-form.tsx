@@ -103,7 +103,7 @@ const FormSection = ({
 }: {
   title: string
   description?: string
-  icon?: React.ElementType
+  icon?: React.ComponentType<{ className?: string }>
   children: React.ReactNode
 }) => (
   <motion.div variants={itemVariants}>

@@ -16,6 +16,7 @@ import {
   X,
   Search,
   ShoppingCart,
+  Video,
 } from "lucide-react"
 import { Button, buttonVariants } from "./ui/button"
 // import { useUser } from "@/lib/auth"
@@ -28,6 +29,7 @@ const SiteHeader = () => {
   const navigationItems = [
     { href: "/", icon: BedSingle, label: "Furniture" },
     { href: "/customize", icon: Users, label: "Customize" },
+    { href: "/videos", icon: Video, label: "Videos" },
     { href: "/about", icon: User, label: "About Us" },
   ]
 

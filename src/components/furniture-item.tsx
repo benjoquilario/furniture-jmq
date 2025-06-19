@@ -286,7 +286,7 @@ const FurnitureItem = ({
             {/* Header */}
             <div className="space-y-2">
               <div className="flex items-start justify-between gap-2">
-                <h3 className="text-foreground group-hover:text-primary line-clamp-2 text-lg leading-tight font-semibold transition-colors">
+                <h3 className="text-foreground group-hover:text-primary line-clamp-1 text-lg leading-tight font-semibold transition-colors">
                   {name}
                 </h3>
                 <BadgeComponent variant="outline" className="shrink-0 text-xs">
@@ -296,7 +296,7 @@ const FurnitureItem = ({
 
               <div className="text-muted-foreground flex items-center gap-2 text-sm">
                 <UserIcon className="h-4 w-4" />
-                <span className="font-medium">{brand}</span>
+                {/* <span className="font-medium">{brand}</span> */}
                 {model && (
                   <>
                     <span>•</span>
@@ -315,29 +315,29 @@ const FurnitureItem = ({
             {/* Features */}
             <div className="flex flex-wrap gap-2">
               {color && (
-                <div className="bg-secondary text-secondary-foreground flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium">
-                  <Palette className="h-3.5 w-3.5" />
+                <BadgeComponent>
+                  <Palette className="mr-1 h-3.5 w-3.5" />
                   <span>{color}</span>
-                </div>
+                </BadgeComponent>
               )}
 
               {material && (
-                <div className="bg-secondary text-secondary-foreground flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium">
-                  <Tag className="h-3.5 w-3.5" />
+                <BadgeComponent>
+                  <Tag className="mr-1 h-3.5 w-3.5" />
                   <span>{material}</span>
-                </div>
+                </BadgeComponent>
               )}
 
               {dimensions && (
-                <div className="bg-secondary text-secondary-foreground flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium">
-                  <Ruler className="h-3.5 w-3.5" />
+                <BadgeComponent>
+                  <Ruler className="mr-1 h-3.5 w-3.5" />
                   <span>{dimensions}</span>
-                </div>
+                </BadgeComponent>
               )}
             </div>
 
             {/* Footer */}
-            <div className="flex items-center justify-between border-t pt-4">
+            {/* <div className="flex items-center justify-between border-t pt-4">
               <div className="space-y-1">
                 <div className="text-muted-foreground flex items-center gap-1 text-xs">
                   <Calendar className="h-3 w-3" />
@@ -347,7 +347,7 @@ const FurnitureItem = ({
                   By {seller.name || seller.email}
                 </p>
               </div>
-            </div>
+            </div> */}
 
             {/* CTA Button */}
           </div>

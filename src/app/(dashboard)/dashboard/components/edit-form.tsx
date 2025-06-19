@@ -82,105 +82,23 @@ import {
   FileUploadTrigger,
 } from "@/components/ui/file-upload"
 
-import { cn } from "@/lib/utils"
 import { updateFurniture } from "../products/actions"
 import {
-  CreateFurniture,
-  CreateFurnitureSchema,
   UpdateFurniture,
   UpdateFurnitureSchema,
-} from "../products/utils/validations/furnitures"
+} from "../validations/furnitures"
 import { useUploadThing } from "@/lib/uploadthing"
-
-// Types matching your Prisma schema
-interface FurnitureImage {
-  id: string
-  url: string
-  key: string
-  createdAt: Date
-}
-
-interface User {
-  id: string
-  name: string | null
-  email: string
-  image: string | null
-  role: string
-}
-
-interface Furniture {
-  id: string
-  name: string
-  description: string | null
-  category: string
-  brand: string
-  model: string | null
-  color: string | null
-  material: string | null
-  dimensions: string | null
-  condition: string
-  isAvailable: boolean
-  stockCount: number
-  price: number
-  sellerId: string
-  seller: User
-  images: FurnitureImage[]
-  deliveredLocation: string | null
-  createdAt: Date
-  updatedAt: Date
-}
-
+import { categories, conditions, materials } from "../utils/contants"
+import { itemVariants, containerVariants } from "../validations/variants"
+import { useProductStore } from "@/store/product"
+import type { Furniture, FurnitureImage, User } from "@/generated/prisma"
 // Form validation schema
 
-interface EditFormProps {
-  furniture: Furniture
-  // onSave: (data: FurnitureFormData, newImages: File[]) => Promise<void>
-  // onImageDelete: (imageId: string) => Promise<void>
-}
-
-// Constants
-const categories = [
-  "Sofa",
-  "Chair",
-  "Table",
-  "Bed",
-  "Cabinet",
-  "Desk",
-  "Dresser",
-  "Bookshelf",
-  "Wardrobe",
-  "Nightstand",
-  "Other",
-] as const
-
-const conditions = ["New", "Used", "Refurbished", "Damaged"]
-
-const materials = [
-  "Wood",
-  "Metal",
-  "Fabric",
-  "Leather",
-  "Plastic",
-  "Glass",
-  "Composite",
-]
-
-// Animation variants for smooth transitions
-const containerVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      staggerChildren: 0.1,
-    },
-  },
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 10 },
-  visible: { opacity: 1, y: 0 },
+interface EditFormProps extends Furniture {
+  furniture: Furniture & {
+    images: FurnitureImage[]
+    seller: User
+  }
 }
 
 // Form section component for better organization
@@ -192,7 +110,7 @@ const FormSection = ({
 }: {
   title: string
   description?: string
-  icon?: React.ElementType
+  icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>
   children: React.ReactNode
 }) => (
   <motion.div variants={itemVariants}>
@@ -209,20 +127,26 @@ const FormSection = ({
   </motion.div>
 )
 
-const EditForm = ({
-  furniture,
-  // onSave,
-  // onImageDelete,
-  // isLoading = false,
-}: EditFormProps) => {
+const EditForm = ({ furniture }: EditFormProps) => {
   const router = useRouter()
-  const [selectedImages, setSelectedImages] = useState<File[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
   const [imageToDelete, setImageToDelete] = useState<string | null>(null)
   // const [isUploading, setIsUploading] = useState(false)
   const { startUpload, isUploading } = useUploadThing("imageUploader")
 
+  const {
+    deletedKeys,
+    setDeletedKeys,
+    clearDeletedKeys,
+    setDeletedFiles,
+    deletedFiles,
+    clearDeletedFiles,
+  } = useProductStore()
+
+  const [fileState, setFileState] = React.useState<FurnitureImage[]>(
+    furniture.images
+  )
   // Form setup with validation
   const form = useForm<UpdateFurniture>({
     resolver: zodResolver(UpdateFurnitureSchema),
@@ -240,11 +164,25 @@ const EditForm = ({
       stockCount: furniture.stockCount,
       price: furniture.price,
       deliveredLocation: furniture.deliveredLocation || "",
+      images: [],
     },
   })
 
   // Watch form state for conditional rendering
-  const watchedImages = selectedImages
+
+  const handleOnRemove = React.useCallback(
+    (id: string, key: string) => {
+      if (!fileState) return
+      const newFiles = fileState.filter((file) => file.id !== id)
+      setFileState(newFiles)
+
+      setDeletedFiles(id)
+      setDeletedKeys(key)
+    },
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [fileState]
+  )
 
   // Handle existing image deletion
   const handleDeleteExistingImage = async (imageId: string) => {
@@ -264,28 +202,36 @@ const EditForm = ({
     async (data: UpdateFurniture) => {
       try {
         setIsSubmitting(true)
-        console.log("Form submission data:", data)
 
-        let uploadedImages: Array<{ url: string; key: string }> = []
+        toast.promise(
+          startUpload(data.images ?? []).then((files) => {
+            if (files) {
+              const uploadedImages = files.map((file) => ({
+                url: file.url,
+                key: file.key,
+              }))
 
-        // Only upload images if new images are selected
-        if (selectedImages && selectedImages.length > 0) {
-          const uploadResults = await startUpload(selectedImages)
-
-          if (uploadResults && uploadResults.length > 0) {
-            uploadedImages = uploadResults.map((file) => ({
-              url: file.url,
-              key: file.key,
-            }))
+              return updateFurniture(
+                furniture.id,
+                {
+                  ...data,
+                  images: uploadedImages,
+                },
+                deletedFiles,
+                deletedKeys
+              )
+            } else {
+              throw new Error("No images uploaded")
+            }
+          }),
+          {
+            loading: "Uploading images...",
+            success: "Furniture updated successfully!",
+            error: "Failed to upload images",
           }
-        }
+        )
 
-        await updateFurniture(furniture.id, {
-          ...data,
-          images: uploadedImages,
-        })
         // await onSave(data, selectedImages)
-        toast.success("Furniture updated successfully!")
         router.push("/dashboard/products")
       } catch (error) {
         console.error("Form submission error:", error)
@@ -294,7 +240,7 @@ const EditForm = ({
         setIsSubmitting(false)
       }
     },
-    [selectedImages, router]
+    [router]
   )
 
   console.log(form.formState.errors)
@@ -687,7 +633,7 @@ const EditForm = ({
             icon={ImageIcon}
           >
             {/* Current Images */}
-            {furniture.images.length > 0 && (
+            {fileState.length > 0 && (
               <div className="space-y-4">
                 <div>
                   <FormLabel>Current Images</FormLabel>
@@ -696,7 +642,7 @@ const EditForm = ({
                   </FormDescription>
                 </div>
                 <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-                  {furniture.images.map((image) => (
+                  {fileState.map((image) => (
                     <div
                       key={image.id}
                       className="group bg-muted relative overflow-hidden rounded-lg border"
@@ -711,10 +657,7 @@ const EditForm = ({
                           type="button"
                           variant="destructive"
                           size="sm"
-                          onClick={() => {
-                            setImageToDelete(image.id)
-                            setDeleteDialogOpen(true)
-                          }}
+                          onClick={() => handleOnRemove(image.id, image.key)}
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -727,81 +670,94 @@ const EditForm = ({
 
             {/* New Images Upload */}
             <div className="space-y-4">
-              <FormLabel>
-                Add New Images
-                <span className="text-muted-foreground ml-2 text-sm font-normal">
-                  (1-10 images, 5MB each)
-                </span>
-              </FormLabel>
-              <div className="relative">
-                <FileUpload
-                  value={selectedImages}
-                  onValueChange={setSelectedImages}
-                  accept="image/*"
-                  maxFiles={10}
-                  maxSize={5 * 1024 * 1024}
-                  onFileReject={(_, message) => {
-                    form.setError("root", {
-                      message,
-                    })
-                  }}
-                  multiple
-                >
-                  <FileUploadDropzone className="flex-row flex-wrap border-dotted text-center">
-                    <CloudUpload className="size-4" />
-                    Drag and drop or
-                    <FileUploadTrigger asChild>
-                      <Button variant="link" size="sm" className="p-0">
-                        choose files
-                      </Button>
-                    </FileUploadTrigger>
-                    to upload
-                  </FileUploadDropzone>
-                  <FileUploadList>
-                    {selectedImages.map((file, index) => (
-                      <FileUploadItem key={index} value={file}>
-                        <FileUploadItemPreview />
-                        <FileUploadItemMetadata />
-                        <FileUploadItemDelete asChild>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="size-7"
-                          >
-                            <X />
-                            <span className="sr-only">Delete</span>
-                          </Button>
-                        </FileUploadItemDelete>
-                      </FileUploadItem>
-                    ))}
-                  </FileUploadList>
-                </FileUpload>
+              <FormField
+                control={form.control}
+                name="images"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Furniture Images *
+                      <span className="text-muted-foreground ml-2 text-sm font-normal">
+                        (1-10 images, 5MB each)
+                      </span>
+                    </FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <FileUpload
+                          value={field.value}
+                          onValueChange={field.onChange}
+                          accept="image/*"
+                          maxFiles={10}
+                          maxSize={5 * 1024 * 1024}
+                          onFileReject={(_, message) => {
+                            form.setError("images", {
+                              message,
+                            })
+                          }}
+                          multiple
+                        >
+                          <FileUploadDropzone className="flex-row flex-wrap border-dotted text-center">
+                            <CloudUpload className="size-4" />
+                            Drag and drop or
+                            <FileUploadTrigger asChild>
+                              <Button variant="link" size="sm" className="p-0">
+                                choose files
+                              </Button>
+                            </FileUploadTrigger>
+                            to upload
+                          </FileUploadDropzone>
+                          <FileUploadList>
+                            {field.value &&
+                              Array.isArray(field.value) &&
+                              field.value.map((file, index) => (
+                                <FileUploadItem key={index} value={file}>
+                                  <FileUploadItemPreview />
+                                  <FileUploadItemMetadata />
+                                  <FileUploadItemDelete asChild>
+                                    <Button
+                                      variant="ghost"
+                                      size="icon"
+                                      className="size-7"
+                                    >
+                                      <X />
+                                      <span className="sr-only">Delete</span>
+                                    </Button>
+                                  </FileUploadItemDelete>
+                                </FileUploadItem>
+                              ))}
+                          </FileUploadList>
+                        </FileUpload>
 
-                {/* Upload Progress Indicator */}
-                <AnimatePresence>
-                  {isUploading && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="bg-background/80 absolute inset-0 flex items-center justify-center rounded-lg backdrop-blur-sm"
-                    >
-                      <div className="text-foreground flex items-center gap-2">
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                        <span className="text-sm font-medium">
-                          Uploading images...
-                        </span>
+                        {/* Upload Progress Indicator */}
+                        <AnimatePresence>
+                          {isUploading && (
+                            <motion.div
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              exit={{ opacity: 0 }}
+                              className="bg-background/80 absolute inset-0 flex items-center justify-center rounded-lg backdrop-blur-sm"
+                            >
+                              <div className="text-foreground flex items-center gap-2">
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                                <span className="text-sm font-medium">
+                                  Uploading images...
+                                </span>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-              <FormDescription>
-                Upload clear, well-lit photos from multiple angles. Include
-                shots of: front view, side view, any special features, and
-                close-ups of materials. The first image will be the main display
-                image.
-              </FormDescription>
+                    </FormControl>
+                    <FormDescription>
+                      Upload clear, well-lit photos from multiple angles.
+                      Include shots of: front view, side view, any special
+                      features, and close-ups of materials. The first image will
+                      be the main display image.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
           </FormSection>
 

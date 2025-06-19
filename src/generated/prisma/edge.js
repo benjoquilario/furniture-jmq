@@ -35,12 +35,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.9.0
- * Query Engine version: 81e4af48011447c3cc503a190e86995b66d2a28e
+ * Prisma Client JS version: 6.10.0
+ * Query Engine version: aee10d5a411e4360c6d3445ce4810ca65adbf3e8
  */
 Prisma.prismaVersion = {
-  client: "6.9.0",
-  engine: "81e4af48011447c3cc503a190e86995b66d2a28e"
+  client: "6.10.0",
+  engine: "aee10d5a411e4360c6d3445ce4810ca65adbf3e8"
 }
 
 Prisma.PrismaClientKnownRequestError = PrismaClientKnownRequestError;
@@ -219,12 +219,13 @@ const config = {
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
-  "clientVersion": "6.9.0",
-  "engineVersion": "81e4af48011447c3cc503a190e86995b66d2a28e",
+  "clientVersion": "6.10.0",
+  "engineVersion": "aee10d5a411e4360c6d3445ce4810ca65adbf3e8",
   "datasourceNames": [
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -235,7 +236,7 @@ const config = {
   },
   "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id             String    @id @default(cuid())\n  name           String?\n  email          String    @unique\n  emailVerified  DateTime?\n  hashedPassword String?\n  role           String    @default(\"USER\")\n\n  image    String?\n  accounts Account[]\n  sessions Session[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  Furniture Furniture[]\n}\n\nmodel Account {\n  userId            String\n  type              String\n  provider          String\n  providerAccountId String\n  refresh_token     String?\n  access_token      String?\n  expires_at        Int?\n  token_type        String?\n  scope             String?\n  id_token          String?\n  session_state     String?\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  user User @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@id([provider, providerAccountId])\n}\n\nmodel Session {\n  sessionToken String   @unique\n  userId       String\n  expires      DateTime\n  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel VerificationToken {\n  identifier String\n  token      String\n  expires    DateTime\n\n  @@id([identifier, token])\n}\n\nmodel Furniture {\n  id          String           @id @default(cuid())\n  name        String\n  description String?\n  images      FurnitureImage[]\n\n  deliveredLocation String? // Relation to track delivery locations\n  // Optional: Add a relation to track delivery status\n  // This can be used to manage delivery status and history\n\n  // Core furniture properties\n  category   String // Type of furniture (e.g., \"Chair\", \"Table\", \"Sofa\", \"Bed\")\n  brand      String // Brand/Manufacturer (e.g., \"IKEA\", \"Ashley Furniture\")\n  model      String? // Model name/number (e.g., \"BILLY\", \"L-Shaped Sectional\")\n  color      String?\n  material   String? // Primary material (e.g., \"Wood\", \"Metal\", \"Fabric\", \"Leather\")\n  dimensions String? // Structured dimensions (e.g., \"120x80x75 cm\")\n\n  // Condition and availability\n  condition   String  @default(\"New\") // \"New\", \"Used\", \"Refurbished\"\n  isAvailable Boolean @default(true)\n  stockCount  Int     @default(1)\n\n  // Pricing and seller\n  price    Float // Changed to Float for decimal prices\n  sellerId String\n  seller   User   @relation(fields: [sellerId], references: [id])\n\n  // Timestamps\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel FurnitureImage {\n  id          String     @id @default(uuid())\n  url         String\n  key         String // For storage management\n  furniture   Furniture? @relation(fields: [furnitureId], references: [id], onDelete: Cascade)\n  furnitureId String?\n\n  createdAt DateTime @default(now())\n}\n",
   "inlineSchemaHash": "4907d5854d3439323082c2ce709a07ad900397c5eab9bd164354c0d40846c703",
-  "copyEngine": false
+  "copyEngine": true
 }
 config.dirname = '/'
 

@@ -28,7 +28,7 @@ import {
   LayoutPanelLeft,
   Ungroup,
 } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
@@ -415,17 +415,25 @@ const FurnitureData = ({ furniture }: FurnitureDataProps) => {
                     and design modifications.
                   </p>
                 </div>
-                <Button variant="outline" className="w-full">
+                <Link
+                  href="https://www.facebook.com/profile.php?id=100094026338126"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={buttonVariants({
+                    variant: "outline",
+                    className: "w-full",
+                  })}
+                >
                   <MessageCircle className="mr-2 h-4 w-4" />
                   Contact Us for Custom Details
-                </Button>
+                </Link>
               </div>
             </div>
           </div>
         </div>
 
         {/* Seller Information */}
-        <Card className="mb-8">
+        {/* <Card className="mb-8">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
@@ -471,7 +479,7 @@ const FurnitureData = ({ furniture }: FurnitureDataProps) => {
               </div>
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
 
         {/* Description */}
         <Card>

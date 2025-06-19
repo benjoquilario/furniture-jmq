@@ -110,7 +110,7 @@ const FormSection = ({
 }: {
   title: string
   description?: string
-  icon?: React.ElementType
+  icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>
   children: React.ReactNode
 }) => (
   <motion.div variants={itemVariants}>

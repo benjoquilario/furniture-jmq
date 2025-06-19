@@ -1,0 +1,37 @@
+.glass-panel {
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(12px);
+}
+
+.control-button {
+  background-color: #2563eb;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  color: white;
+  transition: background-color 200ms ease-in-out;
+}
+
+.control-button:hover {
+  background-color: #1d4ed8;
+}
+
+.control-slider {
+  height: 0.5rem;
+  width: 100%;
+  cursor: pointer;
+  appearance: none;
+  border-radius: 0.5rem;
+  background-color: #374151;
+}
+
+.control-slider::-webkit-slider-thumb {
+  background-color: #3b82f6;
+  height: 1rem;
+  width: 1rem;
+  cursor: pointer;
+  appearance: none;
+  border-radius: 50%;
+}
